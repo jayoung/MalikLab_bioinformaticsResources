@@ -1,7 +1,6 @@
 # Bionformatics
 
-## Learning resources
-
+## Resources to learn computing/bioinformatics
 
 Much more documentation [here](https://sciwiki.fredhutch.org/scicomputing/comp_index/).
 
