@@ -2,9 +2,9 @@
 
 Janet Young
 
-On [github](https://github.com/jayoung/MalikLab_bioinformaticsResources)
+A repository to share bioinformatics teaching materials with the Malik lab. 
 
-Repository to share bioinformatics teaching materials with the Malik lab. 
+Available via github, [here](https://github.com/jayoung/MalikLab_bioinformaticsResources).
 
 # Contents
 
