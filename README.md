@@ -20,9 +20,12 @@ I usually have in-person chats to help you learn these things, using these notes
 - Some [bioinformatics tools](notes/bioinformatics_tools.md) you can use via the command-line, especially blast and phyml.
 - Some old notes on tools to analyze [deep sequencing data](notes/deep_sequencing.md). I think you'll get better information elsewhere.
 
+# PAML
+
+We have a Dropbox folder called `PAML_class` with documents to help teach/learn PAML. If you don't already have access, let me know.   I might transfer those materials here at some point - will see how it goes sharing the other notes first. 
 
 # My own notes on things I'm learning
 
-These are notes for myself - I probably haven't written these in a way that will be clear to others, but you're welcome to look through them if you like.
+These are notes for myself - I haven't written these in a way that will be clear to others, but you're welcome to look through them if you like.
 
 - using [docker containers and singularity](janets_NOTES_forMyself/docker_singularity_container_NOTES.md  )
