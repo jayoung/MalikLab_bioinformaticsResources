@@ -6,12 +6,16 @@ A repository to share bioinformatics teaching materials with the Malik lab.
 
 Available via github, [here](https://github.com/jayoung/MalikLab_bioinformaticsResources).
 
-
 WARNING - some of these files contain notes I put together for an individual project, some a long time ago. In many cases they're probably out-of-date: there might be better ways to do things now.
+
+# Requests/suggestions/feedback
+
+Just let me know! You can talk to me, email me, or submit a github issue if that's your thing.
 
 # Contents
 
-I usually have in-person chats to help you learn these things, using these notes for reference:
+I usually have in-person chats to help you learn these things, and we use these notes for reference. They might not make sense on their own.
+
 - To learn how to use the [Hutch compute cluster](notes/FHCRC_compute_resources.md)
 - To learn some [basic unix commands](notes/unix_intro.md)
 - Some [general advice](notes/general_advice.md) on bioinformatics, and suggestions for where you might learn more
