@@ -21,8 +21,8 @@ File names/directory names should NOT contain unusual characters, for example:  
 `rmdir` remove a directory (only works if it's empty)  
 `rm -r directoryName` - removes a directory and ALL of its contents (-r = recursive)  
 `pwd` - show working directory  
-`more file.txt` view a text file page-by-page. Use the space bar to see the next page, the return key to see just one more line, or the `q` key to quit looking at the file. (cat and less also let you look through files)  
-`head file.txt` or `tail file.txt` – show the first few or last few lines in a file  
+`more file.txt` view a text file page-by-page. Use the space bar to see the next page, the return key to see just one more line, or the `q` key to quit looking at the file. (`cat` and `less` also let you look through files)  
+`head file.txt` or `tail file.txt` – show the first few or last few lines in a file. The default is 10 lines: to see 20 lines, for example, do this: `head -20 file.txt`
 
 
 ## Examples: 
