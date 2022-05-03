@@ -48,7 +48,7 @@ To get interactive access to a node and do some work, there are several steps:
 - if user names are the same, you can do this: `ssh rhino`.  If not, you'll need to do `ssh myFHCRCuserName@rhino`.   If you're doing this from outside the Hutch, you might need to give the complete address of rhino (rhino.fhcrc.org), and you should be running [webVPN]((https://centernet.fredhutch.org/cn/u/center-it/help-desk/vpn.html)).
 - enter your Hutch password. If you've successfully logged on, you'll see a prompt that looks something like this: `rhino02:/home/jayoung`.  This tells us we're on a computer called `rhino02`. 
 
-2. Maybe we'll go through a simple unix tutorial now, working on rhino for the moment.  
+2. Maybe we'll go through a [simple unix tutorial](unix_intro.md) now, working on rhino for the moment.  
 
 3. When we're ready to do some "real" work that might drain compute resources, we'll ask the rhino computer to give you permission to work on one of the nodes:
 - decide how many CPUs you want to ask for, and how many days you'll want access to the node.  1 CPU is enough for very simple stuff. 4 can be nice to run several things simultaneously and all of the available computers have at least 4 CPUs.  Don't run more simultaneous jobs/threads than the number of CPUs you choose!
