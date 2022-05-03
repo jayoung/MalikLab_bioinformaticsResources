@@ -6,6 +6,9 @@ A repository to share bioinformatics teaching materials with the Malik lab.
 
 Available via github, [here](https://github.com/jayoung/MalikLab_bioinformaticsResources).
 
+
+WARNING - some of these files contain notes I put together for an individual project, some a long time ago. In many cases they're probably out-of-date: there might be better ways to do things now.
+
 # Contents
 
 I usually have in-person chats to help you learn these things, using these notes for reference:
@@ -15,8 +18,8 @@ I usually have in-person chats to help you learn these things, using these notes
 - Some [more advanced tricks](notes/FHCRC_compute_resources_advanced.md) for the Hutch compute cluster
 
 
-# My own notes, on things I'm learning
+# My own notes on things I'm learning
 
-I haven't necessarily written these in a way that others will be able to understand, but you're welcome to look through them if you like.
+These are notes for myself - I probably haven't written these in a way that will be clear to others, but you're welcome to look through them if you like.
 
-- learning about [docker containers and singularity](janets_NOTES_forMyself/docker_singularity_container_NOTES.md  )
+- using [docker containers and singularity](janets_NOTES_forMyself/docker_singularity_container_NOTES.md  )
