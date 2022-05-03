@@ -16,6 +16,9 @@ I usually have in-person chats to help you learn these things, using these notes
 - To learn some [basic unix commands](notes/unix_intro.md)
 - Some [general advice](notes/general_advice.md) on bioinformatics, and suggestions for where you might learn more
 - Some [more advanced tricks](notes/FHCRC_compute_resources_advanced.md) for the Hutch compute cluster
+- Notes on [transferring/copying large files](notes/file_transfer.md) from one computer to another
+- Some [bioinformatics tools](notes/bioinformatics_tools.md) you can use via the command-line, especially blast and phyml.
+- Some old notes on tools to analyze [deep sequencing data](notes/deep_sequencing.md). I think you'll get better information elsewhere.
 
 
 # My own notes on things I'm learning
