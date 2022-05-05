@@ -1,4 +1,4 @@
-# Bionformatics
+# Bioinformatics
 
 ## General advice
 Keep good notes of what you've done! Think of it like a lab book. I often keep a file for each project (e.g. a gene of interest) of exactly what commands I've run, whether they worked or not). 
@@ -33,11 +33,11 @@ The Carpentries – coding and data science courses
 Bioinformatics.ca resources
 - https://www.youtube.com/channel/UCKbkfKk65PZyRCzUwXOJung  
 - https://bioinformatics.ca 
-- bioinformatics-ca.github.io 
+- https://bioinformatics-ca.github.io 
 
 http://evomics.org/learning/
 
-UW Summer Institutes (Biostats department)
+[UW Summer Institutes](https://si.biostat.washington.edu) (Biostats department). Every year, July/August. Sign up for half-week modules on various topics (stats, genetics, genomics, big data, epidemiology and more)
 
 Data Camp https://www.datacamp.com
 
