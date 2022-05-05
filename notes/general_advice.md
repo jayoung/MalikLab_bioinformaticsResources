@@ -37,6 +37,8 @@ Bioinformatics.ca resources
 - https://bioinformatics.ca 
 - https://bioinformatics-ca.github.io 
 
+Melbourne Bioinformatics [RNA-seq tutorial](https://www.melbournebioinformatics.org.au/tutorials/tutorials/rna_seq_dge_basic/rna_seq_basic_tutorial/) (Risa recommends it)
+
 http://evomics.org/learning/
 
 [UW Summer Institutes](https://si.biostat.washington.edu) (Biostats department). Every year, July/August. Sign up for half-week modules on various topics (stats, genetics, genomics, big data, epidemiology and more)
