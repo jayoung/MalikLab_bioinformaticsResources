@@ -21,7 +21,7 @@ The Hutch used to have access to a server called ‘globus’ https://fh.globusg
 
 Much more documentation on the Hutch resources [here](https://sciwiki.fredhutch.org/scicomputing/comp_index/).
 
-A [list of courses/resources](https://sciwiki.fredhutch.org/scicomputing/reference_training) suggested by other Hutch people: includes Hutch stuff and web resources (scroll to the bottom)
+A [list of courses/resources](https://sciwiki.fredhutch.org/scicomputing/reference_training) suggested by other Hutch people: includes Hutch stuff as well as resources elsewhere on the internet (scroll to the bottom)
 
 The Hutch [‘Coop’](https://centernet.fredhutch.org/cn/u/bdsc.html) Bioinformatics & Data Science Cooperative. Used to have staff whose job was training, but not any more, sadly. Website still has some teaching materials here. 
 
