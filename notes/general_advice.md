@@ -25,12 +25,10 @@ The Hutch [‘Coop’](https://centernet.fredhutch.org/cn/u/bdsc.html) Bioinform
 
 Some useful classes/courses available through [fhcrc.io](fhcrc.io) (some self-guided, some taught live)
 
-
 The Carpentries – coding and data science courses 
 - https://carpentries.org/
 - https://software-carpentry.org
 - https://datacarpentry.org
-
 
 Bioinformatics.ca resources
 - https://www.youtube.com/channel/UCKbkfKk65PZyRCzUwXOJung  
@@ -45,3 +43,4 @@ Data Camp https://www.datacamp.com
 
 RuneStone Academy? 
 
+https://www.ebi.ac.uk/training/on-demand
