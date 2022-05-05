@@ -21,6 +21,8 @@ The Hutch used to have access to a server called ‘globus’ https://fh.globusg
 
 Much more documentation on the Hutch resources [here](https://sciwiki.fredhutch.org/scicomputing/comp_index/).
 
+A [list of courses/resources](https://sciwiki.fredhutch.org/scicomputing/reference_training) suggested by other Hutch people: includes Hutch stuff and web resources (scroll to the bottom)
+
 The Hutch [‘Coop’](https://centernet.fredhutch.org/cn/u/bdsc.html) Bioinformatics & Data Science Cooperative. Used to have staff whose job was training, but not any more, sadly. Website still has some teaching materials here. 
 
 Some useful classes/courses available through [fhcrc.io](fhcrc.io) (some self-guided, some taught live)
@@ -39,7 +41,9 @@ http://evomics.org/learning/
 
 [UW Summer Institutes](https://si.biostat.washington.edu) (Biostats department). Every year, July/August. Sign up for half-week modules on various topics (stats, genetics, genomics, big data, epidemiology and more)
 
-Data Camp https://www.datacamp.com
+[Data Camp](https://www.datacamp.com)
+
+[Code Academy](https://www.codecademy.com)
 
 RuneStone Academy? 
 
