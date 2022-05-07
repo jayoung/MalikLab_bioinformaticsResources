@@ -50,3 +50,9 @@ http://evomics.org/learning/
 RuneStone Academy? 
 
 https://www.ebi.ac.uk/training/on-demand
+
+[Learning R](https://stat545.com/r-basics.html)
+
+For R: RStudio's [ondemand webinars](http://rstudio.com/resources/webinars) 
+
+RStudio's [cheatsheets](http://rstudio.com/resources/cheatsheets) on various aspects of R coding
