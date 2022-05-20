@@ -28,3 +28,8 @@ Scripts should be specified as prerequesites in a Makefile as well as data and o
 
 [Carpentries tutorial](https://carpentries-incubator.github.io/workflows-nextflow/aio/index.html)
 
+see `~/FH_fast_storage/general_notes/computing/nextflow_test`
+
+and tutorial materials I'm trying: `~/FH_fast_storage/general_notes/computing/nextflow_test/proteinDigestTutorial/bioinformatics-pipeline-tutorial`
+
+Config info for [running on gizmo](https://sciwiki.fredhutch.org/hdc/workflows/running/on_gizmo/)
