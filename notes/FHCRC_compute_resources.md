@@ -98,7 +98,41 @@ If you're working on the command line on your Mac (i.e. not working on the clust
 [This link](https://centernet.fredhutch.org/cn/u/center-it/help-desk/network_drive_paths_windows.html) might help.
 
 
+# Storage on disk (large files)
+
+Our lab gets 5Tb of file storage funded by FHCRC, and above that we'll be charged monthly for disk storage. All of us should keep an eye on any large files we download and generate - it's fine to pay for them if we're actually using them, but we should tidy up files we're not using as much as we can.  (there is another cheaper place we can store "archive" type files that we don't really use, but that system is not so robust yet and requires special access methods)
+
+A command to check file/folder size:  
+`du -sm myFolder` = shows total size of everything in myFolder  
+`du -sm *`        = shows total size of each item in the current directory  
+   (`du` = disk usage, `-s` = summary, `-m` = megabytes)
+
+Some programs or bioinformatic pipelines generate a lot of large intermediate files that can be deleted after the program has run (e.g. de novo assembly programs).
+
+
+
+# Using scicomp's installed "environmental modules" (programs)
+
+The scicomp people have installed MANY useful biology tools for us to use on the cluster. See instructions [here](https://sciwiki.fredhutch.org/scicomputing/compute_environments/).
+
+To list all available modules (installed in /app and /app/easybuild): `module avail`
+
+To look for modules whose name contains ‘bowtie’: `module avail bowtie` (it will find partial matches and it’s not case-sensitive).
+
+If there's a program you're interested in trying that doesn't seem to be available, ask me if I have installed it for our lab - I have a few additional tools that scicomp haven't installed as modules. You can also ask them to install things - sometimes they respond very quickly, sometimes it takes a few days or a week.  If you're feeling brave you can install it yourself, for your own use.
+
+To load a module (i.e. make it ready to use). This only applies in your current terminal window, and will reset when you exit that window:  
+    `module load Cufflinks`  
+That loads the default version of cufflinks, usually the most recent version that's been installed. In the output of `module avail`, the D indicates the default version of each tool, which can change with time. To make your work more reproducible, you probably want to get in the habit of choosing a specific version of each tool for each project, and sticking to it:  
+`module load Cufflinks/2.2.1-foss-2018b`
+
+To see all modules currently loaded in your session: `module list`
+
+To unload all modules currently loaded in your session: `module purge`
+
 # Running commands on the cluster in batch mode
+
+More info [here](https://sciwiki.fredhutch.org/scicomputing/compute_jobs/), but basically you do this:
 
 1. figure out the command or set of commands you want to run.  Multiple commands can be run one after the other by concatenating them with ";".  For example, to run `command1` then `command2`, you would do this:  
 `command1 ; command2`
@@ -150,37 +184,45 @@ or, with additional options:
 7. if there's a problem, use scancel to kill a job or jobs. The simplest way is to use the job ID: `scancel myJobID`
 You can also do this to cancel all your running jobs - e.g. to cancel all jobs for user `jayoung` you do this:  `scancel -u jayoung `
 
+# Running a bunch of sbatch jobs, on multiple samples
 
-# Storage on disk (large files)
+If you want to get fancy, and run the same command on a set of inputs, you might want to set up a **"slurm script"** that will look something like this:
 
-Our lab gets 5Tb of file storage funded by FHCRC, and above that we'll be charged monthly for disk storage. All of us should keep an eye on any large files we download and generate - it's fine to pay for them if we're actually using them, but we should tidy up files we're not using as much as we can.  (there is another cheaper place we can store "archive" type files that we don't really use, but that system is not so robust yet and requires special access methods)
+```
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=0-04:00:00
+#SBATCH --array=[0-8]%9 # how many jobs and batch size
+#SBATCH --output=slurm.%J.out
+#SBATCH --job-name="fastqDump"
 
-A command to check file/folder size:  
-`du -sm myFolder` = shows total size of everything in myFolder  
-`du -sm *`        = shows total size of each item in the current directory  
-   (`du` = disk usage, `-s` = summary, `-m` = megabytes)
+ACCESSIONS=(SRR2927735 SRR2927736 SRR2927737 SRR2927738 SRR2927739 SRR2927740 SRR2927741 SRR2927742 SRR292
+7743)
 
-Some programs or bioinformatic pipelines generate a lot of large intermediate files that can be deleted after the program has run (e.g. de novo assembly programs).
+CACHE="/fh/fast/malik_h/grp/public_databases/NCBI/SRA/cache/sra"
+SINGLE_ACCESSION="${ACCESSIONS[$SLURM_ARRAY_TASK_ID]}"
+SRAFILE="${CACHE}/${ACCESSIONS[$SLURM_ARRAY_TASK_ID]}.sra"
 
+echo "My accession: ${SINGLE_ACCESSION}"
+if test -f "${SRAFILE}"; then
+    echo "$SRAFILE already exists"
+else
+    echo ""
+    echo "running prefetch"
+    prefetch ${SINGLE_ACCESSION}
+fi
 
-# Using scicomp's installed "environmental modules" (programs)
+echo ""
+echo "running fastq-dump"
+fastq-dump --split-spot --split-e --gzip  ${SRAFILE}
+```
 
-The scicomp people have installed MANY useful biology tools for us to use on the cluster. See instructions [here](https://sciwiki.fredhutch.org/scicomputing/compute_environments/).
+The lines beginning `#SBATCH` specify resources to request for each sbatch job.  
 
-To list all available modules (installed in /app and /app/easybuild): `module avail`
+The other words in capital letters are *variables* that we define using the = symbol.  Once we define variables, we can use their values with `${}` notation.
 
-To look for modules whose name contains ‘bowtie’: `module avail bowtie` (it will find partial matches and it’s not case-sensitive).
-
-If there's a program you're interested in trying that doesn't seem to be available, ask me if I have installed it for our lab - I have a few additional tools that scicomp haven't installed as modules. You can also ask them to install things - sometimes they respond very quickly, sometimes it takes a few days or a week.  If you're feeling brave you can install it yourself, for your own use.
-
-To load a module (i.e. make it ready to use). This only applies in your current terminal window, and will reset when you exit that window:  
-    `module load Cufflinks`  
-That loads the default version of cufflinks, usually the most recent version that's been installed. In the output of `module avail`, the D indicates the default version of each tool, which can change with time. To make your work more reproducible, you probably want to get in the habit of choosing a specific version of each tool for each project, and sticking to it:  
-`module load Cufflinks/2.2.1-foss-2018b`
-
-To see all modules currently loaded in your session: `module list`
-
-To unload all modules currently loaded in your session: `module purge`
+Notice that `ACCESSIONS` has paretheses and specifies several items - it's an array, and we can run some commands on each item in the array, using the `SINGLE_ACCESSION` variable.
 
 
 # Additional notes for PC users
