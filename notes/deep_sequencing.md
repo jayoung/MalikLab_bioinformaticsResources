@@ -105,7 +105,7 @@ module load BWA/0.7.17-GCC-10.2.0
 bwa index refGenome.fa
 ```
 
-Then map. An example shell script for paired end reads is given [here](example_scripts/bwa_mem_paired.sh)
+Then map. An example shell script for paired end reads is given [here](../example_scripts/bwa_mem_paired.sh)
 
 # using PacBio reads
 
