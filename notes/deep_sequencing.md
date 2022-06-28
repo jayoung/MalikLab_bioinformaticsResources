@@ -12,8 +12,9 @@ show file size(s) in Mb:
 show space left on the disk you're working on
 `df -k | grep 'jayoung'`
 
-## quality filtering, trimming, etc
-FASTQC
+# quality filtering, trimming, etc
+
+## FASTQC
 http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
 
 this command without any arguments opens up a GUI interface - I haven't tried it, but it might be useful:
@@ -91,7 +92,28 @@ fastx_trimmer -f 11 -i SRR826809_1.fastq -z -o SRR826809_1.trim11toEnd.fastq.gz
 or, (I think) using a gzipped input file:
 zcat SRR826809_1.fastq.gz | fastx_trimmer -f 11 -z -o SRR826809_1.trim11toEnd.fastq.gz
 
-## K-mer analysis using jellyfish
+
+# Mapping Illumina reads
+
+## BWA
+
+[BWA manual](http://bio-bwa.sourceforge.net/bwa.shtml)
+
+First, index the genome:
+```
+module load BWA/0.7.17-GCC-10.2.0
+bwa index refGenome.fa
+```
+
+Then map. An example shell script for paired end reads is given [here](example_scripts/bwa_mem_paired.sh)
+
+# using PacBio reads
+
+Aligners: blasr, minimap2, others
+
+# De novo assemblies
+
+## K-mer analysis using jellyfish (pre-assembly analysis)
 
 example on some tetrahymena data:
 1. `jellyfish count`
@@ -111,12 +133,6 @@ jellyfish histo LGCallFiles.31mercounts.BloomFilter.jf > LGCallFiles.31mercounts
 ```
 
 use R script to look at tab-delimited results.  Can then calculate coverage and genome size
-
-# PacBio reads
-
-## blasr aligner
-
-# De novo assemblies
 
 ## De novo assembly using SOAPdenovo2 + GapCloser 
 
