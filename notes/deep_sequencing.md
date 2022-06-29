@@ -105,7 +105,30 @@ module load BWA/0.7.17-GCC-10.2.0
 bwa index refGenome.fa
 ```
 
-Then map. An example shell script for paired end reads is given [here](../example_scripts/bwa_mem_paired.sh)
+Then use `bwa mem` or `bwa aln` to map. The difference is explained [here](http://bio-bwa.sourceforge.net/bwa.shtml) - I usually use `bwa mem` for reads >=70bp long. 
+
+An example shell script to map a single sample's paired end reads is given [here](../example_scripts/bwa_mem_paired_oneSample.sh)
+
+An example slurm script to map multiple samples' paired end reads is given [here](../example_scripts/bwa_mem_paired_multipleSamples_slurm.sh)
+
+
+## using samtools to generate statistics on bam files
+
+Samtools [manual](http://www.htslib.org/doc/samtools.html)
+
+`flagstat` is very useful to see how well mapping worked: shows how many reads total, how many mapped, how many properly paired, etc.
+```
+samtools flagstat bamfile > statsoutputfile.txt
+```
+or to count how many mappings there were in total
+```
+samtools view –c file.bam
+```
+or to count how many reads were on each chromosome:
+```
+samtools idxstats file.bam file.bam.chrCounts.txt
+```
+
 
 # using PacBio reads
 
@@ -411,17 +434,6 @@ These are the options I chose - might be different for other datasets:
 - `--min-intron-length 30` Drosophila have quite small introns (median=68bp). By default tophat will ignore donor/acceptor pairs closer than 70 bases apart. 
 
 After mapping, you might want to do some kind of filtering.  e.g. might filter for reads mapping uniquely.
-
-# samtools for statistics on bam files
-
-Very useful to see how well mapping worked: shows how many reads total, how many mapped, how many properly paired, etc.
-```
-samtools flagstat bamfile > statsoutputfile.txt
-```
-count how many mappings there were
-```
-samtools view –c file.bam
-```
 
 # counting reads for each gene
 
