@@ -112,6 +112,7 @@ There are many ways to run MAFFT. Here's how you run it using the defaults:
 module load MAFFT/7.453-GCC-8.3.0-with-extensions
 mafft -h
 mafft seqsToAlign.fa > alignment.fa
+module purge
 ```
 
 ## MACSE
