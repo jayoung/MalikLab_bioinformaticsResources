@@ -96,13 +96,57 @@ Phyre, HHpred, and I'm sure many more
 There are MANY programs to do this. Each has MANY parameters you can set and experiment with.
 
 My current favorites are:
-- `mafft` (for DNA or protein alignments) 
-- `MACSE` (for in-frame, translation-based alignments). 
+- `mafft` (for DNA or protein alignments, very fast) 
+- `MACSE` (for in-frame, translation-based alignments, can handle frameshifts). 
 
 In the past I have also used:
 - `PRANK` (in-frame nucleotide alignment
 - `clustalw` (DNA/protein)
 - `translatorx.pl` (in-frame nucleotide alignment, using Muscle, Clustalw, Prank, or mafft to actually perform the alignment), e.g. `translatorx.pl -i myDNAseqs.fa -o myDNAseqs.translatorx`
+
+
+## mafft
+
+There are many ways to run MAFFT. Here's how you run it using the defaults:
+```
+module load MAFFT/7.453-GCC-8.3.0-with-extensions
+mafft -h
+mafft seqsToAlign.fa > alignment.fa
+```
+
+## MACSE
+
+MACSE requires java, so do this before trying to run it:
+```
+module load Java/11.0.2 
+```
+and perhaps this after you've finished:
+```
+module purge
+```
+
+Show all MACSE modes:
+```
+java -jar /fh/fast/malik_h/grp/malik_lab_shared/bin/macse_v2.06.jar -help
+```
+
+Show help for one particular mode:
+```
+java -jar /fh/fast/malik_h/grp/malik_lab_shared/bin/macse_v2.06.jar -prog alignSequences -help
+```
+
+To make an alignment from scratch, use `alignSequences` mode:
+```
+java -jar /fh/fast/malik_h/grp/malik_lab_shared/bin/macse_v2.06.jar -prog alignSequences -out_NT alignment.fa -seq seqsToAlign.fa
+```
+
+To add seqs to an alignment, use `enrichAlignment` mode:
+```
+module purge
+module load Java/11.0.2 
+java -jar /fh/fast/malik_h/grp/malik_lab_shared/bin/macse_v2.06.jar -prog enrichAlignment -align existingAlignment.fa  -out_NT newAlignment.fa -seq seqsToAdd.fa
+module purge
+```
 
 ## trimming/masking alignments
 
