@@ -57,7 +57,9 @@ blastdbcmd -db myNuclSeqs.fa -entry seq1 -out seq1.fa -range 101-200 -strand min
 ```
 
 # Shared databases
-I've got a bunch of databases in a shared Malik lab folder, and most are formatted for blasting. See this file for a list `/fh/fast/malik_h/grp/malik_lab/public_databases/database_list.txt`.  We can easily download more databases if they'd be useful - talk to me about this.
+I've got a bunch of databases in a shared Malik lab folder, and most are formatted for blasting. See this file for a list `/fh/fast/malik_h/grp/malik_lab/public_databases/database_list.txt`.  It's not a very well-organized file: sorry! Sometimes I list files under the source where I downloaded them from (e.g. UCSC, NCBI, Ensembl), sometimes under their species or lineage.
+
+We can easily download more databases if they'd be useful - talk to me about this.
 
 Some useful databases at NCBI (using `-remote`) include:
 ```
@@ -116,6 +118,39 @@ You can look through the whole file, or you might use these search terms in a 'f
 ## Other options
 
 Phyre, HHpred, and I'm sure many more
+
+# Repetitive sequences
+
+## RepeatMasker
+
+Searches sequences against database of known repeats, detects simple repeats. Gives coordinates of repeats, as well as providing a 'masked' version of the sequence where repeats are replaced by NNNs.
+
+There is an [online server](http://www.repeatmasker.org/cgi-bin/WEBRepeatMasker).
+
+You can also run it on the Hutch server:
+
+By default, RepeatMasker assumes your sequences are from human. It's simple to run:
+```
+RepeatMasker myseqs.fasta
+```
+
+Use the `-species` option if your sequences are not from human
+```
+RepeatMasker -species mus myseqs.fasta
+```
+
+## Tandem repeat finder
+
+There is an [online server](https://tandem.bu.edu/trf/trf.html)
+
+Or you can run it on the server. Detailed instructions are [here](https://tandem.bu.edu/trf/trf.unix.help.html). To run using their recommended parameters:
+```
+module load TRF/4.09-linux64
+trf yoursequence.fa 2 7 7 80 10 50 500 -f -d -m
+module purge
+```
+You'll get four output files, whose names begin `yoursequence.fa.2.7.7.80.10.50.500`
+
 
 # Multiple sequence alignments
 
