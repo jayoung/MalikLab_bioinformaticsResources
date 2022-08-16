@@ -75,15 +75,25 @@ refseq_genomic
 ## HMMer package
 Hutch module: `module load HMMER/3.3.2-gompi-2020b`
 
-hmmbuild creates an HMM from a multiple sequence alignment
+`hmmbuild` creates an HMM from a multiple sequence alignment
+
+show hmmbuild usage:
 ```
 hmmbuild -h
+```
+run hmmbuild:
+```
 hmmbuild myAln.fa.hmm myAln.fa
 ```
 
-hmmsearch takes an HMM and searches protein sequences:
+`hmmsearch` takes an HMM and searches protein sequences:
+
+show hmmsearch usage:
 ```
 hmmsearch -h
+```
+run hmmsearch (searches a protein database, in fasta format)
+```
 hmmsearch -A myAln.vs.seqsToSearch.stockholm myAln.fa.hmm seqsToSearch.fa > myAln.vs.seqsToSearch.stockholm.hmmsearch
 ```
 
