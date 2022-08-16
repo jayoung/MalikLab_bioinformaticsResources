@@ -70,9 +70,15 @@ refseq_genomic
 ```
 
 
-# Remote homology searches
+# Searching for remote homologs
 
 ## HMMer package
+
+### Running it online:
+You can run it online via [EMBL-EBI](https://www.ebi.ac.uk/Tools/hmmer/search/hmmsearch) against various databases, and you can restrict your search to certain taxonomic databases.
+
+### Running it on the Hutch server, against databases stored locally:
+
 Hutch module: `module load HMMER/3.3.2-gompi-2020b`
 
 `hmmbuild` creates an HMM from a multiple sequence alignment
@@ -96,6 +102,16 @@ run hmmsearch (searches a protein database, in fasta format)
 ```
 hmmsearch -A myAln.vs.seqsToSearch.stockholm myAln.fa.hmm seqsToSearch.fa > myAln.vs.seqsToSearch.stockholm.hmmsearch
 ```
+
+Protein databases to search: this works on any multiple sequence fasta file. Sometimes I search a file I made myself, sometimes I download all predicted proteins for a given species, sometimes we search bigger databases (uniprot etc).
+
+Check out database files we have stored on the server, listed in `/fh/fast/malik_h/grp/public_databases/database_list.txt`. It's not a very well-organized file: sorry! Sometimes I list files under the source where I downloaded them from (e.g. UCSC, NCBI, Ensembl), sometimes under their species or lineage.
+
+You can look through the whole file, or you might use these search terms in a 'find':
+- `uniref`
+- `Proteome`
+- `protein.faa`
+- `.pep.`
 
 ## Other options
 
