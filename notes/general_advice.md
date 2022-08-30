@@ -25,7 +25,7 @@ A [list of courses/resources](https://sciwiki.fredhutch.org/scicomputing/referen
 
 The Hutch [‘Coop’](https://centernet.fredhutch.org/cn/u/bdsc.html) Bioinformatics & Data Science Cooperative. Used to have staff whose job was training, but not any more, sadly. Website still has some teaching materials here. 
 
-Some useful classes/courses available through [fhcrc.io](fhcrc.io) (some self-guided, some taught live)
+Some useful classes/courses available through [fhcrc.io](http://www.fredhutch.io) (some self-guided, some taught live)
 
 The Carpentries – coding and data science courses 
 - https://carpentries.org/
