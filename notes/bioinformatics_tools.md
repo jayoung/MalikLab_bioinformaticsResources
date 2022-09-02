@@ -12,7 +12,7 @@ Show command-line help: `blastn -help`
 
 To blast a remote NCBI database (notice the `-remote` option):
 ```
-blastn -remote -query myNuclQuerySeq.fa -db nr -out myNuclQuerySeq.fasta.blastnNR -task blastn
+blastn -remote -query myNuclQuerySeq.fa -db nr -out myNuclQuerySeq.fa.blastnNR -task blastn
 ```
 
 To format your own fasta format file as a blastable database:
