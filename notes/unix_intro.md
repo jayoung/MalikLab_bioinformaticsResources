@@ -4,7 +4,7 @@
 
 File names/directory names ARE case-sensitive.
 
-File names/directory names should NOT contain unusual characters, for example:  `spaces * , /  \ + ! ( )`. These characters are OK: `. - _`
+File names/directory names should NOT contain unusual characters, for example:  `spaces * , /  \ + ! ( ) ~ $`. These characters are OK: `. - _`
 
 ## Basic unix commands:
 
