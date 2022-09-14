@@ -87,7 +87,8 @@ First, make a tab-delimited text file of the sequence regions you want to get. M
   - 1. accession 
   - 2. start position
   - 3. end position 
-  - 4. strand (1=forward, 2=reverse)
+  - 4. strand (1=forward, 2=reverse)  
+  
 (start and end coordinates use the 'normal' way of counting, not the weird 0-based start that bed files use)
 ```
 NM_002354       10      30      1
