@@ -8,21 +8,24 @@ module load BLAST+/2.10.1-gompi-2020a
 ```
 (and after you’re done with blast searches for a while, you might want to do `module purge`)
 
-Show command-line help: `blastn -help`
+## Show command-line help: 
 
-To blast a remote NCBI database (notice the `-remote` option):
+`blastn -help`
+
+## To blast a remote NCBI database 
+(notice the `-remote` option):
 ```
 blastn -remote -query myNuclQuerySeq.fa -db nr -out myNuclQuerySeq.fa.blastnNR -task blastn
 ```
 
-To format your own fasta format file as a blastable database:
+## To format your own fasta format file as a blastable database:
 ```
 makeblastdb -help
 makeblastdb -in myNuclSeqs.fa -dbtype nucl -parse_seqids
 makeblastdb -in myProtSeqs.fa -dbtype prot -parse_seqids
 ```
 
-To blast your own database (after formatting it)
+## To blast your own database (after formatting it)
 ```
 blastp -db myProtSeqs.fa -query myProtQuerySeq.fa -out myProtQuerySeq.fa.blastpMyProtSeqs
 
@@ -31,14 +34,27 @@ tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblast
 tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblastnPrimate -entrez_query 'human[Organism]'
 ```
 
+## Blast output formats
 Blast can give output in other formats - explore the `-outfmt` option. e.g. `-outfmt 6` gives a tabular output that you could sort and filter, perhaps in Excel:
 ```
 tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblastn_tableOutput -outfmt 6
 ```
+If you already have a blast result you obtained using `-remote`, but you want to see that result in a different format, you first want to find the "result ID" you'll find near the top of the blast output, after `RID:`. For example (using grep to find that ID): 
+```
+grep 'RID: ' myProtQuerySeq.fa.tblastnPrimate
+    RID: 1H0R3J40016
+```
+Then you use that result ID in the blast_formatter command:
+```
+blast_formatter -rid 1H0R3J40016 -outfmt 6 -out myProtQuerySeq.fa.tblastnPrimate.outfmt6
+```
+I think results are only retained on the NCBI server for a week or so: if your blast is older than that, you may need to redo it.
 
+## Extracting the sequences of blast matches
 
-To extract a sequence (or partial sequence) from a formatted database
-We'll use a program called blastdbcmd. (in the BLAST+ module)
+### Extracting one sequence
+To extract a sequence (or partial sequence) from a formatted database, we'll use a program called blastdbcmd. (also part of the BLAST+ suite of tools)
+
 Blastdbcmd only works you used the -parse_seqids option when you formatted the database.
 
 Look at options:
@@ -55,6 +71,37 @@ Get the reverse-complement of bases 101-200 of seq1 from the myNuclSeqs.fa file:
 ```
 blastdbcmd -db myNuclSeqs.fa -entry seq1 -out seq1.fa -range 101-200 -strand minus -out seq1-200-101.fa
 ```
+
+### Extracting multiple sequences
+
+You probably some sort of tab-delimited table of sequence IDs, start/end coordinates, strand, etc. There are a few different ways to get the seqs you want
+
+#### Extracting multiple sequences from a local database
+
+If your database is local, there are many tools you can use to extract those sequences from the database. One of those is `bedtools getfasta` (use `module load BEDTools`) - see instructions [here](https://www.biostars.org/p/56/) - first you make sure your tab-delimited file is in bed format, then you use `bedtools getfasta`.  Note that [bed format](http://genome.ucsc.edu/FAQ/FAQformat.html#format1) is a bit weird - for start coordinates, the first base of the chromosome is 0, so you need to subtract 1 from the start positions you actually want. The end position is coded in the usual way (so you do NOT subtract 1).
+
+#### Extracting multiple sequences from a remote database
+If you want sequences from a remote database, it's a little more complex. One solution is given [here](https://www.biostars.org/p/301274/) and looks like this.
+
+First, make a tab-delimited text file of the sequence regions you want to get. Mine looks like this, where columns are:
+  - 1 accession 
+  - 2 start position
+  - 3 end position 
+  - 4 strand (1=forward, 2=reverse)
+(start and end coordinates use the 'normal' way of counting, not the weird 0-based start that bed files use)
+```
+NM_002354       10      30      1
+NM_004360       10      30      1
+NM_001144663    10      30      1
+NM_004063       10      30      2
+NM_001145024    10      30      2
+```
+
+Then you run a command that looks like this, except that you replace `smallAccList_withCoords.txt` and `smallAccList_withCoords.txt.fa` with the names of your input and output files, respectively:
+```
+cat seqsToGet.txt | while read -a F ; do wget -q -O - "https://www.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=${F[0]}&seq_start=${F[1]}&seq_stop=${F[2]}&strand=${F[3]}&rettype=fasta" ; done > seqsToGet.txt.fa
+```
+
 
 # Shared databases
 I've got a bunch of databases in a shared Malik lab folder, and most are formatted for blasting. See this file for a list `/fh/fast/malik_h/grp/malik_lab/public_databases/database_list.txt`.  It's not a very well-organized file: sorry! Sometimes I list files under the source where I downloaded them from (e.g. UCSC, NCBI, Ensembl), sometimes under their species or lineage.
