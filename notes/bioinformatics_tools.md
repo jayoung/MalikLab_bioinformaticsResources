@@ -153,6 +153,8 @@ run hmmsearch (searches a protein database, in fasta format)
 hmmsearch -A myAln.vs.seqsToSearch.stockholm myAln.fa.hmm seqsToSearch.fa > myAln.vs.seqsToSearch.stockholm.hmmsearch
 ```
 
+`jackhmmer` does iterative searches, like psi-blast.  Start with a single sequence query, search a database, build an HMM from the results, search the database again, repeat. Might be good for remote homologs but I haven't tried it.
+
 Protein databases to search: this works on any multiple sequence fasta file. Sometimes I search a file I made myself, sometimes I download all predicted proteins for a given species, sometimes we search bigger databases (uniprot etc).
 
 Check out database files we have stored on the server, listed in `/fh/fast/malik_h/grp/public_databases/database_list.txt`. It's not a very well-organized file: sorry! Sometimes I list files under the source where I downloaded them from (e.g. UCSC, NCBI, Ensembl), sometimes under their species or lineage.
