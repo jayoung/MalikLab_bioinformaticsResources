@@ -97,7 +97,7 @@ NM_004063       10      30      2
 NM_001145024    10      30      2
 ```
 
-Then you run a command that looks like this, except that you replace `smallAccList_withCoords.txt` and `smallAccList_withCoords.txt.fa` with the names of your input and output files, respectively:
+Then you run a command that looks like this, except that you replace `smallAccList_withCoords.txt` and `smallAccList_withCoords.txt.fa` with the names of your input and output files, respectively. It's a long command, so make sure you copy the entire thing before editing:
 ```
 cat seqsToGet.txt | while read -a F ; do wget -q -O - "https://www.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=${F[0]}&seq_start=${F[1]}&seq_stop=${F[2]}&strand=${F[3]}&rettype=fasta" ; done > seqsToGet.txt.fa
 ```
