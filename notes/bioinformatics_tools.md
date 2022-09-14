@@ -84,10 +84,10 @@ If your database is local, there are many tools you can use to extract those seq
 If you want sequences from a remote database, it's a little more complex. One solution is given [here](https://www.biostars.org/p/301274/) and looks like this.
 
 First, make a tab-delimited text file of the sequence regions you want to get. Mine looks like this, where columns are:
-  - 1 accession 
-  - 2 start position
-  - 3 end position 
-  - 4 strand (1=forward, 2=reverse)
+  - 1. accession 
+  - 2. start position
+  - 3. end position 
+  - 4. strand (1=forward, 2=reverse)
 (start and end coordinates use the 'normal' way of counting, not the weird 0-based start that bed files use)
 ```
 NM_002354       10      30      1
