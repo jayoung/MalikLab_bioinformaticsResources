@@ -1,3 +1,25 @@
+# Useful links
+
+Shiny job submission/monitoring [dashboard](https://cromwellapp.fredhutch.org) (current db ID `gizmok122:46707`)
+
+More instructions on starting the server, and example jobs [diy-cromwell-server](https://github.com/FredHutch/diy-cromwell-server)
+
+My cromwell home dir: `~/FH_fast_storage/cromwell-home`
+
+Cromwell scratch dir: `/fh/scratch/delete90/malik_h/jayoung`
+
+[OpenWDL](https://openwdl.org) has links to tutorials
+
+[Cromwell docs](https://cromwell.readthedocs.io/en/stable/) - Amy says some stuff there is out of date
+
+# questions for amy
+
+- how to run workflows
+- how to troubleshoot - where are the errors?
+- SNP call design
+
+# Notes
+
 I'm trying the instructions for a [diy-cromwell-server](https://github.com/FredHutch/diy-cromwell-server)
 
 One time, I create a database to store info from my cromwell server
@@ -83,10 +105,9 @@ and there's a slurm job running:
 
 Now I can use this [dashboard](https://cromwellapp.fredhutch.org) to monitor my jobs, clicking 'connect to server' and giving it this `gizmoj17:33241`
 
-I can submit a job by specifying a WDL file here:
-https://cromwellapp.fredhutch.org
+Then I go to the submit tab, and specify the WDL and json files.
 
-Now, run through the [tests here](https://github.com/FredHutch/diy-cromwell-server/tree/main/testWorkflows) - the WDL files are in the github repo I cloned and I submit each through that web server
+I try running through the [tests here](https://github.com/FredHutch/diy-cromwell-server/tree/main/testWorkflows) - the WDL files are in the github repo I cloned and I submit each through that web server
 
 
 # restarting my cromwell server
@@ -149,12 +170,6 @@ This workflow tests whether a Cromwell server can do a multi-step, scientificall
 
 
 
-# questions for amy
-
-- how to run workflows
-- how to troubleshoot - where are the errors?
-- SNP call design
-
 # learning
 
 ## resources
@@ -177,3 +192,32 @@ womtools (a java script) can analyze a WDL and make a DOT file, and graphviz (on
 - arrows = input-to-output relationstip
 
 can nest wdl files (workflows within workflows) and the graph can handle that.  Makes double-walled ovals for steps that are entire workflows
+
+## conversation with Amy Oct 14 2022
+
+The Shiny app's 'validate workflow': useful!  Can validate with or without the input json files (use `cat` if there's >1 input json)
+
+When submitting jobs via the Shiny app: order of input json files does not matter.
+
+On the 'track jobs' tab of the shiny app, when a job is selected, the 'workflow specific job information' are shows the jobs spun off by the workflow.  
+
+If the workflow entirely failed to run, then copy the workflow ID, go back to the 'submit jobs' tab, and put that ID into the 'troubleshoot workflow' box.  Work from the bottom up of that output to see where the errors were.
+
+If the workflow did start running but did not complete, there may be some helpful info on which steps failed in that 'track jobs' tab, or it might be easier to go to the workflow output dir and look at the stderr etc files there
+
+Broad uses the google cloud - some of their WDL files have a few google-specific things in them
+
+If some tasks of a workflow fail, resubmit it and Cromwell SHOULD figure out which things to rerun and which to copy from before. Default we think is to make soft links? Cache or not?  
+
+Hutch github - Amy's workflows all have 'wdl' in their name.  Amy also made a bunch of docker containers that are set up for common tasks - useful for reproducibility or for when I transition to using AWS.
+
+Workflow options - see examples folder. E.g. caching or not.
+
+Vocab:  when we scatter, each job is a 'shard'
+
+In WDL code:   
+`~{variable}` is a WDL variable (as opposed to a shell variable)
+
+see 'Output copying' in [Cromwell docs](https://cromwell.readthedocs.io/en/stable/) for how to copy the files we want as final output from /fh/scratch to a specified place in /fh/fast
+
+The workflow block has an `output` section at the end that specifies which files are final output.  Each task also has an `output` section.
