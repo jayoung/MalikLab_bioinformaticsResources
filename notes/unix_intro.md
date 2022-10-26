@@ -89,7 +89,9 @@ You can save those outputs to files using `>` and similar characters. Examples:
 
 `ls > myListFiles.txt 2> myStdErr.txt` - puts stdout into myListFiles.txt and stderr into myStdErr.txt.  (`ls` is a bad example for this because it does not produce any stderr)
 
-`ls > allScreenOutput.txt 2>&1`  - puts both stderr and stdout into allScreenOutput.txt  (`ls` is a bad example for this because it does not produce any stderr)
+`ls > allScreenOutput.txt 2>&1`  - puts both stderr and stdout into allScreenOutput.txt  (`ls` is a bad example for this because it does not produce any stderr).  
+
+More detail: The `2>&1` (means "Redirect stderr to where stdout is currently going") must come AFTER the initial `> file.txt`. "In other words, the `&1` reuses the file descriptor which stdout currently uses."
 
 
 ## Some keyboard shortcuts
