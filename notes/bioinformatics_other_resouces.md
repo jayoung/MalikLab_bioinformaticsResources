@@ -14,7 +14,7 @@ Much more documentation on the Hutch resources [here](https://sciwiki.fredhutch.
 
 # RNA-seq
 
-Melbourne Bioinformatics [RNA-seq tutorial](https://www.melbournebioinformatics.org.au/tutorials/tutorials/rna_seq_dge_basic/rna_seq_basic_tutorial/) (Risa recommends it)
+Risa recommends this [RNA-seq tutorial](https://www.melbournebioinformatics.org.au/tutorials/tutorials/rna_seq_dge_basic/rna_seq_basic_tutorial/) from Melbourne Bioinformatics
 
 # Other lists of resources
 
