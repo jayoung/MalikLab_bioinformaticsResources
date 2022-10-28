@@ -28,7 +28,7 @@ I usually have in-person chats to help you learn these things, and we use these 
 
 There's a lot of material out there to help you learn bioinformatics, a lot of it better than anything I could put together.  
 
-Some suggestions for tutorials, etc are [here](notes/bioinformatics_other_resouces.md) - let me know if you have any you'd like to add.
+Some suggestions for tutorials, etc are [here](notes/bioinformatics_other_resources.md) - let me know if you have any you'd like to add.
 
 Join the Hutch FH-Data/FH-BCR Slack workspace (old/new names for the same thing) - see instructions on joining [here](https://sciwiki.fredhutch.org/scicomputing/reference_training/). Once you're in, browse the channels for groups that interest you.   It's a great place to ask for help on anything from R coding to analysis strategies - very supportive community.
 
