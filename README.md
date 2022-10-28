@@ -24,6 +24,13 @@ I usually have in-person chats to help you learn these things, and we use these 
 - Some [bioinformatics tools](notes/bioinformatics_tools.md) you can use via the command-line, especially blast and phyml.
 - Some old notes on tools to analyze [deep sequencing data](notes/deep_sequencing.md). I think you'll get better information elsewhere.
 
+# Other resources
+
+There's a lot of material out there to help you learn bioinformatics, a lot of it better than anything I could put together.  
+
+Some suggestions for tutorials, etc are [here](notes/bioinformatics_other_resouces.md) - let me know if you have any you'd like to add.
+
+
 # PAML
 
 We have a Dropbox folder called `PAML_class` with documents to help teach/learn PAML. If you don't already have access, let me know.   I might transfer those materials here at some point - will see how it goes sharing the other notes first. 
