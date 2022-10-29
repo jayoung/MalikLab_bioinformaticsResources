@@ -22,7 +22,7 @@ for(i in 1:length(bitsToCombine)) {
     howManyOptions <- length(thisBitOptions)
     expectedNumCombos <- expectedNumCombos * howManyOptions
     howManyCombosExistAlready <- length(sequenceCombos)
-    cat("round",i,"repeating the initial list",howManyOptions,"times and adding these choices",thisBitOptions,"\n")
+    cat("round",i,"repeating the current list",howManyOptions,"times and adding these choices",thisBitOptions,"\n")
     
     # multiply the existing combos
     sequenceCombos <- rep(sequenceCombos, howManyOptions)
