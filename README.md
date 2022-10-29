@@ -40,4 +40,4 @@ We have a Dropbox folder called `PAML_class` with documents to help teach/learn 
 
 These are notes for myself - I haven't written these in a way that will be clear to others, but you're welcome to look through them if you like.
 
-- using [docker containers and singularity](janets_NOTES_forMyself/docker_singularity_container_NOTES.md  )
+- using [docker containers and singularity](janets_NOTES_forMyself/docker_singularity_container_NOTES.md)
