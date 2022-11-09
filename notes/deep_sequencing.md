@@ -12,7 +12,8 @@ show file size(s) in Mb:
 show space left on the disk you're working on
 `df -k | grep 'jayoung'`
 
-# quality filtering, trimming, etc
+# understanding read quality
+
 
 ## FASTQC
 http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
@@ -34,14 +35,24 @@ example, running on all the R2 files in a specified directory to create a single
 fastqc --casava --outdir Sample_1_Control_DNA/R2 --format fastq --threads 3 --contaminants /fh/fast/malik_h/user/jayoung/general_notes/NextGenSeqStuff/adapterSequences/variousAdaptersBothStrands.fa.txt ../FASTQ_files/Sample_1_Control_DNA/*R2*gz
 ```
 
+# quality filtering, trimming, etc
+
+There are many tools for this, e.g.:
+  - NGmerge
+  - [TrimGalore](https://github.com/FelixKrueger/TrimGalore/blob/master/Docs/Trim_Galore_User_Guide.md#step-1-quality-trimming)
+  - `fastx_trimmer` from the [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/commandline.html) from Greg Hannon's lab
+  - [Cutadapt](https://cutadapt.readthedocs.org/en/latest/guide.html)
+
+More notes below.
+
 ## filter out read pairs that failed the Illumina chastity filter
 
 Usually the files we get from the sequencing facility ALREADY have failed reads removed. But not always.
 
-I wrote my own R script to do this, as I couldn't find an obvious application I could download to do it. 
+I wrote my own R script to do this, as I couldn't find an obvious application I could download to do it at the time.  Years have passed since then - I bet there's a tool out there now.
 
 The actual work is done by an R script, found here:
-~/malik_lab_shared/Rscripts/filterPairedEndReadsIlluminaFilter.R
+`~/malik_lab_shared/Rscripts/filterPairedEndReadsIlluminaFilter.R`
 
 If you wanted to run that R script on a single pair of reads, you could do this:
 ```
@@ -65,32 +76,33 @@ If something goes wrong, error messages in files (b) and/or (c) should help figu
 https://cutadapt.readthedocs.org/en/latest/guide.html
 
 Show usage and arguments:
-cutadapt -help
+`cutadapt -help`
 
 example commands to trim paired end reads:
 - trims based on quality (-q 10) and two adapter sequences that might be on the 3; end
 - throws out read pairs less than 20bp long after trimming
 
 first trim based on the forward reads, storing fastq output in temporary files, storing screen output in the cutadaptinfo.txt file:
-cutadapt -q 10 a1=adapter1 -a a2=adapter2 --minimum-length 20 --paired-output tmp.2.fastq -o tmp.1.fastq reads.1.fastq reads.2.fastq > cutadaptinfo.txt
+
+`cutadapt -q 10 a1=adapter1 -a a2=adapter2 --minimum-length 20 --paired-output tmp.2.fastq -o tmp.1.fastq reads.1.fastq reads.2.fastq > cutadaptinfo.txt`
 
 then trim based on the reverse reads, using the temporary files as input, concatenating screen output to the cutadaptinfo.txt file:
-cutadapt -q 15 a1=adapter1 -a a2=adapter2 --minimum-length 20 --paired-output trimmed.1.fastq -o trimmed.2.fastq tmp.2.fastq tmp.1.fastq >> cutadaptinfo.txt
+`cutadapt -q 15 a1=adapter1 -a a2=adapter2 --minimum-length 20 --paired-output trimmed.1.fastq -o trimmed.2.fastq tmp.2.fastq tmp.1.fastq >> cutadaptinfo.txt`
 
 perhaps use my script to call cutadapt more easily on multiple files, e.g.
-runCutadapt.bioperl *R1*.fastq.gz
+`runCutadapt.bioperl *R1*.fastq.gz`
 
 ## trim exact basepair amounts off fastq reads using fastx_trimmer
 http://hannonlab.cshl.edu/fastx_toolkit/commandline.html
 
 Show usage and arguments:
-fastx_trimmer -help
+`fastx_trimmer -help`
 
 e.g. to trim off the first 10bp of the read (keeps 11-end):
-fastx_trimmer -f 11 -i SRR826809_1.fastq -z -o SRR826809_1.trim11toEnd.fastq.gz
+`fastx_trimmer -f 11 -i SRR826809_1.fastq -z -o SRR826809_1.trim11toEnd.fastq.gz`
 
 or, (I think) using a gzipped input file:
-zcat SRR826809_1.fastq.gz | fastx_trimmer -f 11 -z -o SRR826809_1.trim11toEnd.fastq.gz
+`zcat SRR826809_1.fastq.gz | fastx_trimmer -f 11 -z -o SRR826809_1.trim11toEnd.fastq.gz`
 
 
 # Mapping Illumina reads

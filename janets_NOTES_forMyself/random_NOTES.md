@@ -4,6 +4,11 @@ github:  pull requests
 
 try git kraken as alternative to git desktop?  
 
+# programming philosophies
+
+['Shaving the yak'](https://www.pipinghotdata.com/posts/2022-11-02-regular-intentional-and-time-boxed-yak-shaving/)
+
+
 # REST API
 
 API = application programming interface 
