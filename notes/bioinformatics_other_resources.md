@@ -48,3 +48,7 @@ EBI's [training materials](https://www.ebi.ac.uk/training/on-demand)
 
 [RuneStone Academy](https://runestone.academy) - open source textbooks. Don't know anything about the quality.
 
+# More detailed R stuff
+
+[regexpr](https://regexr.com) website - helps figure out regular expressions
+
