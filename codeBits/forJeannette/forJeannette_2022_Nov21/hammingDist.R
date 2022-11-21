@@ -6,7 +6,10 @@ seqs1 <- c("CNIVPLN",
           "CNIVPWN")
 seqs2 <- AAStringSet(seqs1)
 
-##### get all pairwise hamming distances
+### one versus the rest
+neditAt(seqs2[[1]], seqs2, at=1)
+
+### all versus all
 hammingMatrix <- sapply( seqs2, function(x) {
     neditAt(x, seqs2, at=1)
 } )
