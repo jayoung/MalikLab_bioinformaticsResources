@@ -1,28 +1,10 @@
-# Useful links
-
-Shiny job submission/monitoring [dashboard](https://cromwellapp.fredhutch.org) (current db ID `gizmok122:46707`)
-
-More instructions on starting the server, and example jobs [diy-cromwell-server](https://github.com/FredHutch/diy-cromwell-server)
-
-My cromwell home dir: `~/FH_fast_storage/cromwell-home`
-
-Cromwell scratch dir: `/fh/scratch/delete90/malik_h/jayoung`
-
-[OpenWDL](https://openwdl.org) has links to tutorials
-
-[Cromwell docs](https://cromwell.readthedocs.io/en/stable/) - Amy says some stuff there is out of date
-
-# questions for amy
-
-- how to run workflows
-- how to troubleshoot - where are the errors?
-- SNP call design
-
 # Notes
 
-I'm trying the instructions for a [diy-cromwell-server](https://github.com/FredHutch/diy-cromwell-server)
+October 2022
 
-One time, I create a database to store info from my cromwell server
+Trying the original instructions for a [diy-cromwell-server](https://github.com/FredHutch/diy-cromwell-server).  As of Nov 2022, [newer (better?) instructions](https://hutchdatascience.org/FH_WDL101_Cromwell/introduction.html) exist - see [WDLworkflows_tryIt_v2.md](janets_NOTES_forMyself/WDLworkflows_tryIt_v2.md).
+
+A one time only thing: I first create a database to store info from my cromwell server
 
 I use the Hutch [DB4SCI interface](https://mydb.fredhutch.org/index) described [here](https://sciwiki.fredhutch.org/scicomputing/store_databases/#db4sci--previously-mydb) and I select these:
   - create DB container (MariaDB 10.3)
@@ -54,7 +36,7 @@ create database jayoungWDL;
 
 ```
 
-
+(I have since deleted this git clone and made a new one)
 ```
 cd ~/FH_fast_storage/cromwell-home
 
