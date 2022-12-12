@@ -192,37 +192,38 @@ If you want to get fancy, and run the same command on a set of inputs, you might
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=0-04:00:00
-#SBATCH --array=[0-8]%9 # how many jobs and batch size
+#SBATCH --time=0-08:00:00
+#SBATCH --array=[0-2]%3 
 #SBATCH --output=slurm.%J.out
-#SBATCH --job-name="fastqDump"
+#SBATCH --job-name="testSlurm"
 
-ACCESSIONS=(SRR2927735 SRR2927736 SRR2927737 SRR2927738 SRR2927739 SRR2927740 SRR2927741 SRR2927742 SRR292
-7743)
+#### load module(s)
+source /app/lmod/lmod/init/profile
+module load SAMtools/1.11-GCC-10.2.0
 
-CACHE="/fh/fast/malik_h/grp/public_databases/NCBI/SRA/cache/sra"
-SINGLE_ACCESSION="${ACCESSIONS[$SLURM_ARRAY_TASK_ID]}"
-SRAFILE="${CACHE}/${ACCESSIONS[$SLURM_ARRAY_TASK_ID]}.sra"
+#### define sample names
+SAMPLE_IDS=(sample1 sample2 sample3)
 
-echo "My accession: ${SINGLE_ACCESSION}"
-if test -f "${SRAFILE}"; then
-    echo "$SRAFILE already exists"
-else
-    echo ""
-    echo "running prefetch"
-    prefetch ${SINGLE_ACCESSION}
-fi
+#### choose sample for each job
+SINGLE_ID="${SAMPLE_IDS[$SLURM_ARRAY_TASK_ID]}"
 
-echo ""
-echo "running fastq-dump"
-fastq-dump --split-spot --split-e --gzip  ${SRAFILE}
+#### specify input/output file names
+BAM_FILE="${SINGLE_ID}.bam"
+INDEX_FILE="${SINGLE_ID}.bam.bai"
+STATS_FILE="${SINGLE_ID}.bwa.flagstats"
+
+#### run commands
+samtools index ${BAM_FILE}
+samtools flagstat ${BAM_FILE} > ${STATS_FILE}
 ```
 
-The lines beginning `#SBATCH` specify resources to request for each sbatch job.  
+A version of that script with detailed comment lines to help you understand it is (here)[example_scripts/simple_slurm_script.sh]. 
 
-The other words in capital letters are *variables* that we define using the = symbol.  Once we define variables, we can use their values with `${}` notation.
+Some key points:
+- the lines beginning `#SBATCH` specify resources to request for each sbatch job.  
+- the other words in capital letters are *variables* that we define using the = symbol.  Once we've defined variables, we can use their values with `${}` notation.
+- notice that `SAMPLE_IDS` has paretheses and specifies several items - it's an array, and we can run some commands on each item in the array, using the `SINGLE_ID` variable.
 
-Notice that `ACCESSIONS` has paretheses and specifies several items - it's an array, and we can run some commands on each item in the array, using the `SINGLE_ACCESSION` variable.
 
 
 # Additional notes for PC users
