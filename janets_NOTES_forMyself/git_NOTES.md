@@ -83,3 +83,9 @@ Assuming the fork exists, push/pull/status etc will now look at my fork not the 
 
 I can use a button on the github website from my own fork ([example](https://github.com/jayoung/FH_WDL101_Cromwell.git)) to submit a pull request. It's under the 'Contribute' dropdown menu.
 
+## Git and Rstudio
+
+There's a git/SVN panel in preferences. I think you need to be working in an "Rproject" to use git (?).  Can start a new Rproject by letting Rstudio clone a repo.  Can also start a new repo for an Rproject from Rstudio.  I did NOT see a way to associate an existing Rproject with an existing repo.  I already had git installed on the mac and linked to my github account, and Rstudio somehow worked with my stored credentials (at laest on the work computer).
+
+See docs [here](https://support.posit.co/hc/en-us/articles/200532077)
+
