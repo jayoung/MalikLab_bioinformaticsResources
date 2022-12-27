@@ -29,3 +29,7 @@ Scripts should be specified as prerequesites in a Makefile as well as data and o
 See `~/FH_fast_storage/general_notes/computing/nextflow_test/nextflow_NOTES_2022.md` and other files there
 
 See also `~/FH_fast_storage/getSameSpeciesGenomicEquivalent` where I'm trying to use nextflow in a real project
+
+# WDL
+
+See `~/FH_fast_storage/cromwell-home/janet-learning-WDL`
