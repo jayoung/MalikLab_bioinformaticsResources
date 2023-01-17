@@ -186,7 +186,7 @@ You can also do this to cancel all your running jobs - e.g. to cancel all jobs f
 
 # Running a bunch of sbatch jobs, on multiple samples
 
-If you want to get fancy, and run the same command on a set of inputs, you might want to set up a **"slurm script"** that will look something like this:
+If you want to get fancy, and run the same command on a set of inputs, you might want to set up a **"slurm script"** (a.k.a. **"sbatch script") that will look something like this:
 
 ```
 #!/bin/bash
@@ -217,7 +217,9 @@ samtools index ${BAM_FILE}
 samtools flagstat ${BAM_FILE} > ${STATS_FILE}
 ```
 
-A version of that script with detailed comment lines to help you understand it is (here)[example_scripts/simple_slurm_script.sh]. 
+A version of that script with detailed comment lines to help you understand it is [here](example_scripts/simple_slurm_script.sh). 
+
+To run an slurm script: `sbatch myScript.sbatch`
 
 Some key points:
 - the lines beginning `#SBATCH` specify resources to request for each sbatch job.  
