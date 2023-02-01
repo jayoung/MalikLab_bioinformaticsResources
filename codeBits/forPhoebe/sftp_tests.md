@@ -1,24 +1,25 @@
 # sftp 
 
-`sftp` [manpage](https://linux.die.net/man/1/sftp)
-
-There are various ways to use sftp
+Here's the [documentation](https://linux.die.net/man/1/sftp) for `sftp`.  There are various ways to use it:
 
 ## 1. basic interactive usage
 
-`sftp user@host`.  
+`sftp remote.host.name` or `sftp user@remote.host.name`
 
-It should ask for a password, then you use commands like `cd`, `mget` and `get` interactively.
+It should ask for a password, and once you're in, youcan  use commands like `cd`, `mget` and `get` interactively.
 
-This should work fine, and will be easy, but will require you to enter user name and password, making it harder to parallelize using sbatch.
+This should work fine. However, because it requires you to enter user name and password, it'll be harder to parallelize using sbatch scripts.
 
 ## 2. set up password-less access
 
-In order to run `sftp` in batch mode, we first need to set up password-free access to the remote machine. This is a one-time thing for each remote machine. I think we do that using the [`ssh-keygen`](https://linux.die.net/man/1/ssh-keygen) command? There are two steps:
-- generate an ssh key pair - see these [instructions](https://linuxiac.com/generate-ssh-key-pair/) 
-- put the public key on the remote machine - see these [instructions](https://linuxiac.com/ssh-login-without-password/). 
+In order to run `sftp` in batch mode, we first need to set up password-free access to the remote machine. This is a one-time thing for each remote machine. I think we do that using the [`ssh-keygen`](https://linux.die.net/man/1/ssh-keygen) command, using two steps:
+- generate an ssh key pair - see these [instructions](https://linuxiac.com/generate-ssh-key-pair/). This creates two files, a private key file (`~/.ssh/id_rsa`) and a public key file (`~/.ssh/id_rsa.pub`) 
+- put the public key on the remote machine - see these [instructions](https://linuxiac.com/ssh-login-without-password/)
 
-Once that's done, we should be able to connect without using a username/password.
+Perhaps we test whether that worked, using a command like `sftp remote.host.name`.
+
+Once that's done, we should be able to connect to the remote server without using a username/password. 
+
 
 ### 2a. use a batchfile
 
