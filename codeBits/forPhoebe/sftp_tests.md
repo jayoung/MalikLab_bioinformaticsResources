@@ -5,6 +5,14 @@ Genewiz/Azenta provide Illumina sequencing services, and they provide the data v
 
 It turns out the answer is to use the Hutch's [Motuz](https://motuz.fredhutch.org) file transfer service.  Simple website that allows transfers via many protocols, including sftp, directly from external site onto `/fh/fast`.   It is working OK-ish, although it seems like there are sporadic authentication failures.  Might be due to trying to have too many connections open at once. It can handle some level of simultaneous downloads, but perhaps not as many as we asked for.  
 
+Connection details for Motuz:
+type=SFTP
+host=sftp.genewiz.com
+initial path = /genewiz-us-ngs-sftp/phoebohsieh_gmail
+username = phoebohsieh_gmail
+protocol = password
+password = phoebe's password supplied by genewiz
+
 
 ## command-line sftp
 
