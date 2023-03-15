@@ -65,6 +65,56 @@ docker system df
 docker rmi <the-image-id>
 ```
 
+# Using containers on rhino/gizmo
+
+Rhino/gizmo don't allow docker containers. We first have to convert the docker image to a singularity/apptainer image.
+
+Apptainer is the same thing as singularity, just a newer version. In Feb 2023 Dan told me "I did experience some problems using the latest version (and reported them) but 1.0.1 seems to work fine"
+
+Example:
+```
+cd ~/FH_fast_storage/paml_screen/pamlWrapper/buildContainer
+
+module purge
+module load Apptainer/1.1.6
+
+apptainer build paml_wrapper-v1.3.5.sif docker://jayoungfhcrc/paml_wrapper:version1.3.5
+```
+A file appears called paml_wrapper-v1.3.5.sif - this file can be used just like a docker image. Example, to run a command within the container (`--cleanenv` ensures the environment outside the container isn't used within the container):
+```
+singularity exec --cleanenv paml_wrapper-v1.3.5.sif /pamlWrapper/scripts/pw_testScript.bioperl
+```
+
+That can go in a shell script for use in sbatch.
+
+Or to get a shell in the container:
+```
+apptainer run --cleanenv paml_wrapper-v1.3.5.sif
+```
+my rhino home dir (`/home/jayoung`) is available within the container but `/fh/fast` is not.
+
+```
+module purge
+```
+
+# Understanding containers, kernels, operating systems
+
+The container still runs on the kernel of whichever machine it's running on: that's what `uname -a` will show from within the container.  
+
+If we're running on a Mac or Windows computer, the computer needs a virtual machine in order to make the container work, rather than running directly on the Mac kernel, so `uname -a` shows something like this:
+```
+root@74ceeece7d11:/# uname -a
+Linux 74ceeece7d11 5.15.49-linuxkit #1 SMP Tue Sep 13 07:51:46 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+```  
+
+On top of the kernel, there's an operating system (OS).  To see what OS we're using, do this: `cat /etc/*-release`.  That will be whatever was the base OS used when building the docker image, and is often different from the OS used outside the container. 
+
+Example:  inside paml_wrapper-v1.3.5 container, `cat /etc/*-release` includes the info `DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"` (whether I'm running it via Docker on my Mac, or via apptainer/singularity on gizmo/rhino)/
+
+Outside the container, on gizmo/rhino, `cat /etc/*-release` includes `DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"` (and I can't even run the cat command on the mac, because those release files don't exist)
+
+
+
 # public images
 
 ```
