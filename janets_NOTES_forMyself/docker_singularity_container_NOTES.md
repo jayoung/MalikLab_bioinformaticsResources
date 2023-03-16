@@ -93,6 +93,17 @@ apptainer run --cleanenv paml_wrapper-v1.3.5.sif
 ```
 my rhino home dir (`/home/jayoung`) is available within the container but `/fh/fast` is not.
 
+
+To get a shell in the container, mounting PWD and starting the shell within it:
+```
+apptainer shell --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif
+```
+
+To run a command within the container, mounting PWD:
+```
+apptainer exec --cleanenv --bind $(pwd):/mnt -H /mnt /fh/fast/malik_h/grp/malik_lab_shared/singularityImages/paml_wrapper-v1.3.6.sif /pamlWrapper/scripts/pw_makeTreeAndRunPAML.pl CENPA_primates_aln2a_only5seqs.fa 
+```
+
 ```
 module purge
 ```
