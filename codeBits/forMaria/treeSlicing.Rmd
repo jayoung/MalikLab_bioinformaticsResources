@@ -10,16 +10,17 @@ always_allow_html: true
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Load a test tree and show some basic information on it. It's an object of class `phylo`.
-
-```{r load packages and data, include=FALSE}
+```{r load packages, results=FALSE, warning=FALSE, message=FALSE, error=FALSE}
 library(tidyverse)
-library(phytools)
+library(phytools)    ## for the mammal.tree dataset
 library(ggtree)
 library(tidytree)
 library(dendextend)  ## for a cutree function that works on mammal.tree
-# library(TreeTools)
+```
 
+Load a test tree and show some basic information on it. It's an object of class `phylo`.
+
+```{r load data}
 data(mammal.tree) #  load example tree from phytools
 
 mammal.tree

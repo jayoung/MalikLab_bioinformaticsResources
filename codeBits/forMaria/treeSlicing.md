@@ -3,8 +3,30 @@ test_tree_thinning
 Janet Young
 2023-10-27
 
+``` r
+library(tidyverse)
+library(phytools)    ## for the mammal.tree dataset
+library(ggtree)
+library(tidytree)
+library(dendextend)  ## for a cutree function that works on mammal.tree
+```
+
 Load a test tree and show some basic information on it. It’s an object
 of class `phylo`.
+
+``` r
+data(mammal.tree) #  load example tree from phytools
+
+mammal.tree
+```
+
+    ## 
+    ## Phylogenetic tree with 49 tips and 48 internal nodes.
+    ## 
+    ## Tip labels:
+    ##   U._maritimus, U._arctos, U._americanus, N._narica, P._lotor, M._mephitis, ...
+    ## 
+    ## Rooted; includes branch lengths.
 
 Plot the tree (plot function comes from the ape package, I think - see
 ?plot.phylo).
