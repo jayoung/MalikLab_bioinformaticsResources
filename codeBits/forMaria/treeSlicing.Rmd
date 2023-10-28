@@ -1,0 +1,124 @@
+---
+title: "test_tree_thinning"
+author: "Janet Young"
+date: "`r Sys.Date()`"
+output: github_document
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load a test tree and show some basic information on it. It's an object of class `phylo`.
+
+```{r load packages and data, include=FALSE}
+library(tidyverse)
+library(phytools)
+library(ggtree)
+library(tidytree)
+library(dendextend)  ## for a cutree function that works on mammal.tree
+# library(TreeTools)
+
+data(mammal.tree) #  load example tree from phytools
+
+mammal.tree
+```
+
+Plot the tree (plot function comes from the ape package, I think - see ?plot.phylo). 
+
+```{r simple tree plot, fig.height=5, width=5}
+plot(mammal.tree, cex=0.5)
+add.scale.bar()
+```
+
+
+We'll use the `cutree` function to slice the tree into some number of clusters (5 in this example): it returns a vector of cluster IDs for each taxon, but I turn that into a tibble.
+
+```{r define clades}
+cladeIDs <- dendextend::cutree(mammal.tree, k=5) %>% 
+    as_tibble(rownames="taxon") %>% 
+    dplyr::rename(clusterID=value) %>% 
+    mutate(clusterID=factor(paste("cluster_",clusterID,sep="")))
+
+cladeIDs %>% 
+    head()
+```
+Tabulate cluster membership
+```{r tabulate cluster membership}
+cladeIDs %>% 
+    count(clusterID)
+```
+
+`ggtree` is a nice package for tree plotting. The [ggtree 'book' website](https://yulab-smu.top/treedata-book/index.html) is helpful.
+
+Here's that simple plot again using ggtree:
+```{r siple ggtree plot, fig.height=5, width=5}
+ggtree(mammal.tree) +
+    geom_tiplab(size=2.5) +
+    hexpand(0.5)
+```
+
+But ggtree has lots of cool ways to display more info about the tree.
+
+Let's say we have info on the taxa in a tree, and maybe we've stored it in a tibble. To use ggtree's plotting functions, we want to make a single object that contains the tree and the tibble together - that will be an object of class `treedata` (defined by the `tidytree` package)
+
+Maybe there's an easier way to do that, but I wrote a function called `addInfoToTree` to merge tree and taxon info that includes a couple of sanity checks.  `left_join` is the function that actually merges the tree and the information. 
+
+```{r define addInfoToTree function}
+###### addInfoToTree - make a treedata object by combining a phylo object with a tibble that has info on the tips
+addInfoToTree <- function(tree, info, colnameForTaxonLabels="taxon") {
+    ##### get info in same order as taxa in the tree:
+    if (! colnameForTaxonLabels %in% colnames(info)) {
+        stop("\n\nERROR - there should be a ",colnameForTaxonLabels," column in the info table\n\n")
+    }
+    ## check all taxa are in the info table
+    tipLabelsInInfoTable <- info %>% select(all_of(colnameForTaxonLabels)) %>% deframe()
+    if(length(setdiff(tree$tip.label, tipLabelsInInfoTable))>0) {
+        stop("\n\nERROR - there are taxon labels in the tree that are not in the info table\n\n")
+    }
+    # now get info
+    desiredRows <- match(tree$tip.label, tipLabelsInInfoTable)
+    info_treeorder <- info[desiredRows,] 
+    # add info to tree
+    tree_withInfo <-  left_join(
+        tree, 
+        info_treeorder ,
+        by=c("label"=colnameForTaxonLabels))
+    return(tree_withInfo)
+}
+
+```
+
+Combine the mammal.tree with the cladeID tibble we made using cutree
+
+```{r use addInfoToTree}
+mammal.tree.withInfo <- addInfoToTree(mammal.tree, cladeIDs)
+```
+
+Plot the tree again and color the clades
+```{r plot tree with colored clades, fig.height=5, width=5}
+ggtree(mammal.tree.withInfo,aes(color=clusterID) ) +
+    geom_tiplab(aes(color=clusterID), size=2.5) + 
+    hexpand(0.5) +
+    theme(legend.position = "top")
+```
+
+
+We could randomly choose one taxon per clade like this:
+```{r choose one taxon per clade}
+cladeMembersList <- split( cladeIDs$taxon, cladeIDs$clusterID)
+oneMemberPerClade <- sapply(cladeMembersList, sample, size=1)
+```
+
+And we can update the info table associated with the tree to show which taxa we chose, and label those tips on the tree plot:
+```{r label chosen taxa, fig.height=5, width=5}
+mammal.tree.withInfo <- mammal.tree.withInfo %>% 
+    mutate( chosen= label %in% oneMemberPerClade) 
+
+ggtree(mammal.tree.withInfo,aes(color=clusterID) ) +
+    geom_tiplab(aes(color=clusterID), size=2.5)+ 
+    geom_tippoint(aes(subset= chosen), size=3) +
+    hexpand(0.5) +
+    theme(legend.position = "top")
+```

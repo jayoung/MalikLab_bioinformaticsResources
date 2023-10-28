@@ -6,6 +6,8 @@ A repository to share bioinformatics teaching materials with the Malik lab.
 
 Available via github, [here](https://github.com/jayoung/MalikLab_bioinformaticsResources).
 
+My own local copy is in `/fh/fast/malik_h/user/jayoung/general_notes/computing/MalikLab_bioinformaticsResources`
+
 WARNING - some of these files contain notes I put together for an individual project, some a long time ago. In many cases they're probably out-of-date: there might be better ways to do things now.
 
 # Requests/suggestions/feedback
