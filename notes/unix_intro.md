@@ -39,6 +39,24 @@ change working directory to the tetrahymena/annotations dir: `cd tetrahymena/ann
 
 use the `resize` command, if you resize the window after logging in and things look odd
 
+## Slightly less basic unix commands:
+
+### `mv` to move or rename files
+
+Examples:
+- `mv oldfilename.txt newfilename.txt` - rename a file  
+- `mv file1.txt file2.txt my_folder_to_move my_destination_folder` - move one or more files into a folder  
+
+`mv` can be a bit confusing, as it can move files OR rename them, depending on how you use it:
+- If the last part of the command is the name of an existing folder (e.g. `my_destination_folder` in the second example above), `mv` will move any other files/folders specified in the command into that folder.
+- If the last part of the command doesn't yet exist (e.g. `newfilename.txt` in the first example above) `mv` will rename the file
+
+### `cp` to copy files
+Examples:
+- `cp oldfilename.txt newfilename.txt` - make a new copy of the file, with a different name
+- `cp oldfilename.txt my_destination_folder` - make a new copy of the file, within a different folder (if you don't specify a file name within that folder, the new file will have the same file name as the original)
+
+
 ## Adding options to commands
 
 Many commands have options that change their behavior. A google search can tell you more, especially if you include the word `man` (for manual) and `unix` or `linux` in your search terms  (e.g. search with `man ls unix`).
