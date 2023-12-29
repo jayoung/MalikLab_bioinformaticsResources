@@ -119,6 +119,7 @@ fi
 More useful packages:
 ```
 pip install ipykernel # for python notebooks
+pip install notebook # for python notebooks
 pip install pandas # to data tables
 pip install matplotlib # for graphs
 ```
