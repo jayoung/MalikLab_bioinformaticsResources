@@ -142,10 +142,12 @@ gr_GRlist
     ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 
 Sometimes I want to use the name of each element in the list to add it
-to the column names, like this:
+to the column names, like this. Because I’m “applying” across the NAMES
+(class=character) not the GRangesList I can’t use endoapply, because it
+will want to return an object of class character. So I use lapply and
+turn it back into GRangesList afterwards
 
 ``` r
-# because I'm running "apply" on the NAMES (class=character) not the GRangesList I can't use endoapply, because it will want to return an object of class character. So I use lapply and turn it back into GRangesList afterwards
 gr_GRlist_new <- lapply(names(gr_GRlist), function(x){
     this_gr <- gr_GRlist[[x]]
     colnames(mcols(this_gr))[1] <- paste(x,"_score",sep="")
@@ -155,7 +157,10 @@ gr_GRlist_new <- lapply(names(gr_GRlist), function(x){
 names(gr_GRlist_new) <- names(gr_GRlist)
 
 
-# turn it back into GRangesList . turns out this tries to make the colnames the same across all list elements. might result in extra columns. If that's a problem, we can try to figure out a way to suppress that  
+# turn it back into GRangesList . 
+# turns out this tries to make the colnames the same across all list elements.
+# might result in extra columns. 
+# If that's a problem, we can likely figure out a way to suppress that 
 gr_GRlist_new2 <- GRangesList(gr_GRlist_new)
 
 gr_GRlist_new2
