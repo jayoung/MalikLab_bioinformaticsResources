@@ -13,7 +13,7 @@ myplot <- ggplot(mtcars, aes(mpg, wt, shape = factor(cyl)))
 myplot
 ```
 
-![](ggplot_layers_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](ggplot_troubleshooting_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 add two geom_point layers
 
@@ -24,7 +24,7 @@ myplot <- myplot +
 myplot
 ```
 
-![](ggplot_layers_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](ggplot_troubleshooting_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 mess with aesthetics (here I didn’t save the updated plot but you
 could). `theme_classic()` applies a whole bunch of changes
@@ -33,7 +33,7 @@ could). `theme_classic()` applies a whole bunch of changes
 myplot + theme_classic()
 ```
 
-![](ggplot_layers_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](ggplot_troubleshooting_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 you can also change individual plot elements one at a time. google
 searches are your friend for this (also `?theme`)
@@ -46,7 +46,7 @@ myplot +
     theme(axis.line = element_line(colour = "black"))
 ```
 
-![](ggplot_layers_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](ggplot_troubleshooting_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 # trying to speed things up
 
@@ -192,7 +192,7 @@ plot_v2 <- ggplot(binnedCounts_allTypes,
 plot_v2
 ```
 
-![](ggplot_layers_files/figure-gfm/plot_v2-1.png)<!-- -->
+![](ggplot_troubleshooting_files/figure-gfm/plot_v2-1.png)<!-- -->
 
 ``` r
 ## Grant's original code
