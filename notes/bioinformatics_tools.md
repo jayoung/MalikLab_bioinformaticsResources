@@ -30,8 +30,27 @@ makeblastdb -in myProtSeqs.fa -dbtype prot -parse_seqids
 blastp -db myProtSeqs.fa -query myProtQuerySeq.fa -out myProtQuerySeq.fa.blastpMyProtSeqs
 
 tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblastn
+```
 
-tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblastnPrimate -entrez_query 'human[Organism]'
+## To blast only some species (remote)
+
+Use an entrez-style query via the `-entrez_query` option: e.g. you can use common or latin name of a species or large taxonomic grouping. 
+
+You can use [NCBI's taxonomy database](https://ncbi.nlm.nih.gov/taxonomy) to help figure out the taxonomic terms you're looking for.  
+
+You can also test whether your entrez query is a good one by pasting the entire query into the [nucleotide](https://ncbi.nlm.nih.gov/nucleotide) or [protein](https://ncbi.nlm.nih.gov/protein) database search bars and seeing whether there are a reasonable number of matches, and whether the matches seem like what you wanted.
+```
+# human using common name
+tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'human[Organism]'
+
+# human using latin name
+tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'homo sapiens[Organism]'
+
+# rodents
+tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'rodentia[Organism]'
+
+# non-human simian primates:
+tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'Simiiformes[Organism] NOT homo sapiens[Organism]'
 ```
 
 ## Blast output formats
