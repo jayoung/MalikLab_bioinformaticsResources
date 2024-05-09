@@ -1,0 +1,148 @@
+#!/bin/bash
+
+# Instructions
+# cd into your alphafold directory
+# cp your fasta file to that directory (format should be yoursequence.fasta)
+# run this interactive program
+
+
+#last updated: 2024 APR 25
+
+#thank you to the campbell lab, yasu, nic lehrbach, and richard adeyemi for beta testing
+
+#fastafile=$1
+
+echo ""
+echo ""
+echo "##############################################################################"
+echo "#                                                                            #"
+echo $'\e[1;35m'\#  \ Welcome to the Campbell lab implementation of AlphaFold-2.3.1 on RHINO\!  \ \ \#  $'\e[0m'
+echo "#                                                                            #"
+echo "##############################################################################"
+echo " "
+echo "This is a very simplified implementation of alphafold."
+echo "If you want to do complicated things or have specific input/output directories,"
+echo "it is not recommended to use this "
+echo " "
+echo " "
+echo $'\e[1;32m' INSTRUCTIONS, please read!! $'\e[0m' 
+echo " "
+echo "1. cd into the directory where you want your output to be "
+echo "2. put your .fasta file in this directory "
+echo "3. run this program (./share_run_alphafold_cluster_v0.3)"
+echo "4. answer the green prompts"
+echo "5. alphafold will run"
+echo " "
+echo " "
+sleep 1s
+echo "If you are running mulitmer, put all monomers in the same fasta file."
+echo "Example: ITGAM_ITGB2.fasta (file contains sequences for ITGAM and ITGB2 each with a >title and sequence)"
+echo " "
+echo "If you want to run multiple sequentially, list all files separating via a comma."
+echo "Example: ICAM1.fasta,SINV.fasta,talin.fasta "
+echo " "
+echo "For more examples, see here: https://github.com/deepmind/alphafold#running-alphafold"
+echo " "
+echo " "
+echo $'\e[1;32m' More about the program $'\e[0m' 
+echo "This program will run in your current directory, and submit a single GPU alphafold job to the cluster."
+echo "(You do NOT need to start an interactive session)"
+echo "It will make a folder called "alphafold_results" and your results will be there in a folder with the name of your fasta"
+echo "The output is 5 ranked models of protein/complex structures"
+echo "Please note if you run two jobs with the same fasta file the results will be overwritten"
+echo "To avoid that, just cp and rename your fasta file or move the first set of results"
+echo "The program automatically uses the most recent templates in database (i.e. max template date is today)"
+echo "Once you run this program and submit a job, you can run it again with a new fasta and submit as many more jobs as you"
+echo "want at the same time. If they don't run immediately, they may be in the queue"
+sleep 1s
+echo "Once submitted, you can check the status of your job using the command squeue | grep $USER"
+#echo "Once submitted, you can check the status of your job using the command" $'\e[1;30m'  squeue \| grep $USER $'\e[0m' 
+echo "If the job is running there will be an R after your username. If it is waiting in the queue there will be a PD"
+echo " "
+echo " "
+read -p "Press RETURN to continue or CTRL + C to quit"
+echo $'\e[1;32m' What is your input fasta? $'\e[0m' example: MYPROTEIN.fasta
+read fastafile
+echo "Got it, you want to fold ${fastafile}"
+echo " "
+echo  $'\e[1;32m' What AlphaFold Model do you want to run? $'\e[0m' example: monomer
+echo "Options: monomer, monomer_casp14, monomer_ptm, multimer"
+read model_preset
+echo "Cool, we're gonna run ${model_preset}"
+echo " "
+
+
+
+#######################
+
+# probably don't need to change these
+
+inputDir=$PWD
+output_dir=$PWD/alphafold_results
+#max_template_date=2023-02-05
+printf -v date '%(%Y-%m-%d)T\n' -1
+max_template_date=$date
+
+#######################
+
+# also don't change these
+alphafold_path=/app/software/AlphaFold/2.3.1-foss-2022a-CUDA-11.7.0/bin/alphafold
+alphafold_version=AlphaFold/2.3.1-foss-2022a-CUDA-11.7.0
+nodes=1
+threads=4
+jobname="${fastafile%.*}"
+
+#note the ALPHAFOLD_DATA_DIR is an environmental variable set by the cluster ppl, don't change
+#######################################################################
+
+
+echo "Loading Module ${alphafold_version}..."
+
+# load module
+
+ml ${alphafold_version}
+
+
+echo "Making alphafold_results dir..."
+
+# make alphafold_results dir
+if [ ! -d $PWD/alphafold_results ] ; then mkdir $PWD/alphafold_results ; fi
+
+# make logs_cluster dir
+if [ ! -d $PWD/logs_cluster ] ; then mkdir $PWD/logs_cluster ; fi
+
+
+echo "Making job file..."
+
+# set up job
+
+    echo "#!/bin/sh" > ${jobname}.job
+    echo "#SBATCH --job-name=unassigned" >> ${jobname}.job
+    echo "#SBATCH -N ${nodes}" >> ${jobname}.job
+    echo "#SBATCH -c ${threads}" >> ${jobname}.job
+    echo "#SBATCH --gres gpu:1" >> ${jobname}.job
+    echo "#SBATCH --mem 64G" >> ${jobname}.job
+    echo "#SBATCH -t 23:59:00" >> ${jobname}.job
+    echo "#SBATCH -o ${inputDir}/logs_cluster/${jobname}.out" >> ${jobname}.job
+    
+    echo >> ${jobname}.job
+
+echo $alphafold_path --data_dir=${ALPHAFOLD_DATA_DIR} --output_dir=${output_dir} --max_template_date=${max_template_date} --fasta_paths=${inputDir}/${fastafile} --model_preset=${model_preset} >> ${jobname}.job
+
+
+echo "Submitting job file..."
+
+# submit job
+sbatch ${jobname}.job
+
+sleep 1s
+#echo $'\e[1;35m' YAY!!! $'\e[0m'
+sleep 1s
+echo "You can check the status of your job using the command" $'\e[1;30m' squeue \| grep $USER $'\e[0m' 
+sleep 1s
+echo "You can check the log file here:" $'\e[1;30m' ${inputDir}/logs_cluster/${jobname}.out $'\e[0m' 
+sleep 1s
+echo "Results can be found here:" $'\e[1;30m' ${output_dir}/${jobname} $'\e[0m' 
+sleep 1s
+sleep 1s
+echo $'\e[1;32m' "It's fine to close your terminal and logout. The alphafold job will continue to run." $'\e[0m' 

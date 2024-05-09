@@ -36,11 +36,21 @@ Create a new branch:
 - can have sub-branches of branches
 
 Switch local copy to a different branch:
-- `git pull` shows available branches
-- `git checkout branch_name` switches to the named branch
+- `git branch` shows local branches
+- `git branch -rv` shows remote branches (v is for verbose, to include most recent commit message)
+- `git branch -av` shows local and remote branches (remote branch names begin with `origin/`)
+- `git checkout my_branch_name` switches to the named branch
 - `git checkout main` switches back to the main branch
-- `git branch` shows which branches you've worked on
-- the branch we're cuurently working on is known as the `HEAD` branch
+- the branch we're currently working on is known as the `HEAD` branch
+
+Seeing branch structure/commit history:
+- here's a way to show a crude graph of the branching structure as viewed from our current working branch/local directory: `git log --all --decorate --oneline --graph`
+- on the website, we can see a branch structure diagram under 'Insights-Network'.  In some views the arrow points to the parent commit.  With a regular used account this works only for public repos. With 'github pro' this is also available for private repos.
+
+Updating local copy to reflect the remote:
+- [`git pull`](https://www.freecodecamp.org/news/git-pull-explained/) does two things:
+  - updates the current local working branch.  It fetches (`git fetch`) the new commits and merges (`git merge`) these into your local branch.
+  - updates the remote tracking branches for all other branches.
 
 
 Adding/committing
@@ -55,13 +65,14 @@ Pull requests (merging branches)
 - can choose to delete the branch or not
 - it's good to keep pull requests small and modular
 
+Even after we delete a branch on the remote server, it still exists locally. To delete it locally, we do `git branch --delete my_branch_name`
+
 `git pull` sort of combines two commands: `git fetch` then `git merge`. Doing them separately is a bit safer - if there are changes in the remote repo that conflict with/overwrite changes that have occurred locally, you might lose the local versions.
 
 `git fetch origin` is similar to `git pull` but more subtle.  Not sure I totally understand it, but it looks like `git fetch` (I think by default it does `git fetch origin`) gets the metadata, i.e. tells us what's changed on the remote repo versus the local copy, but it doesn't actually change the files
 
 A **fork** is NOT the same as a **branch** - to fork is to create a new copy of the entire repo in a different user's github account. Sort of a much more extreme version of a branch (think of a fork in the road)
 
-On the website can see a branch structure diagram under 'Insights-Network'.  In some views the arrow points to the parent commit.
 
 Ways to interact with git:
 - command line
@@ -71,3 +82,4 @@ Ways to interact with git:
 
 Other things to learn about
 - github [wikis](https://docs.github.com/en/communities/documenting-your-project-with-wikis/about-wikis) for hosting documentation
+

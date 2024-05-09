@@ -1,0 +1,10 @@
+#!/bin/sh
+#SBATCH --job-name=unassigned
+#SBATCH -N 1
+#SBATCH -c 4
+#SBATCH --gres gpu:1
+#SBATCH --mem 64G
+#SBATCH -t 23:59:00
+#SBATCH -o /home/jayoung/FH_fast_storage/git_more_repos/MalikLab_bioinformaticsResources/janets_NOTES_forMyself/test_MelodyCampbell_alphafoldScript/logs_cluster/human_CENPA_ORF.peps.noStop.out
+
+/app/software/AlphaFold/2.3.1-foss-2022a-CUDA-11.7.0/bin/alphafold --data_dir=/shared/biodata/ngs/Reference/protein --output_dir=/home/jayoung/FH_fast_storage/git_more_repos/MalikLab_bioinformaticsResources/janets_NOTES_forMyself/test_MelodyCampbell_alphafoldScript/alphafold_results --max_template_date=2024-05-08 --fasta_paths=/home/jayoung/FH_fast_storage/git_more_repos/MalikLab_bioinformaticsResources/janets_NOTES_forMyself/test_MelodyCampbell_alphafoldScript/human_CENPA_ORF.peps.noStop.fa --model_preset=monomer

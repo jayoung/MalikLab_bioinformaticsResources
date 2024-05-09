@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 *DS_Store*
+
+alphafold_results
+logs_cluster
