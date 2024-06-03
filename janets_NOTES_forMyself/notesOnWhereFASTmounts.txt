@@ -1,0 +1,40 @@
+## 2021
+
+I'm using Go-ConnectToServer-smb://center.fhcrc.org/fh/fast/malik_h/
+
+It mounts as /Volumes/malik_h
+
+
+
+
+## before 2021
+
+Aug 4. work computer. 
+
+I got rid of all the links in my sidebar and started again, by using Go-ConnectToServer-smb://center.fhcrc.org/fh. That mounts as /Volumes/fh/.
+
+ls /Volumes/fh/
+economy		fast		secure		transfer
+
+(previously I think it appeared as /Volumes/fh/ but was actually pointing to /Volumes/fh/fast/malik_h/ - now I think I need that whole path)
+
+see script substitutetexttemp.pl to help me change paths where necessary (and then perhaps mvfiletemp.pl)
+
+
+Aug 8 work computer
+
+connected via sidebar-favorites, and I get this: 
+ls /Volumes/fh/
+SR	grp	pub	user
+
+connected via Go-ConnectToServer-smb://center.fhcrc.org/fh and got this: 
+ls /Volumes/fh/
+economy		fast		secure		transfer
+
+
+
+Aug 30 home computer
+connected via Go-ConnectToServer-smb://center.fhcrc.org/fh and got this: 
+ls /Volumes/fh/
+economy		fast		secure		transfer
+

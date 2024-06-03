@@ -1,3 +1,7 @@
+# Bioinformatics tools (core)
+
+This document contains notes on tools I'm more familiar with. For notes on other tools I haven't used much, see bioinformatics_tools_not_curated.md
+
 # BLAST via the command line.
 We can blast any NCBI database, contacting NCBI remotely.  We can also format a set of sequences you have and blast those. 
 
@@ -123,7 +127,8 @@ cat seqsToGet.txt | while read -a F ; do wget -q -O - "https://www.ncbi.nlm.nih.
 ```
 
 
-# Shared databases
+# Shared local databases
+
 I've got a bunch of databases in a shared Malik lab folder, and most are formatted for blasting. See this file for a list `/fh/fast/malik_h/grp/malik_lab/public_databases/database_list.txt`.  It's not a very well-organized file: sorry! Sometimes I list files under the source where I downloaded them from (e.g. UCSC, NCBI, Ensembl), sometimes under their species or lineage.
 
 We can easily download more databases if they'd be useful - talk to me about this.
@@ -221,6 +226,40 @@ module purge
 You'll get four output files, whose names begin `yoursequence.fa.2.7.7.80.10.50.500`
 
 
+
+
+# File format conversion (alignments, trees)
+
+Many other tools can convert formats, but I have some scripts to do it on the command line. 
+
+## Convert fasta format to phyml format 
+
+(phyml format is very similar to phylip format, I think just without any * or X or ? characters):  `fasta2phyml.pl` - you can copy this script from `/fh/fast/malik_h/user/jayoung/bin`.
+Simply call my script on alignment files in fasta format.
+```
+fasta2phyml.pl alignment1.fasta
+```
+The script has a switch at the top - can choose to leave sequence names as they are, or can replace names with sequential names (seq0001, seq0002, etc). Name conversions will be recorded in a file called alignment1.fasta.alias
+
+## Restore original sequence names in a phylip format tree file
+```
+changenamesinphyliptreefileguessaliasfilename.pl myTree.tre
+```
+
+## Convert fasta format to nexus format 
+```
+fasta2nexus.bioperl alignment1.fasta alignment2.fasta 
+```
+creates .nex file (the alignment) and .alias file (records the name conversions)
+
+This script replaces original sequence names with sequential names (seq0001, seq0002, etc)
+
+## Restore original sequence names in a nexus format tree file
+```
+changenamesinnexustreefileguessaliasfilename.pl myTree.tre
+```
+
+
 # Multiple sequence alignments
 
 There are MANY programs to do this. Each has MANY parameters you can set and experiment with.
@@ -230,9 +269,19 @@ My current favorites are:
 - `MACSE` (for in-frame, translation-based alignments, can handle frameshifts). 
 
 In the past I have also used:
-- `PRANK` (in-frame nucleotide alignment
+- `PRANK` (in-frame nucleotide alignment). Seems to do well in many published tests.
 - `clustalw` (DNA/protein)
 - `translatorx.pl` (in-frame nucleotide alignment, using Muscle, Clustalw, Prank, or mafft to actually perform the alignment), e.g. `translatorx.pl -i myDNAseqs.fa -o myDNAseqs.translatorx`
+
+For VIEWING/editing alignments, here are some options:
+- Seaview (mac)
+- wasabi
+- geneious
+
+Could also check out:
+
+- OPCAT - online pipeline to collect orthologs and make codon-aware alignment, also trims poorly aligned start/end regions.  Looks like it's not so useful for local use (?)
+- DGINN pipeline (Lucie Etienne)
 
 
 ## mafft
@@ -286,11 +335,24 @@ module purge
 trimal -in myAln.fa -out myAln.trimal.fa -automated1 -htmlout myAln.trimal.html -colnumbering > myAln.trimal.retainedColumns.txt
 ```
 
-Also: `SWAMP`
+Also, could check out these:
+- `SWAMP`
+- GUIDANCE (I used this inthe kinetochore pipeline)
+- ZORRO (Wu, Chatterji, Eisen, PLoS ONE, 2012)
+- trimal - some papers say this isn't as good as GUIDANCE and/or ZORRO
+- GBLOCKs - some papers say this isn't as good as GUIDANCE
+
 
 # Phylogenetic trees
 
 [Phylogenetic Biology](http://dunnlab.org/phylogenetic_biology/) online book, but Casey Dunn
+
+## some jargon
+
+"ultrametric"  (right-aligned)
+
+"tanglegram" = a plot to compare two trees, drawing lines between the same taxa in the two trees. 
+
 
 ## PhyML
 
@@ -330,6 +392,7 @@ sbatch --job-name=phyml --cpus-per-task=10 --wrap="/bin/bash -c \"source /app/lm
 ```
 
 ## Choose best evolutionary model for nucleotide alignments
+
 Use `jmodeltest`. The help file is here:
 `/fh/fast/malik_h/grp/malik_lab_shared/jmodeltest-2.1.10/README`
 
@@ -371,7 +434,7 @@ e.g.
 Model selected: 
    Model = SYM
 
-## choose best evolutionary model for amino acid alignments
+## Choose best evolutionary model for amino acid alignments
 Use `prottest` The help file is here: `/fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4.2/README`
 
 examples are here: `/fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4.2/examples`
@@ -415,37 +478,6 @@ grep 'Best' outputFile.txt
 e.g.
 Best model according to AIC: JTT+I+G+F
 
-
-
-## File format conversion (alignments, trees)
-Many other tools can convert formats, but I have some scripts to do it on the command line. 
-
-### Convert fasta format to phyml format 
-
-(phyml format is very similar to phylip format, I think just without any * or X or ? characters):  `fasta2phyml.pl` - you can copy this script from `/fh/fast/malik_h/user/jayoung/bin`.
-Simply call my script on alignment files in fasta format.
-```
-fasta2phyml.pl alignment1.fasta
-```
-The script has a switch at the top - can choose to leave sequence names as they are, or can replace names with sequential names (seq0001, seq0002, etc). Name conversions will be recorded in a file called alignment1.fasta.alias
-
-### Restore original sequence names in a phylip format tree file
-```
-changenamesinphyliptreefileguessaliasfilename.pl myTree.tre
-```
-
-### Convert fasta format to nexus format 
-```
-fasta2nexus.bioperl alignment1.fasta alignment2.fasta 
-```
-creates .nex file (the alignment) and .alias file (records the name conversions)
-
-This script replaces original sequence names with sequential names (seq0001, seq0002, etc)
-
-### Restore original sequence names in a nexus format tree file
-```
-changenamesinnexustreefileguessaliasfilename.pl myTree.tre
-```
 
 ## mrbayes, to make bayesian phylogenies
 
@@ -527,6 +559,41 @@ tail myMBrun.log.txt
 
 Similarly, can use sbatch/wrap to run this command on the cluster (make sure you specify --cpus-per-task)
 
+## Miscellaneous other phylogeny-related things
+
+There's the BALTIC python suite for drawing/manipulating trees, from Trevor Bedford's lab.
+
+Stephanie Spielman wrote pyvolve - simulation tools
+
+
+# Analysis of selective pressures
+
+PAML
+
+DataMonkey / Hyphy
+
+[SWAKK](http://bioinformatics.mdanderson.org/main/SWAKK:Overview) website for sliding window dN/dS
+
+# Ancestral reconstruction
+
+For newer notes, see homing endonuclease project. Older notes:
+
+There is a way to do it with PAML’s codeml on your local computer (run M0 and change the RateAncestor setting to 1, output will be in rst file). I tried this in cd ~/pamlPipeline/geneListsDone/list9_publishedPositivelySelectedGenes.txt_output/manualAnalysis/MX2_tryAncestralReconstruction – see NOTES file there.
+
+But it might be easier to use one of these web servers:
+1. http://fastml.tau.ac.il/ 
+2.  https://academic.oup.com/bib/article/22/4/bbaa337/6042664   (it looks like you can access the linked website only from outside the Hutch firewall – it’s a Czech site, and I think they’re on some kind of list the Hutch is restricting - so you’ll need to be off campus and off the VPN)
+3. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4966924/ (the linked server is not responding for me!)
+
+
+
+# Detecting recombination
+
+GARD (DataMonkey / Hyphy)
+
+LDhat (McVean et al 2002).  Ziheng Yang used this in a 2004 paper.  He also used PLATO and PIST but commented that PLATO is susceptible to interpreting different selective pressures on different parts of the alignment as recombination, when it's not really. Can maybe get around that by analyzing only the third codon position.
+
+
 # dotter, to compare two sequences visually
 
 (need to install X11 on your Mac for this to work, if it's not already installed.  Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
@@ -578,3 +645,35 @@ Another, even more annoying way to generate a features file:
 - convertUCSCgtfToDotterFeature.pl humanIFITlocusRefGeneTrack.gtf humanIFITlocus.fa
 
 
+
+
+
+# Ensembl database
+
+It's confusing – first issue is that there are several Ensembl sites for different sets of species, with a little overlap:
+‘main site’ = mostly vertebrates, but some info for selected others, e.g. fly, worm: http://uswest.ensembl.org/index.html
+fungi: http://fungi.ensembl.org/index.html
+other metazoa (mostly invertebrates flies): http://metazoa.ensembl.org/index.html
+https://ensemblgenomes.org/
+Non-vertebrates:  https://ensemblgenomes.org/
+The multiple sites will eventually get merged in a future Ensembl release.  
+Ensembl databases house a TON of information, but for now we are just looking at their phylogenetic treees. These have been generated in an automated way, so will give you a good first pass view of what’s going on with orthology and paralogy, but they might not be totally accurate.
+
+The phylogenetic trees are at two levels:
+a.	fairly closely-related species/paralogs (the same species sets found in whichever version of the Ensembl website you’re looking at, like vertebrates). 
+b.	‘pan-taxonomic Compara’ - spans a broader range of species: if it was possible to align the genes reasonably well, you may see a tree that includes vertebrates and invertebrates, fungi, plants, protists, etc.  Fewer species in each genus/order.
+
+How to look at Ensembl’s trees:
+1.	Open Ensembl website and navigate to your gene of interest
+2.	Find a link that says ‘gene tree’ (likely on the left).  For some species you will see two ‘gene tree’ links – one is pan-taxonomic compara, the other for only more related species. 
+3.	Scroll to the bottom and click 'view fully expanded tree'.  Spend some time figuring out the display. Your starting gene will be highlighted in red, and parlogs from the same species highlighted in blue. At phylogeny branch points, blue nodes=speciation, red nodes=duplication. The green bars on the right depict the alignment, and can help you see that some sequences in the tree were badly aligned and maybe don’t belong in that location on the tree.  Don’t trust everything you see – duplications in just one species are often genome assembly errors. Hovering over a gene name can get you a link to more info on that gene in a particular species.
+
+Note: unfortunately there is no direct link to pan-taxonomic Compara for human genes (or any vertebrate). This might get fixed in future releases.  It’s annoying.  If your starting point is a human gene, you can use the tree you see on the main Ensembl site to (hopefully) pick out a fly or worm ortholog, get the gene ID, then look it up on the Enseml Metazoa site where you should be able to accesss the pan-taxonomic tree. 
+
+Note: at some point Ensembl changed the algorithms/parameters that group genes before making trees, and now they are more conservative. For genes that are not super well conserved, distant orthologs/paralogs are not always in the same pan-taxonomic compara tree. Sometimes it helps to go to an OLDER version of the Ensembl database to see if there was a larger gene grouping. See http://www.ensembl.info/2018/10/24/changes-to-paralogy-in-release-94/ for details, and maybe use this site: http://jul2018.archive.ensembl.org/index.html 
+Note: in April 2021 there is a bug in pan-taxonomic trees where many sequences appear listed as ‘ancestral sequence’ instead of the species they’re actually from. Not useful. This should be fixed when release 51 comes out in early May.
+
+
+# Genomicus
+June 2014: http://www.genomicus.biologie.ens.fr/genomicus-75.02/cgi-bin/search.pl
+Based on Ensembl 75 (released Feb 2014, still current as of June 2014)

@@ -317,8 +317,12 @@ BUSCO compares a set of conserved genes against a genome (or transcriptome) to a
 
 http://busco.ezlab.org
 
-(fhcrc account needs to be set up with correct environmental variables:  
-`cp /fh/fast/malik_h/grp/malik_lab_shared/help/loginFileTemplates/.gizmocombinedMalikLabrc_bashVersion ~` )
+fhcrc account needs to be set up with correct environmental variables for BUSCO to work: 
+```
+cd ~
+cp /fh/fast/malik_h/grp/malik_lab_shared/help/loginFileTemplates/gizmo_login_items.bash .
+cp /fh/fast/malik_h/grp/malik_lab_shared/help/loginFileTemplates/.profile .
+```
 
 get help: `BUSCO -help`
 

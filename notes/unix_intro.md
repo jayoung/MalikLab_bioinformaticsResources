@@ -135,6 +135,11 @@ To learn useful options for grep, google ‘grep man page’ and look through on
 
 `wc`:  ‘word count’ – counts lines and words and bytes in a file. Example: `wc myDat.txt`
 
+`diff`: detects and displays any differences between two files.  Example `diff file1.txt file2.txt`
+
+`cmp` - a quicker alternative to `diff` that stops when it finds the first difference: `cmp --silent file1 file2 || echo "files are different"`
+
+
 ## Linking commands together 
 We can use the `|` symbol (the ‘pipe’) to link commands together. Example: show me the header lines in a fasta file and count them:
      `grep ‘>’  mySeqs.fa | wc`

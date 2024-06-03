@@ -1,0 +1,147 @@
+Dec 20, 2021
+
+
+1. update homebrew on my mac
+git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
+    worked, although it was slow
+brew update
+    it did a LOT! but ended with:
+Error: Cask 'java' is unreadable: undefined method `undent' for #<String:0x00007f8f8071c2f0>
+Did you mean?  undef
+               indent
+               indent!
+
+2. uninstall/reinstall java
+brew uninstall --force java
+rm -r "$(brew --prefix)/Caskroom/java"
+sudo chown -R jayoung /usr/local/lib/pkgconfig /usr/local/share/man
+brew install java
+
+brew update
+    now says I am up to date
+
+2. install ftp on my mac
+brew install inetutils
+
+3. configure cpan, as I am getting errors that all the mirrors it tries are unavailable:
+cpan
+o conf urllist unshift http://www.cpan.org
+o conf commit
+quit
+
+4. install cpanm
+cpan App::cpanminus
+
+5. install mysql
+brew install mysql
+    seems like it worked
+
+I was having trouble with some perl stuff, so I try installing perlbrew and a different version of perl - there is advice in various places not to use the Mac's inbuilt perl: https://perlbrew.pl/Installation.html
+
+6. install perlbrew, to help me manage different versions of perl on the mac
+sudo cpan App::perlbrew
+perlbrew init
+
+echo '' >> ~/.profile
+echo '# use perlbrew rather than system perl:' >> ~/.profile
+echo 'source ~/perl5/perlbrew/etc/bashrc'  >> ~/.profile
+echo ''  >> ~/.profile
+
+7. now actually install a different version of perl - getting stuck here.
+before I did used perlbrew to give me a new perl, I have v5.30.3. The current stable version of perl is 5.34.0.
+
+I got an error if I try to install from the web using this command:
+    perlbrew install perl-5.34.0
+I think it's to do with our firewall. So I found two different tarballs and put them both in /Users/jayoung/perl5/perlbrew/dists/
+
+perl-5.34.0.tar.gz came from https://www.cpan.org/authors/id/X/XS/XSAWYERX/perl-5.34.0.tar.gz
+and 
+perl5-5.34.0.tar.gz came from https://github.com/Perl/perl5/releases/tag/v5.34.0
+
+then I install using this command (I am doing this from /Users/jayoung/source_codes/perl) 
+perlbrew install /Users/jayoung/perl5/perlbrew/dists/perl-5.34.0.tar.gz
+
+seems to have worked - tool a while
+    perl-5.34.0 is successfully installed.
+then do:
+perlbrew switch perl-5.34.0
+
+Now:
+which perl 
+/Users/jayoung/perl5/perlbrew/perls/perl-5.34.0/bin/perl
+perl -v shows 5.34.0
+
+
+8. install cpanm
+cpan App::cpanminus
+   (it went into /Users/jayoung/perl5/perlbrew/perls/perl-5.34.0/bin/cpanm)
+
+
+9. install some prereqs for DBD::mysql that wouldn't install on their own
+   I had to install DBI with cpan instead of cpanm. cpan asked for my password:
+cpan
+install DBI
+
+
+cpanm --force ExtUtils::MakeMaker
+! Installing ExtUtils::MakeMaker failed. See /Users/jayoung/.cpanm/work/1640047297.31513/build.log for details. Retry with --force to force install it.
+
+cpan 
+install ExtUtils::MakeMaker
+    there were errors, but I think it might have actually worked
+
+brew reinstall ca-certificates
+brew install openssl@3
+brew reinstall openssl@1.1
+
+cpanm Test::Deep
+
+## ==> Caveats for openssl 3
+
+A CA file has been bootstrapped using certificates from the system
+keychain. To add additional certificates, place .pem files in
+  /usr/local/etc/openssl@3/certs
+
+and run
+  /usr/local/opt/openssl@3/bin/c_rehash
+
+openssl@3 is keg-only, which means it was not symlinked into /usr/local,
+because macOS provides LibreSSL.
+
+If you need to have openssl@3 first in your PATH, run:
+  echo 'export PATH="/usr/local/opt/openssl@3/bin:$PATH"' >> ~/.profile
+
+For compilers to find openssl@3 you may need to set:
+  export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+  export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+
+For pkg-config to find openssl@3 you may need to set:
+  export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+
+
+
+# https://github-wiki-see.page/m/kyzn/PRC/wiki/Development-Instructions-%28macOS-Apple-Silicon%29
+# Run these two to avoid "perl is loading libcrypto in an unsafe way" errors
+sudo ln -s /usr/local/Cellar/openssl\@1.1/1.1.1m/lib/libssl.dylib /usr/local/lib/libssl.dylib
+sudo ln -s /usr/local/Cellar/openssl\@1.1/1.1.1m/lib/libcrypto.dylib /usr/local/lib/libcrypto.dylib
+
+
+
+
+9. install DBD::mysql
+    I had a lot of trouble until I did this:
+
+https://github-wiki-see.page/m/kyzn/PRC/wiki/Development-Instructions-%28macOS-Apple-Silicon%29
+Run these two to avoid "perl is loading libcrypto in an unsafe way" errors
+sudo ln -s /usr/local/Cellar/openssl\@1.1/1.1.1m/lib/libssl.dylib /usr/local/lib/libssl.dylib
+sudo ln -s /usr/local/Cellar/openssl\@1.1/1.1.1m/lib/libcrypto.dylib /usr/local/lib/libcrypto.dylib
+
+    then, cpan worked:
+cpan
+install DBD::mysql
+quit
+
+
+xxxx perhaps install bioperl next
+
+xxxx can I now install ensemblVEP?

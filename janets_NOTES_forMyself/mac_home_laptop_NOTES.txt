@@ -1,0 +1,112 @@
+## I think I had the old laptop at this point:
+Nov 30, 2020
+------------
+
+.profile is where my environmental variables are set
+
+## perl stuff
+perl (v5.18.4) and cpan (v1.61) are already installed 
+
+# installed cpanm (cpan-minus, lightweight version)
+cpan App::cpanminus
+   (and allowed it to configure cpan automatically)
+
+added this to my PATH, in .profile:
+/Users/jayoung/perl5/bin
+
+to install other modules I can do 
+cpanm Module::Name
+
+cpanm tips:
+- cpanm suppresses a lot of (typically) irrelevant information. Sometimes when a module fails, you might want more information. There's a -v|--verbose flag that essentially shows you everything cpan would.
+- some modules that require user input may seem to 'hang' when you try to install them. That's because the output that's asking you to type something is suppressed. You can use the --interactive (or --verbose) flags to work around that.
+
+
+
+cpanm Bio::Seq
+
+
+I may need to add to PERL5LIB
+
+! Can't write to /Library/Perl/5.18 and /usr/local/bin: Installing modules to /Users/jayoung/perl5
+
+
+ (@INC contains: /Library/Perl/5.18/darwin-thread-multi-2level /Library/Perl/5.18 /Network/Library/Perl/5.18/darwin-thread-multi-2level /Network/Library/Perl/5.18 /Library/Perl/Updates/5.18.4 /System/Library/Perl/5.18/darwin-thread-multi-2level /System/Library/Perl/5.18 /System/Library/Perl/Extras/5.18/darwin-thread-multi-2level /System/Library/Perl/Extras/5.18 .) at ./temp.bioperl line 5.
+BEGIN failed--compilation aborted at ./temp.bioperl line 5.
+
+
+## this should be after I switched to the new 16" laptop:
+
+Oct 2021
+--------
+
+changing some BBedit expert settings to try to not have bbedit freeze as often - I think it is to do with auo-save and docs found on remote servers:
+
+https://www.barebones.com/support/bbedit/ExpertPreferences.html
+https://groups.google.com/g/bbedit/
+
+from Mac terminal command line:
+defaults write com.barebones.bbedit EnableAutoSave_v2 -bool YES
+defaults write com.barebones.bbedit AutoSaveIntervalInMinutes_v2 -int 30
+defaults write com.barebones.bbedit DisableCtagsScanOnRemoteVolumes -bool YES
+defaults write com.barebones.bbedit DisableSettingsScanOnRemoteVolumes -bool YES
+
+
+Oct 13 2021
+----------
+for VScode:
+cpanm Perl::LanguageServer.pm
+cpanm Perl::LanguageServer::DebuggerInterface.pm
+
+https://github.com/richterger/Perl-LanguageServer/issues/52
+https://freesoft.dev/program/74304320
+
+I need to have VScode read my PERL5LIB settings
+I added this line to launch.json (found in .vscode directory of the master folder)
+            "inc": "/Users/jayoung/perl5/lib/perl5"
+            
+There is also a file called settings.json here:
+/Users/jayoung/Library/Application Support/Code/User
+is that a location for universal launch settings?
+
+https://code.visualstudio.com/docs/getstarted/settings
+VS Code provides two different scopes for settings:
+
+User Settings - Settings that apply globally to any instance of VS Code you open.
+Workspace Settings - Settings stored inside your workspace and only apply when the workspace is opened.
+Workspace settings override user settings. Workspace settings are specific to a project and can be shared across developers on a project.
+
+in the extensions setting for the perl language server there is something called 
+Perl: Path Map mapping of local to remote paths
+that I would edit in the global settings.json file
+
+Perl: Perl Inc
+array with paths to add to perl library path. This setting is used by the syntax checker and for the debuggee and also for the LanguageServer itself. perl.perlInc should be absolute paths.
+
+Gerald Richter is the author of the Perl extensions for VSCode:
+https://github.com/richterger/
+https://github.com/richterger/Perl-LanguageServer
+https://github.com/richterger/vscode-perl-debug
+
+
+https://github.com/richterger/Perl-LanguageServer/issues/52
+
+But you can try what happens if you manually set your "env" variable, and include PERL5LIB in there (careful, the extension currently doesn't use a hash, but an array of key/value pairs).
+
+perl -MPerl::LanguageServer -e 'print $INC{"Perl::LanguageServer.pm"}' or perldoc -l Perl::LanguageServer
+
+echo 'print map { sprintf( "%20s : %s\n", $_, $INC{$_} ) } sort keys %INC; print "\n'$1' version : $'$1'::VERSION\n\n"' | perl "-M$1" 
+
+
+Can't locate Perl/LanguageServer/DebuggerInterface.pm in @INC (you may need to install the Perl::LanguageServer::DebuggerInterface module) (@INC contains: /Users/jayoung/perl5/lib/perl5:/System/Library/Perl/5.30/darwin-thread-multi-2level:/System/Library/Perl/5.30:/System/Library/Perl/Extras/5.30/darwin-thread-multi-2level:/System/Library/Perl/Extras/5.30 /Library/Perl/5.30/darwin-thread-multi-2level /Library/Perl/5.30 /Network/Library/Perl/5.30/darwin-thread-multi-2level /Network/Library/Perl/5.30 /Library/Perl/Updates/5.30.2 /System/Library/Perl/5.30/darwin-thread-multi-2level /System/Library/Perl/5.30 /System/Library/Perl/Extras/5.30/darwin-thread-multi-2level /System/Library/Perl/Extras/5.30).
+
+perl -MPerl::LanguageServer -e Perl::LanguageServer::run -- --port 13603 --log-level 2
+
+perl -MPerl::LanguageServer::DebuggerInterface -e Perl::LanguageServer::DebuggerInterface::run -- --port 13603 --log-level 2
+
+
+Can't open perl script "/Users/jayoung/Desktop/workStuff/temp/../../../../../extension-output-richterger.perl-#1": No such file or directory
+
+Can't open perl script extension-output-richterger.perl-#1 No such file or directory
+
+

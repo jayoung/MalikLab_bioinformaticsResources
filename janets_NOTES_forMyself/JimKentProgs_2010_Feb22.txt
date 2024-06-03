@@ -1,0 +1,2916 @@
+While many of the programs in the source tree are useful only 
+in very specialized contexts, some are generally useful.  Here
+are brief descriptions of the generally useful programs
+organized by category.  Underneath this are longer 
+descriptions of all programs alphabetically sorted.
+
+------ Code generators/program utilities ----------
+autoSql - Generate database/tab file objects
+autoXml - Generate XML parser
+newProg - make a new C source skeleton.
+      You'll want to customize this one
+stringify - Convert file to C strings
+subs - a utility to perform massive string substitutions on source
+
+------ Genome Browser Database Related --------
+bedCoverage - Analyse coverage by bed files. Bases can
+    be covered more than once (unlike featureBits)
+bedSort - Sort a .bed file by chrom,chromStart
+featureBits - Correlate tables via bitmap projections.
+getFeatDna - Get dna for a type of feature in browser database.
+hgsql - Execute some sql code using passwords in .hg.conf
+      same as 'mysql -u user -ppassword -A'
+
+--------Text crunching------------
+catDir - concatenate files in directory to stdout.
+     For those times when too many files for cat to handle.
+countChars - Count the number of occurences of a particular char
+endsInLf - Check that last letter in files is end of line
+fixCr - strip <CR>s from ends of lines
+randomLines - Pick out random lines from file
+subChar - Substitute one character for another throughout a file.
+toLower - Convert upper case to lower case in file. Leave other chars alone
+toUpper - Convert lower case to upper case in file. Leave other chars alone
+wordLine - chop up file by white space and output one word per line.
+
+------ Number crunching----------
+addCols - Sum columns in a text file.
+aveCols - Add together columns
+calc - Little command line calculator.
+tableSum - Sum or average rows and columns to produce smaller table.
+
+------ Fasta file utilities --------
+faCmp - Compare two .fa files
+faFrag - Extract a piece of DNA from a .fa file.
+ faNoise - Add noise to .fa file
+faOneRecord - Extract a single record from a .FA file
+faRc - Reverse complement a FA file
+faSize - print total base count in fa files.
+faSplit - Split an fa file into several files.
+faTrans - Translate DNA .fa file to peptide
+
+------- Blat and related utilities -------------
+blat - Fast alignment of similar sequences. (license needed for commercial use)
+psLayout - Fast program to find largish DNA overlaps. (commercial license)
+pslFilter - filter out psl file
+pslPretty - Convert PSL to human readable output
+pslReps - Find repeats and best or near best in genome alignments.
+pslSwap - Swap query and target in  PSL
+
+------- Other Sequence analysis ----------
+ameme - Find motifs in DNA sequence. (aka improbizer)
+correctEst - Correct ESTs by passing them through genome
+gsBig - Run Genscan on big input and produce GTF files and other parsed output
+trfBig - Run trf (tandem repeat finder) on big input and make bed file.
+waba - Cross-species dna alignment.  Handles large gaps (commercial license)
+
+
+With all of these you can use 'stdin' or 'stdout' as file name
+arguments to get them to fit into a pipe or something....
+
+
+
+------- Full Alphabetical Listing --------
+
+addCols - Add together columns
+usage:
+   addCols XXX
+
+======================================================================
+
+addFinFinf - Add list of finished clones to end of finf file.
+usage:
+   addFinFinf cloneList finished.finf
+options:
+   -inf - do same thing to sequence.inf file instead
+
+======================================================================
+
+addMhcClones - Add info on missing MHC files to Greg's stuff.
+usage:
+   addMhcClones ~/gs/otherIn/mhc/clones ~/gs
+options:
+
+======================================================================
+
+agpCloneCheck - Check that have all clones in an agp file (and the right version too)
+usage:
+   agpCloneCheck file.agp gsDir
+
+======================================================================
+
+agpCloneList - Make simple list of all clones in agp file
+to stdout
+usage:
+   agpCloneList file(s).agp
+options:
+   -ver print clone version as well as name.
+
+======================================================================
+
+agpNotInf - List clones in .agp file not in .inf file
+usage:
+   agpNotInf ctg_nt.agp sequence.inf
+
+======================================================================
+
+agpToFa - Convert a .agp file to a .fa file
+usage:
+   agpToFa in.agp agpSeq out.fa freezeDir
+Where agpSeq matches a sequence name in in.agp
+and seqDir is where program looks for sequence.
+
+This is currently a fairly limited implementation.
+It only works on finished clones
+
+options:
+   -simple - treat freezeDir as a simple directory full of
+             .fa files.  In this case .fa files must be named
+             accession.fa and only have one record
+   -subDirs=predraft,draft,fin,extras  Explicitly specify comma separated
+             list of freeze subdirectories.
+======================================================================
+
+agpToGl - Convert AGP file to GL file.  Some fakery involved.
+usage:
+   agpToGl source.agp dest
+options:
+   -md=seq_contig.md - get list of clones to reverse from NCBI .md file
+                       and produce output parsed into contigs
+
+======================================================================
+
+agpVsMap - Plot clones in agp file vs. map coordinates
+usage:
+   agpVsMap XXX
+
+======================================================================
+
+ali2alx - produces an index file for each chromosome into an ali file.
+Usage:
+     ali2alx in.ali alxDir
+======================================================================
+
+aliGlue - tell where a cDNA is located quickly.
+usage:
+    aliGlue genomeListFile otherListFile otherType ignore.ooc 5and3.pai outRoot
+The genomeListFile is a list of .FA files containing genomic sequence, which
+  should altogether be 5 megabases or less.  Typically this file is a list of BACs.
+The otherListFile is a list of .FA files containing the sequences to compare against
+  the genomic files.  These may be of unlimited size.  
+The otherType should be either 'mRNA' or 'genomic', and controls whether
+  the gap penalties are mRNA style (introns ok) or not.
+Ignore.ooc is a file containing overrepresented 10.mers.
+5and3.pai is a list of 5' and 3' ests in the 'other' sequence.
+  You can use /dev/null here if there is no pairing info.
+outRoot specifies the base name of the three output files the
+  program creates: outRoot.hit, outRoot.glu, and outRoot.ok
+  The program will create the files outRoot.hit outRoot.glu outRoot.ok
+  which contain the cDNA hits, gluing cDNAs, and a sign that the program
+  ended ok respectively.
+======================================================================
+
+altGraph - do alt-splice clustering and generate constraints for genie and 
+load database.
+Usage:
+   altGraph load bacAccession(s)
+Loads clusters into database
+   altGraph gff gffDir bacAccession(s)
+This produces a constraint gff file for genie for each bac (that's been preloaded
+into database
+   altGraph align geno.lst mrna.lst 10.ooc gffFile 
+This will align each file in geno.lst to the mrna in mrna.lst and put the resulting
+constriants in gffFile less than 5 megabases each.  10.ooc is an overused 10-mer
+file for the patSpace algorithm.
+   altGraph psl mrna.psl genoFaDir gffFile
+This will take the alignments in mrna.psl against genomic .fa files in genoFaDir
+and produce and altGraph of them in gffFile
+   altGraph extract id(s)
+Extracts altGraph of given ID from database
+   altGraph view bacAccession(s)
+Just views clusters
+
+======================================================================
+
+altSplice - constructs altSplice graphs using information alignments
+in est and mrna databases. At first only for chr22
+usage:
+	altSplice <db> <outputFile.AltGraph.tab>
+
+======================================================================
+
+ameme - find common patterns in DNA
+usage
+    ameme good=goodIn.fa [bad=badIn.fa] [numMotifs=2] [background=m1] [maxOcc=2] [motifOutput=fileName] [html=output.html] [gif=output.gif]
+where goodIn.fa is a multi-sequence fa file containing instances
+of the motif you want to find, badIn.fa is a file containing similar
+sequences but lacking the motif, numMotifs is the number of motifs
+to scan for, background is m0,m1, or m2 for various levels of Markov
+models, maxOcc is the maximum occurrences of the motif you 
+expect to find in a single sequence and motifOutput is the name of afile to store just the motifs in.
+
+======================================================================
+
+assessLibs - Make table that assesses the percentage of library that covers 5' and 3' ends
+usage:
+   assessLibs database refTrack
+options:
+   -chrom=chrNN - restrict this to chromosome NN
+
+======================================================================
+
+autoSql - create SQL and C code for permanently storing
+a structure in database and loading it back into memory
+based on a specification file
+usage:
+    autoSql specFile outRoot
+This will create outRoot.sql outRoot.c and outRoot.h based
+on the contents of specFile
+======================================================================
+
+autoXml - Generate structures code and parser for XML file from DTD-like spec
+usage:
+   autoXml file.dtdx root
+This will generate root.c, root.h
+options:
+   -textField=xxx what to name text between start/end tags. Default 'text'
+   -comment=xxx Comment to appear at top of generated code files
+   -picky  Generate parser that rejects stuff it doesn't understand
+   -main   Put in a main routine that's a test harness
+   -prefix=xxx Prefix to add to structure names. By default same as root
+   -positive Don't write out optional attributes with negative values
+
+======================================================================
+
+aveCols - Add together columns
+usage:
+   aveCols file
+File may be stdin.
+======================================================================
+
+axtAndBed - Intersect an axt with a bed file and output axt.
+usage:
+   axtAndBed in.axt in.bed out.axt
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtBest - Remove second best alignments
+usage:
+   axtBest in.axt chrom out.axt
+options:
+   -winSize=N  - Size of window, default 10000
+   -minScore=N - Minimum score alignments to consider.  Default 1000
+   -minOutSize=N - Minimum score of piece to output. Default 10
+   -matrix=file.mat - override default scoring matrix
+Alignments scoring over minScore (where each matching base counts
+about +100 in the default scoring scheme) are projected onto the
+target sequence.  The score within each overlapping 1000 base window
+is calculated, and the best scoring alignments in each window are
+marked.  Alignments that are never the best are thrown out.
+The best scoring alignment for each window is the output, chopping
+up alignments if necessary
+
+======================================================================
+
+axtCalcMatrix - Calculate substitution matrix and make indel histogram
+usage:
+   axtCalcMatrix files(s).axt
+
+======================================================================
+
+axtDropSelf - Drop alignments that just align same thing to itself
+usage:
+   axtDropSelf in.axt out.axt
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtForEst - Generate file of mouse/human alignments corresponding to MGC EST's
+usage:
+   axtForEst database axtDir output.axt
+options:
+   -chrom=chrN - restrict to a specific chromosome
+   -track=track - Use a track other than est
+   -lib=libWildCard (SQL format where  1073787440s like * normally)
+   -refSeq - Don't correct indels in EST, treat as refSeq
+To get MGC est's for Dec 2001 human do:
+axtForEst mm2 ~/bz/axtBest mgcEst.axt -track=tightEst -lib=NIH_MGC%
+
+======================================================================
+
+axtIndex - build index of axt file
+usage:
+   axtIndex in.axt out.axt.ix
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtPretty - Convert axt to more human readable format.
+usage:
+   axtPretty in.axt out.pretty
+options:
+   -line=N Size of line, default 70
+
+======================================================================
+
+axtQueryCount - Count bases covered on each query sequence
+usage:
+   axtQueryCount in.axt
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtSort - Sort axt files
+usage:
+   axtSort in.axt out.axt
+options:
+   -query - Sort by query position, not target
+
+======================================================================
+
+axtSplitByTarget - Split a single axt file into one file per target
+usage:
+   axtSplitByTarget in.axt outDir
+
+======================================================================
+
+axtSwap - Swap source and query in an axt file
+usage:
+   axtSwap source.axt target.sizes query.sizes dest.axt
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtToBed - Convert axt alignments to simple bed format
+usage:
+   axtToBed in.axt out.bed
+options:
+   -xxx=XXX
+
+======================================================================
+
+axtToMaf - Convert from axt to maf format
+usage:
+   axtToMaf in.axt tSizes qSizes out.maf
+Where tSizes and qSizes is a file that contains
+the sizes of the target and query sequences.
+Very often this with be a chrom.sizes file
+
+======================================================================
+
+axtToPsl - Convert axt to psl format
+usage:
+   axtToPsl in.axt tSizes qSizes out.psl
+Where tSizes and qSizes are tab-delimited files with
+       <seqName><size>
+columns.
+options:
+   -xxx=XXX
+
+======================================================================
+
+bargeVsMap - Plot clones in barge vs. map coordinates
+usage:
+   bargeVsMap bargeFile infoFile output.gif
+
+======================================================================
+
+barger - make a clone map based on sequence overlap and sts positions.
+usage:
+      barger sequence.inf strictPairs loosePairs inSts outDir
+where inClones is a list of clones, inPairs contains a list of overlapping clones,
+inSts contains sts positions and outDir is a directory where the various result
+files are written. (outDir will be created if it doesn't exist).
+
+======================================================================
+
+bedCons - Look at conservation of a BED track vs. a refence (nonredundant) alignment track
+usage:
+   bedCons database refAliTrack bedTrack
+Bed track can also be a bed file (ending in .bed suffix)
+options:
+   -chrom=chrom  - restrict to a single chromosome.
+
+======================================================================
+
+bedCoverage - Analyse coverage by bed files - chromosome by 
+chromosome and genome-wide.
+usage:
+   bedCoverage database bedFile
+Note bed file must be sorted by chromosome
+   -restrict=restrict.bed Restrict to parts in restrict.bed
+
+======================================================================
+
+bedCoverage - Analyse coverage by bed files - chromosome by 
+chromosome and genome-wide.
+usage:
+   bedCoverage database bedFile
+Note bed file must be sorted by chromosome
+
+======================================================================
+
+bedDown - Make stuff to find a BED format submission in a new version
+usage:
+   bedDown database table output.fa output.tab
+
+======================================================================
+
+bedSort - Sort a .bed file by chrom,chromStart
+usage:
+   bedSort in.bed out.bed
+in.bed and out.bed may be the same.
+======================================================================
+
+bedUp - Load bed submissions after conversion back into new database.
+usage:
+   bedUp oldDb table newDb old.tab convert.psl missing
+
+======================================================================
+
+please use:
+
+ bin param sequence 
+
+ where   param - name of file with parameters  
+
+ and  sequence - name of file with sequence   
+
+======================================================================
+
+binGood - convert text format alignment file to binary format
+usage:
+    binGood good.txt good.ali
+
+
+======================================================================
+
+blat - Standalone BLAT v. 15 fast sequence search command line tool
+usage:
+   blat database query [-ooc=11.ooc] output.psl
+where:
+   database is either a .fa file, a .nib file, or a list of .fa or .nib
+   files, query is similarly a .fa, .nib, or list of .fa or .nib files
+   -ooc=11.ooc tells the program to load over-occurring 11-mers from
+               and external file.  This will increase the speed
+               by a factor of 40 in many cases, but is not required
+   output.psl is where to put the output.
+options:
+   -t=type     Database type.  Type is one of:
+                 dna - DNA sequence
+                 prot - protein sequence
+                 dnax - DNA sequence translated in six frames to protein
+               The default is dna
+   -q=type     Query type.  Type is one of:
+                 dna - DNA sequence
+                 rna - RNA sequence
+                 prot - protein sequence
+                 dnax - DNA sequence translated in six frames to protein
+                 rnax - DNA sequence translated in three frames to protein
+               The default is dna
+   -prot       Synonymous with -d=prot -q=prot
+   -ooc=N.ooc  Use overused tile file N.ooc.  N should correspond to 
+               the tileSize
+   -tileSize=N sets the size of match that triggers an alignment.  
+               Usually between 8 and 12
+               Default is 11 for DNA and 5 for protein.
+   -oneOff=N   If set to 1 this allows one mismatch in tile and still
+               triggers an alignments.  Default is 0.
+   -minMatch=N sets the number of tile matches.  Usually set from 2 to 4
+               Default is 2 for nucleotide, 1 for protein.
+   -minScore=N sets minimum score.  This is twice the matches minus the 
+               mismatches minus some sort of gap penalty.  Default is 30
+   -minIdentity=N Sets minimum sequence identity (in percent).  Default is
+               90 for nucleotide searches, 25 for protein or translated
+               protein searches.
+   -maxGap=N   sets the size of maximum gap between tiles in a clump.  Usually
+               set from 0 to 3.  Default is 2. Only relevent for minMatch > 1.
+   -noHead     suppress .psl header (so it's just a tab-separated file)
+   -makeOoc=N.ooc Make overused tile file
+   -repMatch=N sets the number of repetitions of a tile allowed before
+               it is marked as overused.  Typically this is 256 for tileSize
+               12, 1024 for tile size 11, 4096 for tile size 10.
+               Default is 1024.  Typically only comes into play with makeOoc
+   -mask=type  Mask out repeats.  Alignments won't be started in masked region
+               but may extend through it in nucleotide searches.  Masked areas
+               are ignored entirely in protein or translated searches. Types are
+                 lower - mask out lower cased sequence
+                 upper - mask out upper cased sequence
+                 out   - mask according to database.out RepeatMasker .out file
+                 file.out - mask database according to RepeatMasker file.out
+   -qMask=type Mask out repeats in query sequence.  Similar to -mask above but
+               for query rather than target sequence.
+   -minRepDivergence=NN - minimum percent divergence of repeats to allow 
+               them to be unmasked.  Default is 15.  Only relevant for 
+               masking using RepeatMasker .out files.
+   -dots=N     Output dot every N sequences to show program's progress
+   -trimT      Trim leading poly-T
+   -noTrimA    Don't trim trailing poly-A
+   -trimHardA  Remove poly-A tail from qSize as well as alignments in psl output
+   -out=type   Controls output file format.  Type is one of:
+                   psl - Default.  Tab separated format without actual sequence
+                   pslx - Tab separated format with sequence
+                   axt - blastz-associated axt format
+                   maf - multiz-associated maf format
+                   wublast - similar to wublast format
+                   blast - similar to NCBI blast format
+======================================================================
+
+blat2p - blat two proteins
+usage:
+   blat2p a.fa b.fa
+options:
+   -xxx=XXX
+
+======================================================================
+
+blatFilter - filter blat alignments somewhat
+usage:
+   blatFilter output.psl infile(s)
+options:
+   -xxx=XXX
+
+======================================================================
+
+borfBig - Run Victor Solovyev's bestorf repeatedly
+usage:
+   borfBig in.fa out.tab
+options:
+   -exe=borf - where exe file belongs
+   -tmpFa=file - where to put temp .fa file
+   -tmpOrf=file - where to put temp bestorf output file
+
+======================================================================
+
+calc - Little command line calculator
+usage:
+   calc this + that * theOther / (a + b)
+
+======================================================================
+
+catDir - concatenate files in directory to stdout.
+For those times when too many files for cat to handle.
+usage:
+   catDir dir(s)
+options:
+   -r            Recurse into subdirectories
+   -suffix=.suf  This will restrict things to files ending in .suf
+   '-wild=*.???' This will match wildcards.
+   -nonz         Prints file name of non-zero length files
+
+======================================================================
+
+catUncomment - Concatenate input removing lines that start with '#'
+Output goes to stdout
+usage:
+   catUncomment file(s)
+
+======================================================================
+
+ccCp - copy a file to cluster.usage:
+   ccCp sourceFile destFile [hostList]
+This will copy sourceFile to destFile for all machines in
+hostList
+
+example:
+   ccCp h.zip /var/tmp/h.zip newHosts
+======================================================================
+
+cdnaOff - creates sorted offset files that position cDNAs in chromosome.
+usage:
+    cdnaOff good.txt outputDir\ 
+======================================================================
+
+cdnaOnOoJobs - make condor submission file for EST and mRNA alignments on draft assembly
+usage:
+   cdnaOnOoJobs ooDir conDir cdna(s)
+This will create conDir and fill it up with a condor submission file
+and various log files.  Please give full path names to both ooDir and conDir
+cdna should be 'refseq', 'mrna', and/or 'est'
+======================================================================
+
+checkDbSync - Check databases on different machines are in sync
+usage:
+   checkDbSync database user password referenceHost otherHost(s)
+
+======================================================================
+
+checkGoldDupes - Check gold files in assembly for duplicates
+usage:
+   checkGoldDupes ooDir goldFileName
+options:
+   -xxx=XXX
+
+======================================================================
+
+checkNt - Check that ctg_nt.agp, ctg_coords, and ctg.fa are consistent
+usage:
+   checkNt ctg_ng.agp ctg_coords ctg.fa
+options:
+   -xxx=XXX
+
+======================================================================
+
+checkYbr - Check NCBI assembly (aka Yellow Brick Road)
+usage:
+   checkYbr build.agp contig.fa seq_contig.md
+options:
+   -checkUs=ourDir - check that our NT*/NT*.fa under ourDir look right
+
+======================================================================
+
+checkableBorf - Convert borfBig orf-finder output to checkable form
+usage:
+   checkableBorf file.borf file.cds output.check
+options:
+   -xxx=XXX
+
+======================================================================
+
+chopFaLines - Read in FA file with long lines and rewrite it with shorter lines
+usage:
+   chopFaLines in.fa out.fa
+
+======================================================================
+
+clusterRna - Make clusters of mRNA and ESTs
+usage:
+   clusterRna database rnaOut.bed estOut.bed
+options:
+   -MGC=mgc.out - output MGC ESTs to sequence fully
+   -chrom=chrN - work on chrN (default chr22)
+   -rna=rnaTable - table to use for mRNA
+   -est=estTable - table to use for ESTs
+   -orient=orientTable - table to use for EST orientation
+   -group=group.out - produce list of mRNA/EST in cluster
+
+======================================================================
+
+cmpMap - compare maps.
+usage:
+  cmpMap sequence.inf map.wu map.jk
+======================================================================
+
+correctEst - Correct ESTs by passing them through genome
+usage:
+   correctEst oldEst.fa ali.psl nibDir out.fa
+The corrected sequence will be in upper case
+options:
+   -xxx=XXX
+
+======================================================================
+
+countChars - Count the number of occurences of a particular char
+usage:
+   countChars char file(s)
+Char can either be a two digit hexadecimal value or
+a single letter literal character
+
+======================================================================
+
+ctgFaToFa - Convert from one big file with all NT contigs to one contig per file.
+usage:
+   ctgFaToFa ctg.fa ctg_coords ntDir
+
+======================================================================
+
+ctgToChromFa - convert contig level fa files to chromosome level
+usage:
+   ctgToChromFa chromName inserts chromDir ordered.lst outFile
+options:
+   spacing=number  - set spacing between contigs to number (default 200000)
+   lift=file.lft - set spacing between contigs from lift file. 
+
+======================================================================
+
+dataSim - Simulate system where data is dynamically distributed
+usage:
+   dataSim machine aCount bCount
+options:
+   -xxx=XXX
+
+======================================================================
+
+dnaMotifFind - Locate preexisting motifs in DNA sequence
+usage:
+   dnaMotifFind motifFile sequence.fa output.tab
+options:
+   -markov=level  Level of Markov background model - 0 1 or 2
+   -background=seq.fa  Sequence to use for background model
+   -threshold=N  significance threshold (ln based, default 8.0)
+   -rc Include reverse complement
+
+======================================================================
+
+dupeFoo - Do some duplication analysis
+usage:
+   dupeFoo dupe.psl dupe.fa region.out
+
+======================================================================
+
+eisenInput - Create input for Eisen-style cluster program
+usage:
+   eisenInput database output.txt
+
+======================================================================
+
+emblMatrixToMotif - Convert transfac matrix in EMBL format to dnaMotif
+usage:
+   emblMatrixToMotif in.embl out.tab
+options:
+   -org=human   get only human (or mouse or whatever).
+
+======================================================================
+
+endsInLf - Check that last letter in files is end of line
+usage:
+   endsInLf file(s)
+options:
+   -zeroOk
+
+======================================================================
+
+estLibStats - Calculate some stats on EST libraries given file from polyInfo
+usage:
+   estLibStats database eiInfo.bed output
+options:
+   -xxx=XXX
+
+======================================================================
+
+This program aligns cDNA with genomic sequence. Usage:
+    exonAli named output cdnaName(s)
+    exonAli in output listFile
+    exonAli all output faFile ntDir
+    exonAli starting output faFile ntDir startingIx [count]
+    exonAli resume output faFile ntDir
+
+======================================================================
+
+expToRna - Make a little two column table that associates 
+rnaClusters with expression info
+usage:
+   expToRna database rnaTable expTable output.tab
+options:
+   -chrom=chr22 - restrict to a chromosome (default is whole genome)
+
+======================================================================
+
+faCmp - Compare two .fa files
+usage:
+   faCmp a.fa b.fa
+
+======================================================================
+
+faFilterN - Get rid of sequences with too many N's
+usage:
+   faFilterN in.fa out.fa maxPercentN
+options:
+   -out=in.fa.out
+   -uniq=self.psl
+
+======================================================================
+
+faFrag - Extract a piece of DNA from a .fa file.
+usage:
+   faFrag in.fa start end out.fa
+
+======================================================================
+
+faNcbiToUcsc - Convert FA file from NCBI to UCSC format.
+usage:
+   faNcbiToUcsc inFile outFile
+options:
+   -split - split into separate files
+   -ntLast - look for NT_ on last bit
+   -wordBefore=xx The word before the accession, default 'gb'
+   -wordIx=N The word (starting at zero) the accession is in
+
+======================================================================
+
+faNoise - Add noise to .fa file
+usage:
+   faNoise inName outName transitionPpt transversionPpt insertPpt deletePpt chimeraPpt
+options:
+   -upper - output in upper case
+
+======================================================================
+
+faOneRecord - Extract a single record from a .FA file
+usage:
+   faOneRecord in.fa recordName
+
+======================================================================
+
+faRc - Reverse complement a FA file
+usage:
+   faRc in.fa out.fa
+In.fa and out.fa may be the same file.
+options:
+   -keepName - keep name identical (don't prepend RC)
+
+======================================================================
+
+faSize - print total base count in fa files.
+usage:
+   faSize file(s).fa
+Command flags
+   detailed=on       outputs name and size of each record
+
+======================================================================
+
+faSplit - Split an fa file into several files.
+usage:
+   faSplit how input.fa count outRoot
+where how is either 'base' 'sequence' or 'size'.  Files
+split by sequence will be broken at the nearest
+fa record boundary, while those split by base will
+be broken at any base.  Files broken by size will
+be broken every count bases.
+Examples:
+   faSplit sequence estAll.fa 100 est
+This will break up estAll.fa into 100 files
+(numbered est001.fa est002.fa, ... est100.fa
+Files will only be broken at fa record boundaries
+   faSplit base chr1.fa 10 1_
+This will break up chr1.fa into 10 files
+   faSplit size input.fa 2000 outRoot
+This breaks up input.fa into 2000 base chunks
+   faSplit about est.fa 20000 outRoot
+This will break up est.fa into files of about 20000 bytes each.
+
+Options:
+    -maxN=N - Suppress pieces with more than maxN n's.  Only used with size.
+              default is size-1 (only suppresses pieces that are all N).
+    -oneFile - Put output in one file. Only used with size
+    -out=outFile Get masking from outfile.  Only used with size.
+    -lift=file.lft Put info on how to reconstruct sequence from
+                   pieces in file.lft.  Only used with size
+
+======================================================================
+
+faToNib - Convert from .fa to .nib format
+usage:
+   faToNib [options] in.fa out.nib
+options:
+   -softMask - create nib that soft-masks lower case sequence
+               Note gfServer/gfClient don't know about this yet
+   -hardMask - create nib that hard-masks lower case sequence
+
+======================================================================
+
+faTrans - Translate DNA .fa file to peptide
+usage:
+   faTrans in.fa out.fa
+options:
+   -stop stop at first stop codon (otherwise puts in Z for stop codons)   -offset=N start at a particular offset.
+======================================================================
+
+fakeFinContigs - Fake up contigs for a finished chromosome
+usage:
+   fakeFinContigs fin.agp fin.fa finDir rootName finFaDir ooVer
+This will scan fin.agp for gaps, and create contigs in finDir
+for each section between gaps
+Example:
+   fakeFinContigs chr20.agp chr20.fa . ctg20fin ~/gs/fin/fa 101
+
+======================================================================
+
+fakeOut - fake a RepeatMasker .out file based on a N's in .fa file
+usage:
+   fakeOut x.fa.masked x.fa.out
+
+======================================================================
+
+featureBits - Correlate tables via bitmap projections. 
+usage:
+   featureBits database table(s)
+This will return the number of bits in all the tables anded togetherOptions:
+   -bed=output.bed   Put intersection into bed format
+   -fa=output.fa     Put sequence in intersection into .fa file
+   -faMerge          For fa output merge overlapping features.
+   -minSize=N        Minimum size to output (default 1)
+   -chrom=chrN       Restrict to one chromosome
+You can include a '!' before a table name to negate it.
+Some table names can be followed by modifiers such as:
+    :exon:N  Break into exons and add N to each end of each exon
+    :cds     Break into coding exons
+    :intron:N Break into introns, remove N from each end
+    :upstream:N  Consider the region of N bases before region
+    :end:N  Consider the region of N bases after region
+
+======================================================================
+
+ffaToFa convert Greg Schuler .ffa fasta files to UCSC .fa fasta files
+usage:
+    ffaToFa file.ffa faDir trans
+where ffaDir is directory full of .ffa files, faDir is where you want
+to put the corresponding .fa files, trans is a table that
+translates from one name to the other and cloneSizes is a file
+that lists the size of each clone.
+If you put 'stdin' for file.ffa, it will read from standard input.
+
+======================================================================
+
+findContigsWithClones - find contigs that contain clones
+usage:
+   findContigsWithClones cloneList ooDir fileName
+example:
+   findContigsWithClones chr22.lst oo.29 gold.99
+
+======================================================================
+
+fixCr - strip <CR>s from ends of lines
+======================================================================
+
+flagMhcClones - Look for clones Stephan wants in MHC.
+usage:
+   flagMhcClones mhcClones.txt gs.N
+
+======================================================================
+
+fqToQa - convert from fq format with one big file to
+format with one file per clone.
+usage:
+    fqToQa infile.fq outDir qaInfo
+This will put the quality scores from infile.fq into a series of
+.qa files in outdir, one file per clone.  Info from the '>' lines
+from the .fq file will be stored in the qaInfo file
+======================================================================
+
+fqToQac - convert from fq format with one big file to
+compressed format with one file per clone.
+usage:
+    fqToQac [infile.fq] outDir
+This will put the quality scores from infile.fq into a series of
+.qac files in outdir, one file per clone.  The .qac files can be
+uncompressed with qacToQa.
+======================================================================
+
+fragPart - get part of a fragment's sequence
+usage:
+   fragPart acc.frag [strand] [start] [end]
+examples:
+   fragPart AC000001.4_3 + 100 200
+This gets between bases 100 and 200 of fragment 4_3 in 
+AC000001.fa somewhere....
+
+======================================================================
+
+usage: freen output
+======================================================================
+
+g2gOverlap- Look at clone clone overlap. 
+usage:
+   g2gOverlap source.psl output [maxBad%] [maxTail] [minUniq] [minMatch] [minFragSize]
+This would put the overlaps in source.psl into out.long
+in the forms of tab delimited lines:
+  <clone 1><overlap><clone 2>
+
+The optional parameters have the following functions and defaults
+   maxBad% (1) - Maximum percentage of mismatches and inserts
+   maxTail (200) - Maximum non-aligning section on end of fragment
+   minUnique (50) - Minimum number of non-repeat-masked matching bases
+   minMatch (100) - Minimum number of matching bases
+   minFragSize(200) - Minimum size of fragments
+
+======================================================================
+
+g2gSeqOverlap - make a big .fa file with overlap sequence.
+usage:
+   g2gSeqOverlap pairFile g2g.psl output.fa
+======================================================================
+
+gapper - try to find unsequenced gaps in the draft human genome
+by looking at BAC end pair alignments between clones and
+between fingerprint contigs.
+usage:
+   gapper mapFile pairFile bacEnds.psl ooDir ooVersion outRoot
+This will look at the WashU style fingerprint map file in mapFile
+the list of BAC end pairs in pairFile and the bacEnd/clone alignments
+in bacEnd.psl, analyze them, and put the results in a series of files
+named outRoot.xxx, where xxx includes:
+    .bep  - pairs of clones connected by a single bac end
+
+======================================================================
+
+gb2cdi - convert GeneBank (GB) files to .fa and cDna Info (CDI) file.
+usage:
+    gb2cdi file(s).gb file.fa file.cdiFile
+======================================================================
+
+gbOneAcc - retrieve one or a few records from a GenBank flat file.
+usage:
+  gbOneAcc gbFile acc(s)
+The output will be printed to standard out
+======================================================================
+
+gbToFaRa - Convert GenBank flat format file to an fa file containing
+the sequence data, an ra file containing other relevant info and
+a ta file containing summary statistics.
+usage:
+   gbToFaRa filterFile faFile raFile taFile genBankFile(s)
+where filterFile is definition of which records and fields
+to use or the word null if you want no filtering.options:
+     byOrganism=outputDir - Make separate files for each organism
+
+======================================================================
+
+gbtofa converts from GeneBank to fa format.
+usage:      gbtofa in.gb out.fa
+======================================================================
+
+gcForBed - Calculate g/c percentage and other stats for regions covered by bed
+usage:
+   gcForBed in.bed nibDir
+options:
+   -xxx=XXX
+
+======================================================================
+
+gensub2 - Generate condor submission file from template and two file lists
+usage:
+   gensub2 <file list 1> <file list 2> <template file> <output file>
+This will substitute each file in the file lists for $(path1) and $(path2)
+in the template between #LOOP and #ENDLOOP, and write the results to
+the output.  Other substitution variables are:
+       $(path1)  - full path name of first file
+       $(path1)  - full path name of second file
+       $(dir1)   - first directory. Includes trailing slash if any.
+       $(dir2)   - second directory
+       $(lastDir1) - The last directory in the first path. Includes trailing slash if any.
+       $(lastDir2) - The last directory in the second path. Includes trailing slash if any.
+       $(root1)  - first file name without directory or extension
+       $(root2)  - second file name without directory or extension
+       $(ext1)   - first file extension
+       $(ext2)   - second file extension
+       $(file1)  - name without dir of first file
+       $(file2)  - name without dir of second file
+       $(num1)   - index of first file in list
+       $(num2)   - index of second file in list
+The <file list 2> parameter can be 'single' if there is only 
+one file list.  By default the order is diagonal, meaning if 
+the first list is ABC and the secon list is abc the combined 
+order is Aa Ba Ab Ca Bb Ac  Cb Bc Cc.  This tends to put the 
+largest jobs first if the file lists are both sorted by size. 
+The following options can change this:
+    -group1 - write elements in order Aa Ab Ac Ba Bb Bc Ca Cb Cc
+    -group2 - write elements in order Aa Ba Ca Ab Bb Cb Ac Bc Cc
+
+======================================================================
+
+getFeatDna - Get dna for a type of feature
+usage:
+   getFeatDna database table chrom output.fa
+where:
+   database is the name of a browser database, like 'hg6'
+   table is the name of a table in this database, like 'exoFish'
+   chrom is a chromosome name, like 'chr8' or 'chr7_random'.  'all'
+       can be used here to denote all chromosomes
+   output.fa is where to put the output in Fasta format
+options:
+   -chromStart=NNN   restrict to features that start after NNN
+   -chromEnd=NNN     restrict to features that end before NNN
+   '-where=some sql pattern'  restrict to features matching some sql pattern
+   -breakUp=how break up alignments into pieces.  How is one of
+                exons - parts that align
+                introns - parts between alignments
+                cdsExons - coding exons (only for gene predictions)
+   -merge=N     merge blocks separated by N or less
+   -output=format format of output.  One of:
+                fasta - fasta sequence (default)
+                pos - position list
+   -addStart=NNN How much to add to feature start coordinate
+   -addEnd=NNN   How much to add to feature end coordinate
+   -addTo=how    How to add to feature coordinates.  One of:
+                   whole - the whole thing (default)
+                   start - addStart/padEnd relative to feature start
+                   end   - addStart/padEnd relative to feature end
+
+======================================================================
+
+getRnaPred - Get RNA for gene predictions
+usage:
+   getRnaPred database table chromosome output.fa
+options:
+   -xxx=XXX
+
+======================================================================
+
+gfClient v. 15 - A client for the genomic finding program that produces a .psl file
+usage:
+   gfClient host port nibDir in.fa out.psl
+where
+   host is the name of the machine running the gfServer
+   port is the same as you started the gfServer with
+   nibDir is the path of the nib files relative to the current dir
+       (note these are needed by the client as well as the server)
+   in.fa a fasta format file.  May contain multiple records
+   out.psl where to put the output
+options:
+   -t=type     Database type.  Type is one of:
+                 dna - DNA sequence
+                 prot - protein sequence
+                 dnax - DNA sequence translated in six frames to protein
+               The default is dna
+   -q=type     Query type.  Type is one of:
+                 dna - DNA sequence
+                 rna - RNA sequence
+                 prot - protein sequence
+                 dnax - DNA sequence translated in six frames to protein
+                 rnax - DNA sequence translated in three frames to protein
+   -dots=N   Output a dot every N query sequences
+   -nohead   Suppresses psl five line header
+   -out=type   Controls output file format.  Type is one of:
+                   psl - Default.  Tab separated format without actual sequence
+                   pslx - Tab separated format with sequence
+                   axt - blastz-associated axt format
+                   maf - multiz-associated maf format
+                   wublast - similar to wublast format
+                   blast - similar to NCBI blast format
+======================================================================
+
+gfServer - Make a server to quickly find where DNA occurs in genome.
+To set up a server:
+   gfServer start host port file(s).nib
+To remove a server:
+   gfServer stop host port
+To query a server with DNA sequence:
+   gfServer query host port probe.fa
+To query a server with protein sequence:
+   gfServer protQuery host port probe.fa
+To query a server with translated dna sequence:
+   gfServer transQuery host port probe.fa
+To process one probe fa file against a .nib format genome (not starting server):
+   gfServer direct probe.fa file(s).nib
+To figure out usage level
+   gfServer status host port
+To get input file list
+   gfServer files host port
+Options:
+   -tileSize=N size of n-mers to index.  Default is 11 for nucleotides, 4 for
+               proteins (or translated nucleotides).
+   -minMatch=N Number of n-mer matches that trigger detailed alignment
+               Default is 2 for nucleotides, 3 for protiens.
+   -maxGap=N   Number of insertions or deletions allowed between n-mers.
+               Default is 2 for nucleotides, 0 for protiens.
+   -trans  Translate database to protein in 6 frames.  Note: it is best
+           to run this on RepeatMasked data in this case.
+   -log=logFile keep a log file that records server requests.
+   -seqLog    Include sequences in log file
+
+======================================================================
+
+ggcPic - Generic gene conservation picture
+usage:
+   ggcPic axtDir chrom.sizes genePred.txt outDir
+options:
+   -generic - Scale things for generic gene
+   -restrict=file  Restrict to only accessions listed in file
+          File should have one accession per line
+   -geneParts=parts.txt - Include info on parts of each gene in file
+
+======================================================================
+
+goldToAgp - convert from ooGreedy 'gold' format to the official
+'.agp' format for golden paths through a contig. 
+usage:
+  goldToAgp gsDir version chromDir(s)
+This will look for gsDir/fin/trans gsDir/draft/trans and gsdir/predraft/trans
+to define name translations.  It will then translate in chromDir/ctg*/gold.version
+into chromDir/ctg*/ctg*.agp
+
+======================================================================
+
+gpStats - Figure out some stats on the golden path.
+usage:
+   gpStats windowSize maxGap file(s).agp
+
+======================================================================
+
+gpToGtf - Convert gp table to GTF
+usage:
+   gpToGtf database table output.gtf
+options:
+   -xxx=XXX
+
+======================================================================
+
+gsBig - Run Genscan on big input and produce GTF files and other parsed output
+usage:
+   gsBig file.fa output.gtf
+options:
+   -subopt=output.bed - Produce suboptimal exons.
+   -trans=output.fa - where to put translated proteins.
+   -prerun=input.genscan - Assume genscan run already with this output.
+   -window=size    Set window to pass to genscan specific size (default 1200000)
+                   You want ~400 bytes memory for each base in window.
+   -exe=/bin/genscan-linux/genscan - where genscan executable is.
+   -par=/bin/genscan-linux/HumanIso.smat - where parameter file is.
+   -tmp=/tmp - where temporary files go to.
+
+======================================================================
+
+hgAvidShortBed - Convert short form of AVID alignments to BED
+usage:
+   hgAvidShortBed input avidRepeat.bed avidUnique.bed
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgClonePos - create clonePos table in browser database
+usage:
+   hgClonePos database ooDir ffa/sequence.inf gsDir
+options:
+   maxErr=N  set maximum allowed errors before aborting (default 0)
+
+======================================================================
+
+hgCtgPos - Store contig positions ( from lift files ) in database.
+usage:
+   hgCtgPos database ooDir
+
+======================================================================
+
+hgExonerate - Convert Exonerate modified GFF files to BED format and load in database.
+usage:
+   hgExonerate database table inputFile
+options:
+   -elia    - handle Elia's 11 column GFF's
+======================================================================
+
+hgExtFile - Add external file to database
+usage:
+   hgExtFile database file(s)
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgFiberglass - Turn Fiberglass Annotations into a BED and load into database
+usage:
+   hgFiberglass database file
+
+======================================================================
+
+hgGcPercent - Calculate GC Percentage in 20kb windows
+usage:
+   hgGcPercent database nibDir
+
+======================================================================
+
+hgGenCon - generate Genie constraint files for human genome
+data.  (Currently set up for chromosome 22.)
+usage:
+    hgGenCon input.sf est.pai dnaDir gffDir
+Will make constraints that correspond to files in dnaDir in
+gffDir using the alignment data in input.sf and est.pai.
+======================================================================
+
+hgGeneBands - Find bands for all genes
+usage:
+   hgGeneBands database outFile.tab
+
+======================================================================
+
+hgGoldGapGl - Put chromosome .agp and .gl files into browser database.
+usage:
+   hgGoldGapGl database gsDir ooSubDir
+options:
+   -noGl  - don't do gl bits
+   -chrom=chrN - just do a single chromosome.  Don't delete old tables.
+example:
+   hgGoldGapGl hg5 /projects/hg/gs.5 oo.21
+
+======================================================================
+
+hgKnownGene - Load auxiliarry tables on Genie known genes
+usage:
+   hgKnownGene database known.gtf
+
+======================================================================
+
+hgKnownMore - Create the knownMore table from a variety of sources.
+usage:
+   hgKnownMore database loc2ref omimIds nomeids.txt
+where:
+   database - destination mysql database, often hgN for some N
+   loc2ref - downloaded from ftp://ncbi.nlm.nih.gov/refseq/LocusLink
+   mim2loc - downloaded from ftp://ncbi.nlm.nih.gov/refseq/LocusLink
+   omimIds - connects names and omimIds
+   nomeIds - lots of info from HUGO ftp site
+
+======================================================================
+
+hgLoadBed - Load a generic bed file into database
+usage:
+   hgLoadBed database track files(s).bed
+options:
+   -nobin   suppress bin field
+   -oldTable add to existing table
+   -sqlTable=table.sql Create table from .sql file
+   -tab  Separate by tabs rather than space
+
+======================================================================
+
+hgLoadOut - load RepeatMasker .out files into database
+usage:
+   hgLoadOut database file(s).out
+For each table chrN.out this will create the table
+chrN_rmsk in the database
+options:
+   -nobin - don't introduce bin fields
+   -tabFile=text.tab - don't actually load database, just create tab file
+======================================================================
+
+hgLoadPsl - Load up a mySQL database with psl alignment tables
+usage:
+   hgLoadPsl database file1.psl ... fileN.psl
+This must be run in the same directory as the .psl files
+It will create a table for each psl file.
+options:
+   -table=tableName  Explicitly set tableName.  (Defaults to file name)
+   -tNameIx  add target name index
+   -xa    Include sequence info
+   -nobin Repress binning
+======================================================================
+
+hgLoadRna - load browser database with mRNA/EST info.
+usage:
+   hgLoadRna new database
+This creates freshly the RNA part of the database
+   hgLoadRna add [-type=type] database /full/path/mrna.fa mrna.ra
+      type can be mRNA or EST or whatever goes into extFile.name
+This adds mrna info to the database
+   hgLoadRna drop database
+This drops the tables created by hgLoadRna from database.
+   hgLoadRna addSeq [-abbr=junk] database file(s).fa
+This loads sequence files only, no auxiliarry info.  Typically
+these are more likely to be mouse reads than rna actually....
+
+======================================================================
+
+hgNibSeq - convert DNA to nibble-a-base and store location in database
+usage:
+   hgNibSeq database nibDir file(s).fa
+This will create .nib versions of all the input .fa files in nibDir
+and store pointers to them in the database. Use full path name for nibDir.
+options:
+   -preMadeNib  don't bother generating nib files, they exist already
+   -table=tableName - Use this table name rather than chromInfo
+
+======================================================================
+
+hgPepPred - Load peptide predictions from Ensembl or Genie
+usage:
+   hgPepPred database type file(s)
+where type is either 'ensembl' or 'genie' or 'softberry'
+or
+   hgPepPred database generic table files(s)
+which will load the given table assuming the peptide name is
+in the fasta record
+options:
+   -abbr=prefix  Abbreviate by removing prefix from names
+
+======================================================================
+
+hgPhMouse - Load phMouse track
+usage:
+   hgPhMouse database track chromFile(s)
+options:
+   -add - add data, don't overwrite old track
+
+======================================================================
+
+wrong # args
+hgRefAlign - Load a reference alignment into a table.
+usage:
+   hgRefAlign [-n] format db table alignfile(s) ...
+supported formats are: `webb', `tab'
+The same chromosome should not appear in multiple alignfiles
+======================================================================
+
+hgRefSeqMrna - Load refSeq mRNA alignments and other info into refGene table
+usage:
+   hgRefSeqMrna database refSeq.fa refSeq.ra refSeq.psl loc2ref refSeqPep.fa mim2loc
+options:
+   -dots=N Output a dot every N records parsed
+   -test Generates tab files but doesn't actually load database.
+
+======================================================================
+
+hgRnaGenes - Turn RNA genes from GFF into database format (BED variant)
+usage:
+   hgRnaGenes database file.gff
+
+======================================================================
+
+hgSanger20 - Load extra info from Sanger Chromosome 20 annotations.
+usage:
+   hgSanger20 database sanger20.gff sanger20.info
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgSanger22 - Load up database with Sanger 22 annotations
+usage:
+   hgSanger22 database transcript.gff cds.gff mrna.fa aa.fa shortArmSize
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgSoftPromoter - Slap Softberry promoter file into database.
+usage:
+   hgSoftPromoter database files(s).prom
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgSoftberryHom - Make table storing Softberry protein homology information
+usage:
+   hgSoftberryHom database file(s).pro
+
+======================================================================
+
+hgStsAlias - Make table of STS aliases
+usage:
+   hgStsAlias database file.alias
+
+======================================================================
+
+hgStsMarkers - Load STS markers into database
+usage:
+   hgStsMarkers database markerDir
+
+======================================================================
+
+hgTpf - Make TPF table
+usage:
+   hgTpf database tpfDir
+options:
+   -xxx=XXX
+
+======================================================================
+
+hgTrackDb - Create trackDb table from text files.
+
+Note that the browser supports multiple trackDb tables, usually
+in the form: trackDb_YourUserName. Which particular trackDb
+table the browser uses is specified in the hg.conf file found
+either in your home directory as '.hg.conf' or in the web 
+server's cgi-bin directory as 'hg.conf'.
+usage:
+   hgTrackDb database trackDb_$(USER) trackDb.sql hgRoot
+
+======================================================================
+
+hgWaba - load Waba alignments into database
+usage:
+   hgWaba database species chromosome offset file(s).wab
+example:
+   hgWaba hg3 tet chr20 0 waba/*.wab
+
+======================================================================
+
+hgsql - Execute some sql code using passwords in .hg.conf
+usage:
+   hgsql database
+or:
+   hgsql database < file.sql
+or:
+   hgsql -h host database
+Generally anything in command line is passed to mysql
+after an implicit '-A -u user -ppassword
+
+======================================================================
+
+intronEnds - Gather stats on intron ends.
+usage:
+   intronEnds database geneTable
+options:
+   -chrom=chrN - restrict to a particular chromosome
+   -withUtr - restrict to genes with UTR regions
+
+======================================================================
+
+iriToControlTable - Convert improbizer run to simple list of control scores
+usage:
+   iriToControlTable inFile outDir
+options:
+   -xxx=XXX
+
+======================================================================
+
+iriToDnaMotif - Convert improbRunInfo to dnaMotif
+usage:
+   iriToDnaMotif improbRunInfo.txt dnaMotif.txt
+options:
+   -xxx=XXX
+
+======================================================================
+
+This program makes a name index file for an .ali file
+usage: ixali file.ali file.ix
+
+======================================================================
+
+jabba - A program to launch,  monitor, and restart jobs via Codine
+Normal usage is to do a 'jabba make' followed by 'jabba push' until
+job is done.  Use 'jabba check' to check status
+usage:
+   jabba command batch.hut [command-specific arguments]
+The commands are:
+jabba make batch.hut jobList
+   This makes the job-tracking database from a text file with the
+   command line for each job on a separate line
+jabba push batch.hut
+   This pushes forward the batch of jobs by submitting jobs to codine
+   It will try and keep the codine queue a size that is efficient for
+   codine, and retry failed jobs
+   options:
+      -retries=N   Number of retries per job - default 3.
+      -maxQueue=N  Number of jobs to allow on codine queue - default 10000
+      -minPush=N  Minimum number of jobs to queue - default 1.  Overrides maxQueue
+      -maxPush=N  Maximum numer of jobs to queue - default 10000
+      -warnTime=N Number of minutes job can run before hang warning - default 4320 (3 days)
+      -killTime=N Number of minutes job can run before push kills it - default 20160 (2 weeks)
+jabba shove batch.hut
+   Push jobs until can't push any more.  Options as with push and also:
+      -sleepTime=N  Number of seconds to sleep between pushes
+jabba try batch.hut
+      This is like jabba push, but only submits up to 10 jobs
+jabba check batch.hut
+   This checks on the progress of the jobs.
+jabba stop batch.hut
+   This stops all the jobs in the batch
+jabba finished batch.hut
+   List jobs that have finished
+jabba hung batch.hut
+   List hung jobs in the batch
+jabba crashed batch.hut
+   List jobs that crashed or failed output checks
+jabba failed batch.hut
+   List jobs that crashed or hung
+jabba problems batch.hut
+   List jobs that had problems (even if successfully rerun).  Includes host info
+jabba running batch.hut
+   Print info on currently running jobs
+jabba time batch.hut
+   List timing information
+
+======================================================================
+
+jkUniq - remove duplicate lines from file.  Lines need not
+be next to each other (plain Unix uniq works for that)
+usage:
+    jkUniq file(s)
+======================================================================
+
+knownVsBlat - Categorize BLAT mouse hits to known genes
+usage:
+   knownVsBlat database table output.stats
+options:
+   -dots=N - Output a dot every N known genes
+   -chrom=chrN - Restrict to a single chromosome
+   -percentId - calculate percent identity. Only works for psl tables. Slow
+   -format=type.  Type = 'bed' or 'psl'
+
+======================================================================
+
+kvsSummary - Summarize output of a bunch of knownVsBlats
+usage:
+   kvsSummary outputFile inputFile(s)
+options:
+   -xxx=XXX
+
+======================================================================
+
+lavToPsl - Convert blastz lav to psl format
+usage:
+   lavToPsl in.lav out.psl
+options:
+   -target-strand=c set the target strand to c (default is no strand)
+
+======================================================================
+
+ldHgGene - load database with gene predictions from a gff file.
+usage:
+     ldHgGene database table file(s).gff
+options:
+     -exon=type   Sets type field for exons to specific value
+
+======================================================================
+
+libScan - Scan libraries to help find g' capped ones
+usage:
+   libScan database output.html
+options:
+   -dots=N - write a dot every N mrnas/ests
+
+======================================================================
+
+liftFrags - This program lifts annotations on clone fragments
+to FPC contig coordinates
+usage:
+   liftFrags destFile gold.N geno.lst sourceDir
+Currently this only handles RepeatMasker .out files
+or psLayout .psl files
+
+======================================================================
+
+liftPromoHits - Lift motif hits from promoter to chromosome coordinates
+usage:
+   liftPromoHits promoPos.bed hit.tab hit.bed
+options:
+   -xxx=XXX
+
+======================================================================
+
+liftUp - change coordinates of .psl, .agp, .gl, .out, .gff, .gtf 
+.gdup .axt or .bed files to parent coordinate system. 
+usage:
+   liftUp [-type=.xxx] destFile liftSpec how sourceFile(s)
+The optional -type parameter tells what type of files to lift
+If omitted the type is inferred from the suffix of destFile
+Type is one of the suffixes described above.
+DestFile will contain the merged and lifted source files,
+with the coordinates translated as per liftSpec.  LiftSpec
+is tab-delimited with each line of the form:
+   offset oldName oldSize newName newSize
+The 'how' parameter controls what the program will do with
+items which are not in the liftSpec.  It must be one of:
+   carry - Items not in liftSpec are carried to dest without translation
+   drop  - Items not in liftSpec are silently dropped from dest
+   warn  - Items not in liftSpec are dropped.  A warning is issued
+If the destination is a .agp file then a 'large inserts' file
+also needs to be included in the command line:
+   liftUp dest.agp liftSpec how inserts sourceFile(s)
+This file describes where large inserts due to heterochromitin
+should be added.
+
+options:
+   -nohead  No header written for .psl files
+   -dots=N Output a dot every N lines processed
+   -pslQ  Lift query (rather than target) side of psl
+   -axtQ  Lift query (rather than target) side of axt
+
+======================================================================
+
+mafTest - Testing out maf stuff
+usage:
+   mafTest in out
+
+======================================================================
+
+makePai - make est.pai or bacEnds.pai file from .ra file or .info file
+usage:
+    makePai type inFile out.pai
+where 'type' is either 'est' or 'bacEnds'
+and inFile must be either .ra or .info
+
+======================================================================
+
+maskOutFa - Produce a masked .fa file given an unmasked .fa and
+a RepeatMasker .out file, or a .bed file to mask on.
+usage:
+   maskOutFa in.fa maskFile out.fa.masked
+where in.fa and out.fa.masked can be the same file, and
+maskFile can end in .out (for RepeatMasker) or .bed.
+MaskFile parameter can also be the word 'hard' in which case 
+lower case letters are converted to N's.
+options:
+   -soft - puts masked parts in lower case other in upper.
+   -softAdd - lower cases masked bits, leaves others unchanged
+   -clip - clip out of bounds mask records rather than dying.
+
+======================================================================
+
+mdToNcbiLift - Convert seq_contig.md file to ncbi.lft
+usage:
+   mdToNcbiLift seq_contig.md ncbi.lft
+options:
+   -xxx=XXX
+
+======================================================================
+
+mm - Map mender
+usage:
+   mm contigDir
+
+======================================================================
+
+mhcToNt - Convert Roger's MHC file to NT file
+usage:
+   mhcToNt mhcOrder.txt output.agp
+
+======================================================================
+
+mmUnmix - Help identify human contamination in mouse and vice versa.
+usage:
+   mmUnmix xAli.pslx fragDir suspect.out mouseBad.out humanBad.out cloneBad.out
+options:
+   -bed=contam.bed
+   -html=contam.html
+
+======================================================================
+
+motifSig - Combine info from multiple control runs and main improbizer run
+usage:
+   motifSig output.tab seqDir motifDir controlDir(s)
+
+======================================================================
+
+mousePoster - Search database info for making foldout
+usage:
+   mousePoster chrM chrN ...
+Note - you'll need to edit the source to use different data
+
+======================================================================
+
+newClones - Find new clones
+usage:
+   newClones old.lst new.lst
+
+======================================================================
+
+newProg - make a new C source skeleton.
+usage:
+   newProg progName description words
+This will make a directory 'progName' and a file in it 'progName.c'
+with a standard skeleton
+
+Options:
+   -cvs
+This will also check it into CVS.  'progName' should include full path
+in source repository
+
+======================================================================
+
+nibFrag - Extract part of a nib file as .fa
+usage:
+   nibFrag [options] file.nib start end strand out.fa
+options:
+   -masked - use lower case characters for masked-out bases
+   -upper - use uppper case characters for all bases
+   -name=name Use given name after '>' in output sequence
+
+======================================================================
+
+nt4Frag - Extract a piece of a .nt4 file to .fa format
+usage:
+   nt4Frag file.nib start end strand out.fa
+
+======================================================================
+
+ntGoldGl - Update gold.NN.noNt and gl.NN.noNt files to unpack NT contig info.
+Put updates in gold.NN and gl.NNusage:
+   ntGoldGl cloneSizes nt.agp NN ctgDir(s)
+
+======================================================================
+
+ooChains - make chains (partially ordered clone fragments) for oo dir
+usage:
+   ooChains ffaDir ooDir
+
+======================================================================
+
+ooCloneEnds - create cloneEnds files in each contig in ooDir
+usage:
+   ooCloneEnds ffaDir shiawPingEndsFile ooDir
+
+======================================================================
+
+ooCloneInfo - Merge info on clone size, phase, etc.
+usage:
+   ooCloneInfo gsDir ooDir
+
+======================================================================
+
+ooCloneOverlaps - Find overlaps between clones in FPC contig based on self.psl
+usage:
+   ooCloneOverlaps contigDir
+This needs the files cloneInfo, self.psl, and cloneEnds to exist in contigDir.
+This will create the file cloneEnds in contigDir
+
+======================================================================
+
+ooCloneSizes - Print out sizes of a bunch of clone .fa files.
+Also first and last fragment names
+usage:
+   ooCloneSizes dir(s)
+
+======================================================================
+
+cloneSpan - List clones and the amount the span by looking at .gl file
+usage:
+   cloneSpan file.gl
+
+======================================================================
+
+ooGreedy - ordering and orienting of unfinished contigs using
+a relatively simple, but hopefully effective greedy method.
+usage:
+      ooGreedy directory
+The program expects the files self.psl, est.psl, mrna.psl, bacEnds.psl
+bacEndsPairs to live in the directory.  It will create the files
+gl.N raft.N graph.N raft.psl ooGreedy.N.gl ooGreedy.log barge.N gold.N 
+where N is the version number of ooGreedy (currently 102).
+These files describe:
+  gl.N - Where each fragment is in 'golden path' coordinates
+         along with connectivity info on fragments.
+  raft.N - Fragments connected by direct sequence overlap
+  graph.N - connections of rafts by mRNA and BAC end data
+  raft.psl - Alignments from self.psl involved in building rafts
+  ooGreedy.N.gl - same as gl.N but lacking connectivity info
+  ooGreedy.log - record of decisions program made.
+  barge.N - where clones in the contig belong.
+  gold.N - what parts of what fragment to use to build final
+           'golden path' merged sequence for contig.
+
+======================================================================
+
+ooLiftSpec - make a specification for lifting coordinates from
+contig to chromosome
+usage:
+   ooLiftSpec cloneMap inserts ooDir
+This will make lift directory containing ordered.lft and random.lft
+each chromosome subdir of ooDir based on contigs in cloneMap and
+large inserts in inserts file.
+options:
+   -goldName=gold.NN - use gold.NN instead of contig.agp
+   -imre  - cloneMap is Imre TPF/FPC directory format rather than Wash U
+   -imreMerge=dir - Merge WashU and TPF maps.  You need to also specify fpcChrom
+   -fpcChrom=M,N - List of chromosomes where the WashU map should predominate.
+   -chrom=N - List of chromosomes to output (default all)
+
+======================================================================
+
+ooNtInput - Arrange source of finished sequence in FPC contig dirs to come from NT contigs where possible
+usage:
+   ooNtInput ooDir ntFaDir
+
+======================================================================
+
+ooSplitFins - Create splitFin files (list of split finished clones)
+usage:
+   ooSplitFins fin/trans ooDir
+
+======================================================================
+
+ooGreedy - ordering and orienting of unfinished contigs using
+a relatively simple, but hopefully effective greedy method.
+usage:
+      ooGreedy directory
+The program expects the files self.psl, est.psl, mrna.psl, bacEnds.psl
+bacEndsPairs to live in the directory.  It will create the files
+gl.N raft.N graph.N raft.psl ooGreedy.N.gl ooGreedy.log barge.N gold.N 
+where N is the version number of ooGreedy (currently 89).
+These files describe:
+  gl.N - Where each fragment is in 'golden path' coordinates
+         along with connectivity info on fragments.
+  raft.N - Fragments connected by direct sequence overlap
+  graph.N - connections of rafts by mRNA and BAC end data
+  raft.psl - Alignments from self.psl involved in building rafts
+  ooGreedy.N.gl - same as gl.N but lacking connectivity info
+  ooGreedy.log - record of decisions program made.
+  barge.N - where clones in the contig belong.
+  gold.N - what parts of what fragment to use to build final
+           'golden path' merged sequence for contig.
+======================================================================
+
+ooTester - generate a test set for ooGreedy
+usage
+    ooTester testName
+This will create the directory testName and populate
+it with a test set
+
+======================================================================
+
+ooWeedZero - Weed out phase zero clones from geno.lst
+usage:
+   ooWeedZero sequence.inf ooDir
+options:
+   -dupes=checkGoldDupes.out - removes a particular accession, zero or not.
+          Can occur multiple times.
+
+======================================================================
+
+orf - Find orf for cDNAs
+usage:
+   orf orf.stats mrna.fa output
+options:
+   -checkIn=seq.cds - File that says size and cds position of sequences
+   -checkOut=twinOrf.check - File that compares our cds position to real
+
+======================================================================
+
+orfStats - Collect stats on orfs
+usage:
+   orfStats refSeq.fa refSeq.cds orf.stats
+options:
+   -xxx=XXX
+
+======================================================================
+
+padFile - Add a bunch of zeroes to end of file
+usage:
+   padFile file count
+options:
+   -xxx=XXX
+
+======================================================================
+
+para - Manage a batch of jobs in parallel on a compute cluster.
+Normal usage is to do a 'para create' followed by 'para push' until
+job is done.  Use 'para check' to check status
+usage:
+   para command [command-specific arguments]
+The commands are:
+
+para create jobList
+   This makes the job-tracking database from a text file with the
+   command line for each job on a separate line
+para push 
+   This pushes forward the batch of jobs by submitting jobs to parasol
+   It will limit parasol queue size to something not too big and
+   retry failed jobs
+   options:
+      -retries=N   Number of retries per job - default 4.
+      -maxQueue=N  Number of jobs to allow on parasol queue - default 200000
+      -minPush=N  Minimum number of jobs to queue - default 1.  Overrides maxQueue
+      -maxPush=N  Maximum number of jobs to queue - default 100000
+      -warnTime=N Number of minutes job runs before hang warning - default 4320 (3 days)
+      -killTime=N Number of minutes job runs before push kills it - default 20160 (2 weeks)
+para try 
+   This is like para push, but only submits up to 10 jobs
+para shove
+   Push jobs in this database until all are done or one fails after N retries
+para make jobList
+   Create database and run all jobs in it if possible.  If one job
+   failes repeatedly this will fail.  Suitable for inclusion in makefiles
+   Same as a 'create' followed by a 'shove'.
+para check
+   This checks on the progress of the jobs.
+para stop
+   This stops all the jobs in the batch
+para chill
+   Tells system to not launch more jobs in this batch, but
+   does not stop jobs that are already running.
+para finished
+   List jobs that have finished
+para hung
+   List hung jobs in the batch
+para crashed
+   List jobs that crashed or failed output checks the last time they were run.
+para failed
+   List jobs that crashed after repeated restarts.
+para problems
+   List jobs that had problems (even if successfully rerun).  Includes host info
+para running
+   Print info on currently running jobs
+para time
+   List timing information
+
+======================================================================
+
+paraHub - parasol hub server version 2
+usage:
+    paraHub machineList
+Where machine list is a file with machine names in the
+first column, and number of CPUs in the second column.
+options:
+    spokes=N  Number of processes that feed jobs to nodes - default 30
+    jobCheckPeriod=N  Minutes between checking on job - default 10
+    machineCheckPeriod=N Minutes between checking on machine - default 20
+    subnet=XXX.YYY.ZZZ Only accept connections from subnet (example 192.168)
+    nextJobId=N  Starting job ID number
+    log=logFile Write a log to logFile. Use 'stdout' here for console
+    logFlush Flush log with every write
+    noResume  Don't try to reconnect with jobs running on nodes
+
+======================================================================
+
+paraHubStop - Shut down paraHub daemon
+usage:
+   paraHubStop now
+
+======================================================================
+
+paraNode - parasol node serve.
+usage:
+    paraNode start
+options:
+    log=file - file may be 'stdout' to go to console
+    hub=host - restrict access to connections from hub
+    umask=000 - set umask to run under, default 002
+    userPath=bin:bin/i386 User dirs to add to path
+    sysPath=/sbin:/local/bin System dirs to add to path
+    cpu=N - Number of CPUs to use.  Default 1
+
+======================================================================
+
+paraNodeStart - Start up parasol node daemons on a list of machines
+usage:
+    paraNodeStart machineList
+where machineList is a file containing a list of hosts
+Machine list contains the following columns:
+     <name> <number of cpus>
+It may have other columns as well
+options:
+    exe=/path/to/paranode
+    log=/path/to/log/file
+    umask=000 - set file creation mask, defaults to 002
+    userPath=bin:bin/i386 User dirs to add to path
+    sysPath=/sbin:/local/bin System dirs to add to path
+    hub=machineHostingParaHub - nodes will ignore messages from elsewhere
+    rsh=/path/to/rsh/like/command
+
+======================================================================
+
+paraNodeStatus - Check status of paraNode on a list of machines
+usage:
+    paraStat machineList
+options:
+    -long - List details of current and recent jobs
+
+======================================================================
+
+paraNodeStop - Shut down parasol node daemons on a list of machines
+usage:
+    paraNodeStop machineList
+
+======================================================================
+
+paraTestJob - A good test job to run on Parasol.  Can be configured to take a long time or crash
+usage:
+   paraTestJob count
+Run a relatively time consuming algorithm count times.  This
+algorithm takes about 1/10 per second each time
+options:
+   -crash - Try to write to NULL when done.
+   -err   - Return -1 error code when done
+   -output=file - make some output in file as well
+   -heavy=n - make output heavy: n extra 'lumberjack lines
+   -input = file - make it read in a file too
+   -sleep=n Sleep for N seconds
+
+======================================================================
+
+Parasol is the name given to the overall system for managing jobs on
+a computer cluster and to this specific command.  This command is
+intended primarily for system administrators.  The 'para' command
+is the primary command for users.
+usage in brief:
+   parasol add machine machineName localTempDir  - add new machine to pool
+   parasol remove machine machineName   - remove machine from pool
+   parasol add spoke - add a new spoke daemon
+   parasol [options] add job command-line  - add job to list
+         options: -out=out -in=in -dir=dir -results=file -verbose
+   parasol remove job id - remove job of given ID
+   parasol ping [count] - ping hub server to make sure it's alive.
+   parasol remove jobs userName [jobPattern] - remove jobs submitted by user that
+         match jobPattern (which may include ? and * escaped for shell)
+   parasol list machines - list machines in pool
+   parasol list jobs - list jobs one per line
+   parasol list users - list users one per line
+   parasol list batches - list batches one per line
+   parasol status - summarize status of machines, jobs, and spoke daemons
+
+======================================================================
+
+patCount - counts up the number of occurences of each
+oligo of a fixed size (up to 13) in input.  Writes out
+all patterns that are overrepresented by at least factor
+to output, which is a binary .ooc file used by patSpace
+nucleotide homology algorithms.
+usage:
+   patCount out.ooc oligoSize overFactor faFiles(s)
+example:
+   patCount hgt.ooc 13 6 hgt1.fa hgt2.fa hgt3.fa
+======================================================================
+
+patJobs bacLsFile bacDir
+======================================================================
+
+patchDir - Patch directions of some ESTs
+usage:
+   patchDir database authurId est.ra
+
+======================================================================
+
+phToPsl - Convert from Pattern Hunter to PSL format
+usage:
+   phToPsl in.ph qSizes tSizes out.psl
+options:
+   -tName=target  (defaults to 'in')
+
+======================================================================
+
+polyInfo - Collect info on polyAdenylation signals etc
+usage:
+   polyInfo contig.psl contig.fa est.fa output.tab
+
+======================================================================
+
+ppSanger - Analyse paired plasmid reads from Sanger and make pairs file.
+usage:
+   ppSanger databaseDir sanger.pair
+
+======================================================================
+
+ppStats - collect stats on paired plasmid alignments
+usage:
+   ppStats pairs.psl pairs.pair finDir read.head missMatch.out
+
+======================================================================
+
+ppWashStats - Gather statistics on WashU paired reads
+usage:
+   ppWashStats XXX
+
+======================================================================
+
+ppWashU - process Wash U paired reads
+usage:
+   ppWashU dataDir washu.pairs washu.fa
+
+======================================================================
+
+ppWhitehead - Analyse paired plasmid reads from Whitehead.
+usage:
+   ppWhitehead headers insertSizes pairs.psl finDir pairedReads.pair mispaired.lst
+
+======================================================================
+
+promoSeqFromCluster - Get promoter regions from cluster
+usage:
+   promoSeqFromCluster database size clusterFile.kgg outDir out.lft
+clusterFile is the output from Eisen's cluster program in kmeans
+settings.
+options:
+   -xxx=XXX
+
+======================================================================
+
+psCluster - tell where a cDNA is located quickly.
+usage:
+    psHits genomeListFile cdnaListFile ignore.ooc output.psc
+The program will create a tab-delimited file describing the
+alignment in output.psc.
+
+======================================================================
+
+psLayout - generate alignments for contig layout programs.
+usage:
+    psLayout genomeListFile otherListFile type ignore.ooc outputFile [noHead]
+The individual parameters are:
+    genomeListFile - A text file containing a list of .fa files that are
+        generally genomic.  This may contain up to 5 million bases total.
+        The program expects a .fa.out file (from RepeatMasker) to exist
+        for each .fa file in the genomeListFile.
+    otherListFile - A text file containing a list of .fa files that may be
+        genomic or mRNA. These may be of unlimited size
+    type - either the word 'mRNA' or 'genomic' depending on whether
+        you want to allow introns in the alignment or not
+    ignore.ooc - A list of overused tiles, typically 10.ooc.
+    outputFile - Where to put the alignments
+    noHead - if the word 'noHead' is present, this will suppress the header
+         so that the output is a simple tab-delimited file
+======================================================================
+
+psHits - tell where a cDNA is located quickly.
+usage:
+    psHits genomeListFile cdnaListFile ignore.ooc
+The program will load the 'h' mySql database with the alignments
+the cDNA hits.  The alignments will be in the estTab, mrnaTab, and 
+noIntronEstTab.  Please create these tables with the right schema
+before using
+
+======================================================================
+
+
+psLayout - generate alignments for contig layout programs.
+usage:
+    psLayout genomeListFile otherListFile type ignore.ooc outputFile [noHead]
+The individual parameters are:
+    genomeListFile - A text file containing a list of .fa files that are
+        generally genomic.  This may contain up to 5 million bases total.
+        The program expects a .fa.out file (from RepeatMasker) to exist
+        for each .fa file in the genomeListFile.
+    otherListFile - A text file containing a list of .fa files that may be
+        genomic or mRNA. These may be of unlimited size
+    type - either the word 'mRNA' or 'genomic' depending on whether
+        you want to allow introns in the alignment or not. g2g is like
+        genomic but only puts out very tight matches. asm is like genomic
+        but does not compute matches of a fragment to itself
+    ignore.ooc - A list of overused tiles, typically 10.ooc.
+    outputFile - Where to put the alignments
+    noHead - if the word 'noHead' is present, this will suppress the header
+         so that the output is a simple tab-delimited file
+
+======================================================================
+
+pscSort - merge and sort psCluster .psc output files
+usage:
+  pscSort outFile tempDir inDir(s)
+This will sort all of the .psc files in the directories
+inDirs in two stages - first into temporary files in tempDir
+and second into outFile.  The device on tempDir needs to have
+enough space (typically 15-20 gigabytes if processing whole genome)
+
+======================================================================
+
+pslCat - concatenate psl files
+usage:
+   pslCat file(s)
+options:
+   -check parses input.  Detects more errors but slower
+   -nohead omit psl header
+   -dir  files are directories (concatenate all in dirs)
+   -out=file put output to file rather than stdout
+   -ext=.xxx  limit files in directories to those with extension
+
+======================================================================
+
+pslCoverage - estimate coverage from alignments.usage:
+    pslCoverage in.sizes in.psl minPercentId endTrim out.cov misAsm.out
+======================================================================
+
+pslCrudeCmp - Crudely compare two psl files
+usage:
+   pslCrudeCmp a.psl b.psl
+options:
+   -verbose
+
+======================================================================
+
+pslDropOverlap - deletes all overlapping self alignments. 
+usage:
+    pslDropOverlap in.psl out.psl
+
+======================================================================
+
+pslFilter - filter out psl file
+    pslFilter in.psl out.psl 
+options
+    -dir  Input files are directories rather than single files
+    -reward=N (default 1) Bonus to score for match
+    -cost=N (default 1) Penalty to score for mismatch
+    -gapOpenCost=N (default 4) Penalty for gap opening
+    -gapSizeLogMod=N (default 1.00) Penalty for gap sizes
+    -minScore=N (default 15) Minimum score to pass filter
+    -minMatch=N (default 30) Min match (including repeats to pass)
+    -minUniqueMatch (default 20) Min non-repeats to pass)
+    -maxBadPpt (default 700) Maximum divergence in parts per thousand
+
+======================================================================
+
+pslGenoJobs - Make up condor jobs to align genome against itself.
+usage
+   pslGenoJobs runDir start end genoDir(s)
+This will make runDir if it doesn't exist, and place inside runDir
+g2g.con, g2g.in, g2g.out, g2g.log, g2g.err.
+======================================================================
+
+pslGlue - reduce a psl mRNA alignment file to only the components
+that might be involved in gluing
+usage:
+   pslGlue in.lst pslDir
+This will create mrna.psl, est.psl, bacEnd.psl, pairedRead.psl and
+mrna.glu and est.glue and bacEnd.psl in the current directory
+   pslGlue mrnaIn.psl mrnaOut.psl mrnaOut.glu
+This takes only the 'gluing' mrnas from mrnaIn and puts in mrnaOut.psl
+======================================================================
+
+pslHitPercent - Figure out percentage of reads in FA file that hit.
+usage:
+   pslHitPercent file.psl file.fa
+
+======================================================================
+
+pslIntronsOnly - Filter psl files to only include those with introns
+usage:
+   pslIntronsOnly in.psl in.nib out.psl
+
+======================================================================
+
+pslMrnaCover - Make histogram of coverage percentage of mRNA in psl.
+usage:
+   pslMrnaCover mrna.psl mrna.fa
+options:
+   -minSize=N  - default 100.  Minimum size of mRNA considered
+   -listZero=zero.tab - List accessions that don't align in zero.tab
+
+======================================================================
+
+pslOoJobs - Make set of jobs to do psLayout of a file vs. genome.
+usage:
+   pslOoJobs ooDir faFileList conDir type
+This will make conDir if it doesn't exist, copy faFileList to
+conDir, and make condor submission files.  Please give full
+path names to all files.
+'Type' parameter should be 'g2g' or 'mrna' or 'genomic'.
+======================================================================
+
+pslPretty - Convert PSL to human readable output
+usage:
+   pslPretty in.psl target.lst query.lst pretty.out
+options:
+   -axt - save in Scott Schwartz's axt format
+   -dot=N Put out a dot every N records
+   -long - Don't abbreviate long inserts
+It's a really good idea if the psl file is sorted by target
+if it contains multiple targets.  Otherwise this will be
+very very slow.   The target and query lists can either be
+fasta files, nib files, or a list of fasta and/or nib files
+one per line
+
+======================================================================
+
+pslReps - analyse repeats and generate genome wide best
+alignments from a sorted set of local alignments
+usage:
+    pslReps in.psl out.psl out.psr
+where in.psl is an alignment file generated by psLayout and
+sorted by pslSort, out.psl is the best alignment output
+and out.psr contains repeat info
+options:
+    -ignoreSize Will not weigh in favor of larger alignments so much
+    -noIntrons Will not penalize for not having introns when calculating
+              size factor
+    -singleHit  Takes single best hit, not splitting into parts
+    -minCover=0.N minimum coverage to output.  Default is 0.
+    -minAli=0.N minimum alignment ratio
+               default is 0.93
+    -nearTop=0.N how much can deviate from top and be taken
+               default is 0.01
+    -minNearTopSize=N  Minimum size of alignment that is near top
+               for aligmnent to be kept.  Default 20.
+
+======================================================================
+
+
+pslSelfJobs - make Condor submission file to do
+psLayout jobs within bacs in a contig.
+usage:
+   pslSelfJobs ooDir output.con finish.csh logDir
+======================================================================
+
+pslSimp - create simplified version of psl file.
+usage:
+    pslSimp filter in.psl. out.ps
+where filter is either:
+    some number - filters by score
+    self - filters out self and bad scores
+    none - no filtering
+
+======================================================================
+
+pslSort - merge and sort psCluster .psl output files
+usage:
+  pslSort dirs[1|2] outFile tempDir inDir(s)
+This will sort all of the .psl files in the directories
+inDirs in two stages - first into temporary files in tempDir
+and second into outFile.  The device on tempDir needs to have
+enough space (typically 15-20 gigabytes if processing whole genome)
+  pslSort g2g[1|2] outFile tempDir inDir(s)
+This will sort a genome to genome alignment, reflecting the
+alignments across the diagonal.
+
+Adding 1 or 2 after the dirs or g2g will limit the program to
+only the first or second pass repectively of the sort
+
+======================================================================
+
+pslSortAcc - sort pslSort .psl output file by accession
+Make one output .psl file per accession.
+usage:
+  pslSortAcc how outDir tempDir inFile(s)
+This will sort the inFiles by accession in two steps
+Intermediate results will be put in tempDir.  The final
+result (one .psl file per target) will be put in outDir.
+Both outDir and tempDir will be created if they do not
+already exist.  The 'how' parameter should be either
+'head' or 'nohead'
+======================================================================
+
+pslSwap - Swap query and target in  PSL  
+usage:
+   pslSwap in.psl out.psl
+
+======================================================================
+
+pslToXa - Convert from psl to xa alignment format
+usage:
+   pslToXa in.psl out.xa qSeqDir tSeqDir
+options:
+   -xxx=XXX
+
+======================================================================
+
+pslUnpile - Removes huge piles of alignments from sorted 
+psl files (due to unmasked repeats presumably).
+usage:
+   pslUnpile in.psl out.psl
+options:
+   -query - removes piles on query side
+   -target - removes piles on target side (default)
+   -nohead - suppress psl header in output.
+   -maxPile - maximum number of hits allowed in a pile before filtering
+              (default 100)
+in.psl should be sorted by query or target as appropriate
+======================================================================
+
+qaGold - make quality score file for golden path in a contig
+usage:
+   qaGold contigDir ooVersion
+
+======================================================================
+
+qaToQac - convert from uncompressed to compressed
+quality score format.
+usage:
+   qaToQac in.qa out.qac
+======================================================================
+
+qacToQa - convert from compressed to uncompressed
+quality score format.
+usage:
+   qacToQa in.qac out.qa
+======================================================================
+
+raToCds - Extract CDS positions from ra file
+usage:
+   raToCds in.ra out.cds
+options:
+   -xxx=XXX
+
+======================================================================
+
+randomEst - Select random ESTs from database
+usage:
+   randomEst database count output.fa
+options:
+   -xxx=XXX
+
+======================================================================
+
+randomLines - Pick out random lines from file
+usage:
+   randomLines inFile count outFile
+options:
+   -decomment - remove blank lines and those starting with 
+
+======================================================================
+
+regionPicker - Code to pick regions to annotate deeply.
+Stratifies genome based on mouse non-transcribed homology
+and spliced EST density.
+usage:
+   regionPicker database axtBestDir output
+options:
+   -region=chrN - restrict to a single chromosome
+   -region=file - File has chrN:start-end on each line
+   -bigWinSize=N -default -1073744012
+   -bigStepSize=N - default -1073744120
+
+======================================================================
+
+relPairs - extract pairs from a big pair list file that actually
+occur in a .psl file
+usage:
+    relPairs all.pai some.psl out.pai dir1 dir2 ... dirN
+This will look in each of the directories for 'some.psl' and
+create 'out.pai' in the same directory.
+Example (run from an oo directory)
+    relPairs ~/hg/mrna/est.pai est.psl ctgEst.pai */ctg*
+======================================================================
+
+reviewSanity - Look through sanity files and make sure things are ok.
+usage:
+   reviewSanity contigDir(s)
+
+======================================================================
+
+Please run again with a xml filename.
+======================================================================
+
+rikenBestInCluster - Find best looking in Riken cluster
+usage:
+   rikenBestInCluster database output.tab
+options:
+   -xxx=XXX
+
+======================================================================
+
+rmFaDup - remove duplicate records in FA file
+usage
+   rmFaDup oldName.fa newName.fa
+
+======================================================================
+
+rmFromFinf - Remove clones in list from finf file
+usage:
+   rmFromFinf listFile oldFinf newFinf
+
+======================================================================
+
+rmskOoJobs - make Condor repeat mask o+o sequence contigs
+usage:
+   rmskOoJobs ooDir conDir
+This will create conDir and fill it up with a condor submission file
+and various log files.  Please give full path names to both ooDir and conDir
+
+======================================================================
+
+sanger22gtf - Convert Sanger chromosome 22 annotations to gtf
+usage:
+   sanger22gtf in.gff out.gtf
+
+======================================================================
+
+scanRa - scan through ra files for info.
+usage:
+    scanRa expression command [command args] raFile(s)
+where expression is:
+    all - matches anything in ra files
+    fileName - a file containing an expression
+where command is:
+    count - to count ones that match expression
+    print key - to print key from ones matching expression
+    save key file - to print key of matcher to file
+    stats key file - to gather statistics on key to file
+    hist key file - to put histogram of key into file
+
+======================================================================
+
+sim4 - an mRNA/DNA aligner
+sim4 seq1 seq2_db [[WXKCRDHAPNBS]=]
+
+       W  -  word size. (W=12)
+       X  -  value for terminating word extensions. (X=12)
+       K  -  MSP score threshold for the first pass. (e.g., K=16)
+       C  -  MSP score threshold for the second pass. (e.g., C=12)
+       R  -  direction of search; 0 - search the '+' (direct) strand only; 
+             1 - search the '-' strand only; 2 - search both strands and 
+             report the best match. (R=2)
+       D  -  bound for the range of diagonals within consecutive msps in an
+             exon. (D=10)
+       H  -  weight factor for MSP scores in relinking. (H=500)
+       A  -  output format: exon endpoints only (A=0), alignment text (A=1),
+             alignment in lav (block) format (A=2), or both exon endpoints
+             and alignment text (A=3, A=4). If complement match, A=0,1,2,3
+             give direct positions in the long sequence and complement 
+             positions in the short sequence. A=4 gives direct positions in 
+             the first sequence, regardless of the relative lengths.
+             A=5 prints the exon and CDS coordinates (the latter, if known)
+             in the `exon file' format required by PipMaker. To be used
+             with full-length mRNA sequences.
+       P  -  if not 0, remove poly-A tails; report coordinates in the 
+             '+' (direct) strand for complement matches; use lav alignment 
+             headers in all display options. (P=0) 
+       N  -  accuracy of sequences (non-zero for highly accurate). (N=0)
+       B  -  if 0, dis-allow ambiguity codes (other than N and X) in the
+             sequence data. (B=1)
+       S  -  coding region specification (available only with A=5);
+             format: S=n1..n2 
+
+======================================================================
+
+sim4big - A wrapper for Sim4 that runs it repeatedly on a multi-sequence .fa file
+usage:
+   sim4big genomic.fa mrna.fa output.bed
+options:
+   -tempDir=someDir
+   -exe=/path/to/sim4
+   -psl  output is .psl instead of bed format
+   -dots=N Output a dot every N sequences aligned
+
+======================================================================
+
+sortFilt - merge, sort, and filter patSpace .hit output.
+usage:
+   sortFilt output.sf histogram.txt matchThreshold sizeThreshold repeatMax infile(s).hit
+where the matchThreshold is the minimum 'psuedo percentage' match
+to take, size threshold is the minimum size (on the query sequence
+to take, and repeatMax is the maximum number of repeats to allow
+======================================================================
+
+splitFa - split a big FA file into smaller ones.
+usage:
+    splitFa source.fa maxSize destRoot
+This will split source into files of maxSize or smaller.
+The resulting files will be named destRoot01.fa destRoot02.fa
+and so forth.
+
+======================================================================
+
+
+splitFaIntoContigs - takes a .agp file and .fa file a destination directory in which to save data and a size (default 1Mbase) into which to split each chromosome of the fa file along non-bridged gaps
+usage:
+
+   splitFaIntoContigs in.agp in.fa outputDir [approx size in kilobases (default 1000)]
+
+======================================================================
+
+splitFile - Split up a file
+usage:
+   splitFile source linesPerFile outBaseName
+options:
+   -head=file - put head in front of each output
+   -tail=file - put tail at end of each output
+======================================================================
+
+splitNcbiFa - Split up NCBI format fa file into UCSC formatted ones.
+usage:
+   splitNcbiFa in.fa outDir
+options:
+   -xxx=XXX
+
+======================================================================
+
+stageMultiz - Stage input directory for Webb's multiple aligner
+usage:
+   stageMultiz h.sizes m.sizes r.sizes hm.axt mrAxtDir outputDir
+where:
+   h.sizes - file with sizes of human sequences
+   m.sizes - file with sizes of mouse sequences
+   r.sizes - file with sizes of rat sequences
+   hm.axt - human/mouse alignments for one human chromosome
+   mrAxtDir - directory full of mouse/rat alignments with indexes
+              built by axtIndex
+   outputDir - this will be created, as will subdirectories, one
+               for each window on the human chromosome
+options:
+   -winSize=N Human bases in each directory.  Default 134546880
+   -overlapSize=N Amount to overlap each window. Default 1010000
+
+======================================================================
+
+stringify - Convert file to C strings
+usage:
+   stringify in.txt
+A stringified version of in.txt  will be printed to standard output.
+
+======================================================================
+
+subChar - Substitute one character for another throughout a file.
+usage:
+   subChar oldChar newChar file(s)
+oldChar and newChar can either be single letter literal characters,
+or two digit hexadecimal ascii codes
+======================================================================
+
+Subs - a utility to perform massive string substitutions on source
+Usage:  subs [options] file1 ... filen [options]
+Options:	-f file (get files to do subs on from file)
+          -s file (get substitutions to perform from file.
+                   by default subs looks for subs.in)
+          -r      (read only - don't write out substitutions)
+          -b      (don't create .bak files on changed files)
+          -e      (looks for embedded substrings as well as
+                   entire C symbols
+          -c char (use char as the separator in substitution
+                   file.  Only matters in embedded case.
+                   '|' by default.)
+          -i      (interactive query on each substitution.)
+The format of subs.in is oldstring<sep>newstring<cr>.
+In the normal case <sep> can be any white space and newstring
+is required.  In the embedded case <sep> defaults to '|' and
+if there is no newstring, oldstring will be eliminated.
+Hashing algorithm doesn't work for one character sub sources.
+There can be more than one substitution in the file.
+Subs does take wildcards in the list of files to substitute.
+======================================================================
+
+subsetAxt - Rescore alignments and output those over threshold
+usage:
+   subsetAxt in.axt out.axt matrix threshold
+options:
+   -xxx=XXX
+
+======================================================================
+
+subsetRef - Make BED track that is a subset of reference sequence
+usage:
+   subsetRef database chromosome refTrack match mismatch gap gapExt newTrack
+example:
+   subsetRef hg7 chr22 mouseRef 10 20 80 20 mouseTight
+option:
+   -tabOnly  - Generate newTrack tab-delimited file rather than database table
+
+======================================================================
+
+subsetTraces - Build subset of mouse traces that actually align
+usage:
+   subsetTraces traceDir pslDir subset.fa
+options:
+   -abbr=junk - abbreviate names in fa files.
+   '-tracePat=*.fa' - just use .fa files in traceDir
+   '-pslPat=*.psl' - just use .psl files in pslDir
+
+======================================================================
+
+tableSum - Summarize a table somehow
+usage:
+   tableSum tableFile
+options:
+   -row         Sum all rows
+   -col         Sum all columns
+   -colEven=N         Output columns that are sum of N columns of input
+   -rowEven=N         Output rows that are sum of N rows of input
+   -colDiv=30,60,10  Produce table that sums columns first
+                     30 columns in input to first column in output,
+                     next 60 columns to second column in output,
+                     and next 10 columns to third column in output.
+   -rowDiv=30,60,10  Similar to colDiv, but for rows,  may be combined
+   -average          Compute average instead of sum
+
+======================================================================
+
+tailLines - add tail to each line of file
+usage:
+   tailLines file tail
+This will add tail to each line of file and print to stdout.
+======================================================================
+
+testXap - Initial test harness for Xap XML Parser
+usage:
+   testXap file.xml
+options:
+   -simple Just print out tag names.
+
+======================================================================
+
+toBb - Convert tables to bb format
+usage:
+   toBb database sourceTable bbTable
+options:
+   -test
+
+======================================================================
+
+toLower - Convert upper case to lower case in file. Leave other chars alone
+usage:
+   toLower in out
+
+======================================================================
+
+toUpper - Convert lower case to upper case in file. Leave other chars alone
+usage:
+   toUpper in out
+
+======================================================================
+
+trackInfo - Centralized repository for track information
+usage:
+   trackInfo database trackDb.sql track.ra
+
+======================================================================
+
+trfBig - Mask tandem repeats on a big sequence file.
+usage:
+   trfBig inFile outFile
+This will repeatedly run trf to mask tandem repeats in infile
+and put masked results in outFile.  inFile and outFile can be .fa
+or .nib format. Outfile can be .bed as well
+
+   -bed creates a bed file in current dir
+   -bedAt=path.bed - create a bed file at explicit location
+   -tempDir=dir Where to put temp files.
+   -trf=trfExe explicitly specifies trf executable name
+   -maxPeriod=N  Maximum period size of repeat (default 500)
+
+======================================================================
+
+trimFosmids - Process Fosmid Endreads to remove low quality bases and put in one big file
+usage:
+   trimFosmids sangDir outFile.fa
+
+======================================================================
+
+twinOrf - Predict open reading frame in cDNA given a cross species alignment
+usage:
+   twinOrf twinOrf.stats in.axt out.orf
+options:
+   -checkIn=seq.cds - File that says size and cds position of sequences
+   -checkOut=twinOrf.check - File that compares our cds position to real
+   -m1  - Use markov 1 model for UTRs  (currently has weird results
+
+======================================================================
+
+twinOrf2 - Predict open reading frame in cDNA given a cross species alignment
+usage:
+   twinOrf2 twinOrf2.stats in.axt out.orf
+options:
+   -checkIn=seq.cds - File that says size and cds position of sequences
+   -checkOut=twinOrf.check - File that compares our cds position to real
+   -utrPenalty=N - Penalize UTR score to encourage long orfs. (default 0.150)
+   -firstBonus=N - Bonus for ATG being first ATG.  (default 15.000)
+
+======================================================================
+
+twinOrf3 - Predict open reading frame in cDNA given a cross species alignment
+usage:
+   twinOrf3 twinOrf3.stats in.axt out.orf
+options:
+   -checkIn=seq.cds - File that says size and cds position of sequences
+   -checkOut=twinOrf.check - File that compares our cds position to real
+   -utrPenalty=N - Penalize UTR score to encourage long orfs. (default 0.150)
+   -firstBonus=N - Bonus for ATG being first ATG.  (default 15.000)
+
+======================================================================
+
+twinOrfStats - Collect stats on refSeq cDNAs aligned to another 
+species via axtForEst
+usage:
+   twinOrfStats refSeqAli.axt refSeq.ra twinOrf.stats
+options:
+   -predict=predict.out - Predict start codon position on same set
+   -threshold=N.N - default 4
+
+======================================================================
+
+twinOrfStats2 - Collect stats on refSeq cDNAs aligned to another 
+species via axtForEst
+usage:
+   twinOrfStats2 refSeqAli.axt refSeq.ra twinOrf.stats
+options:
+   -predict=predict.out - Predict start codon position on same set
+   -threshold=N.N - default 4
+
+======================================================================
+
+twinOrfStats3 - Collect stats on refSeq cDNAs aligned to another 
+species via axtForEst
+usage:
+   twinOrfStats3 refSeqAli.axt refSeq.ra twinOrf.stats
+options:
+   -earlyAaSize=N - default 20 - number of amino acids in N terminal model
+   -predict=predict.out - Predict start codon position on same set
+   -threshold=N.N - default 4 - used with predict only
+
+======================================================================
+
+undupFa - rename duplicate records in FA file
+usage
+   undupFa faFile(s)
+
+======================================================================
+
+wabToSt - Convert WABA output to something Intronerator understands better
+usage:
+   wabToSt out.st in1.wab ... inN.wab
+
+======================================================================
+
+waba - a program for doing genomic vs. genomic DNA alignments
+usage:
+   waba 1 small.lst big.lst output.1
+Runs first pass alignment between all the fasta files in small.lst
+vs. all the fasta files in big.lst writing output to output.1
+You can have .fa files instead of .lst files for small and big.
+   waba 2 input.1 output.2
+Runs second pass alignment taking results from first pass (in 
+input.1 and using them to create output.2
+   waba 3 input.2 output.st
+Runs third pass alignment on second pass results to get final output
+
+The results of all three passes are text files.  You can also run
+all three passes together by the command
+   waba all small.lst big.lst output.wab
+To view a .wab file in a more human readable form try:
+   waba view file.wab
+
+======================================================================
+
+wabaJobs - Create a set of condor jobs to run WABA
+usage:
+   wabaJobs bigDir littleDir conDir
+
+======================================================================
+
+whyConserved - Try and analyse why a particular thing is conserved
+usage:
+   whyConserved database chromosome homologyTrack
+Use 'all' in the chromosome to cover the whole genome
+
+======================================================================
+
+wordLine - chop up words by white space and output them with one
+word to each line.
+usage:
+    wordLine inFile(s)
+Output will go to stdout.
+======================================================================
+

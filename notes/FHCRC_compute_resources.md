@@ -226,7 +226,25 @@ Some key points:
 - the other words in capital letters are *variables* that we define using the = symbol.  Once we've defined variables, we can use their values with `${}` notation.
 - notice that `SAMPLE_IDS` has paretheses and specifies several items - it's an array, and we can run some commands on each item in the array, using the `SINGLE_ID` variable.
 
+# Shared databases and installed programs
 
+## databases:
+
+There's a big folder where I keep databases that might be useful for several of us: `/fh/fast/malik_h/grp/public_databases`. The file `database_list.txt` contains a list of many (but not all) of the databases in that folder. 
+
+## installed programs:
+
+It's a bit of a mess, but there are a bunch of programs installed in these locations:
+```
+/fh/fast/malik_h/grp/malik_lab_shared
+/fh/fast/malik_h/grp/malik_lab_shared/bin
+/fh/fast/malik_h/grp/malik_lab_shared/linux_gizmo/bin
+```
+
+If a program comes with documentation files, I put those in this folder: `/fh/fast/malik_h/grp/malik_lab_shared/help`
+
+Some tools are in subdirectories, e.g. NCBI's edirect tools are here:
+`/fh/fast/malik_h/grp/jayoung/malik_lab_shared/linux_gizmo/bin/edirect/`
 
 # Additional notes for PC users
 

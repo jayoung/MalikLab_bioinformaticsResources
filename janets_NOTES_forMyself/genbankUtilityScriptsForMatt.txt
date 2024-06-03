@@ -1,0 +1,60 @@
+goal:
+
+take a list of accession numbers  ---->   get those seqs from genbank (in genbank format so we have their annotations) ----->   get the ORF(s) from each seq and perhaps name them by species in the output file
+
+###################
+
+using the scripts:
+- you'll probably want to put them in your bin dir on fred (if you have one?)
+- you may need to give yourself execute permissions for the scripts before you use them the first time
+     chmod u+x getgenbankJY_eutils.bioperl
+     chmod u+x getCDSseqAndBedFileFromGenbankEntry.bioperl 
+     chmod u+x checkNoDuplicateSeqNames.pl 
+
+###################
+
+SCRIPT 1. getgenbankJY_eutils.bioperl
+
+take a list (or lists) of genbank accessions and download the sequences (edit the script to say whether we want output in genbank or fasta format)
+
+The script depends on a perl module called Bio::DB::EUtilities (part of the bioperl system). This is installed on the rhino/gizmo nodes. To use it on other systems we/you'll need to figure out getting bioperl installed.
+
+Usage: run script on a single file:
+    getgenbankJY_eutils.bioperl testAccs.txt 
+        output = testAccs.txt.fasta (or testAccs.txt.gb)
+
+Usage: run script on several files:
+    getgenbankJY_eutils.bioperl testAccs.txt testAccs2.txt testAccs3.txt
+        output = testAccs.txt.fasta, testAccs2.txt.fasta testAccs3.txt.fasta 
+                 (or testAccs.txt.gb, testAccs2.txt.gb testAccs3.txt.gb )
+
+###################
+
+SCRIPT 2. getCDSseqAndBedFileFromGenbankEntry.bioperl 
+
+from a set of genbank format sequences, get the CDS sequences as fasta format. The script allows you to specify the type of name the output sequences get (e.g. species? accession?) - you change that by editing the top of the script.
+   (note: this script does NOT deal with genomic seqs where we need to splice the exons together. I have most of that script somewhere but need to make it more robust before it's ready to hand out.)
+
+Usage: run script on a single file:
+    getCDSseqAndBedFileFromGenbankEntry.bioperl testAccs.txt.gb 
+output files = 
+    testAccs2.txt.gb.ORFs 
+    testAccs2.txt.gb.ORFs.warnings.txt
+    and possibly testAccs2.txt.gb.ORFs.bed
+
+Usage: run script on several files:
+    getCDSseqAndBedFileFromGenbankEntry.bioperl testAccs.txt.gb testAccs2.txt.gb 
+
+after running it, check that the output seqs are named as you'd like:
+    grep '>' testAccs2.txt.gb.ORFs 
+
+
+###################
+
+SCRIPT 3. checkNoDuplicateSeqNames.pl 
+
+depending on what sort of output seq names you asked for at the top of the script, there's a danger you might have >1 seq in the file with the same name, which will get you into trouble later. So, you might want to use a script that checks for duplicate sequence names using this checkNoDuplicateSeqNames.pl  script
+
+Usage: checkNoDuplicateSeqNames.pl testAccs2.txt.gb.ORFs 
+   it reports to the screen whether or not you have any duplicate seq names.  If so, perhaps choose a different name output format in the getCDSseqAndBedFileFromGenbankEntry.bioperl script, or manually fix the names or remove some sequences from your list.
+

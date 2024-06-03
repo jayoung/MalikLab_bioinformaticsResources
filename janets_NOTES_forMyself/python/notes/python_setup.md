@@ -1,5 +1,9 @@
 # Installations
 
+## rhino/gizmo server
+
+see /fh/fast/malik_h/user/jayoung/source_codes/pythonModules/pythonModules_INSTALLATION_NOTES_JY.txt
+
 ## Mac desktop (iMac 2017) (installations done Dec 2023)
 
 First I install the latest version of python, using `brew`. This installs a SECOND copy of python3 in a non-default location, along with `pip` and `setuptools`:

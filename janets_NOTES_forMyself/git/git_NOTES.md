@@ -1,4 +1,200 @@
-xxxx there are more git notes somewhere else!
+# Basic notes
+
+Check whether the local repository matches the remote one: `git status`
+
+`git reflog` – shows a list of commits
+
+To list git configuration: `git config –list`
+
+To change preferred editor (for all projects):  `git config --global core.editor "vim"`
+
+To show which files were added during a particular commit:
+`git show --pretty="" --name-only d09fb87` (where d09fb87 is the commit ID)
+
+# removing a cached file:
+
+`git rm --cached otherDataFiles/kyleFowler/GEO/suppData/GSE49977_Rec12_multimap.txt`
+
+`git rm --cached otherDataFiles/kyleFowler/GEO/suppData/GSE49977_Rec12_unique.txt`
+
+`git filter-branch -f --index-filter 'git rm -r --cached --ignore-unmatch otherDataFiles/kyleFowler/GEO/suppData' HEAD`
+
+A more general way to clear the cache and get only the right files on the github server:
+1.	Make sure all changes are committed
+2.	git rm -rf --cached .
+3.	git add --all .
+4.	git commit
+5.	git push
+
+# branches
+
+often a software development approach is to use one branch per issue, and merge that branch into main once the issue is complete/fixed.
+
+‘origin/main’ is the main branch, the version stored at github.com
+‘main’ is the main branch, stored on the local computer.
+
+We can make new branches, for example if the code is working well, but we want to experiment a bit, we might make a branch.  We can ‘checkout’ specific branches for use.
+
+Later we might then merge our branch with the main branch
+Or, we might rebase  - somewhat different from merge.
+Merge should take the commits from main and the commits from the branch, and intersperse them.  Rebase might
+
+`git reset hard` can help with deleted things.
+
+# restoring a deleted file:
+
+To restore a deleted file, if I haven’t done a commit afterwards
+git checkout HEAD <filename>
+
+tools to examine gitignore
+To check why git is ignoring a folder called knownDomesticatedGenes:
+git check-ignore -v -- knownDomesticatedGenes
+
+To see every file git is ignoring:
+git ls-files -o -i --exclude-standard
+
+# Large files
+Github doesn’t want to accept large files. Ideally I include large files/dirs in my .gitignore file before I try to push changes to github. A couple of times I’ve forgotten to do that before I do ‘git push’ and I get an error. Not only do I get an error on that ‘git push’ attempt, but even if I add the file to .gitignore and then try again, it persists in trying to sync the large file. Some combination of these commands seemed to fix it (not sure which ones were key):
+
+
+# file mode Nov 19 2021
+I had a weird issue using VScode where it thought all of my files had uncommitted changes, but it was something to do with permissions and the SMB mount.  I fixed it by issuing two commands from a gizmo command line that prevent git from caring about syncing permissions:
+
+This command changed global options:
+git config --global core.fileMode false
+it added this line to ~/.gitconfig in the [core] section
+		filemode = false
+
+This command changed options within a particular repo (in this case HSV1_Mx_evolution):
+git config core.fileMode false
+it added this line to .git/config in the [core] section
+		fileMode = false
+
+Seemed to fix my weird VScode problem
+
+I also did this on my 16” mac laptop
+
+# OTHER RESOURCES
+
+http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004668
+https://swcarpentry.github.io/git-novice/
+https://jules32.github.io/2016-07-12-Oxford/git/
+
+# Jan 21 2016, presentation by Paul Litwin of Collaborative Data Services, FHCRC
+
+for help, try: http://git-scm.com/doc
+
+centralized version control (one master copy on a server) versus distributed (various versions of the repository are all peers of each other, and the software tracks most recent changes)
+
+git = the software that manages repositories
+github = a website that hosts git-style repositories. Github is free for public repositories, a charge if you want to have private repositories, but FHCRC has an account (ask Dirk). There are also other hosts available, e.g. bitbucket (get 5 private repositories for free)
+
+Once git is installed whichever machine, it can be configured to remember things like your user name, password, preferred text editor (default might be vim - command to exit vim is :q), etc.  Can also install "credential helper" to store name/password for remote servers.
+
+We keep each PROJECT in its own folder. To start a git repository for that project, from the top level of that dir, we do:
+   git init
+This creates a hidden folder called .git where backups, change logs, etc will be stored
+
+Any files that are in the folder or its subdirs will be backed up and changes will be tracked
+
+Files get backed up in two steps (a) files are staged (or "tracked") (b) changes are committed. Files that have not yet been staged might be known as "untracked" Changes that have been committed to a local repository can then also be backed up to a remote repository copy, or can be "checked out" to copy them back to the local copy. Only committed changes are tracked, etc. When you "commit" that captures the project as a whole.
+
+Some useful commands:
+git status
+
+git add (= stage files to temporary staging area - this does NOT commit the changes)
+git add . (= stage all files)  (git add --all is the same thing)
+
+git commit  (= commit changes - it will ask for a message to describe that update, probably in an awkward-to-use text editor. If it's vi, can save and quit by doing escape-:w then escape-:q)
+git commit -m "my message describing this update"
+
+git log
+git log --oneline
+git log -p (profile)
+
+git reset
+
+git diff
+git diff --cached
+git diff --staged
+
+Each commit will have an ID - a checksum number. The most recent commit is also called HEAD. The short version of this ID can be used in various ways, e.g. in git diff or in git reset.
+
+Can make a file called .gitignore if there are files within the project you do NOT want to back up.
+
+Remote repositories: Method A
+1. start up a local repository
+2. use the github website to make a new repo - it will provide a URL and some example commands to commit to that repository.
+3. from the local machine: 
+git remote add origin URL
+("origin" is convention for the current project)
+git push origin master -u
+
+can also edit files directly on the github website
+
+Remote repositories: Method B
+Start the repository remotely, and then clone it locally
+git clone URL
+
+To interact with the remote repository:
+git push
+git pull
+(git add and git commit work only in the local session - they do not compare the local repo with the remote version)
+
+When you do git pull/push, git makes an attempt to resolve conflicting changes that have been made to different versions of the repository (or at least tries to report them)
+
+Version control: branching
+
+e.g. if you want to maintain a "release" version of the software, and will need to do bug fixes on that, but also want to work on a "version2" that is quite different, and is not ready for public release for a while.  "release" and "version2" are different "branches" of the repository. Branches can be merged/deleted, etc.
+
+"stashing" - a way to temporarily save changes without committing them.
+
+"forking" - creates a personal copy of a public repository that you can work on, and then later if you have bug fixes to contribute  you can "create a pull request" so that the authors can try to pull in your fixes to their current version.
+
+# Credentials (passwords, access tokens)
+
+I was initially using a password to access my github repos but they now want me to use an ‘access token’ (similar to a password).
+
+I first used the github website to set up an access token.
+
+Then I store that access token on each computer I want to access github from.  
+https://docs.github.com/en/github/getting-started-with-github/getting-started-with-git/caching-your-github-credentials-in-git
+
+I run this command:
+git config credential.helper store
+then I do a 
+git push
+I give it my user name (jayoung) and the access token, and the credentials will be remembered for next time, as it creates a file called ~/.git-credentials
+
+Or, a method from Jenny Smith on Slack to save PAT on the Gizmos:
+git credential-store --file ~/.git-credentials store 
+This will appear to be "hanging" and won't prompt you for any information. But on the command line, you can enter this:
+protocol=https
+host=github.com
+username=mygithub_username
+password=the_personal_access_token_string
+This should create a file called ~/.git-credentials stored in your home drive. There is a bit more detail on the git documentation but I didn't think it really described it very well (I had to ask SciComp for help). https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage (edited)
+
+Turned out it was using the stored credentials for one repo but not another. The repo where it DOES use stored credentials has a couple of lines in the .git/config file:  
+[credential]
+	   helper = store
+Try this in the repo where it is not using stored credentials:
+git config --global credential.helper store
+then I do a 
+git push
+
+## Personal access token (new credential method, 2021)
+
+As of Aug 2021 now I have to use a personal access token instead of a password. It’s too long to remember so I have to store it. I tried something suggested at this site but it didn’t seem to work:
+https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git
+https://cli.github.com/manual/gh_auth_login 
+
+1.	from the command line, “gh auth login”
+2.	choose GitHub.com
+3.	choose HTTPS
+4.	say Y to ‘authenticate git with my credentials’
+5.	paste my authentication token
+
 
 ## Big picture
 
