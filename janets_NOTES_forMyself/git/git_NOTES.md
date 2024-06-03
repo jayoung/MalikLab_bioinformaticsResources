@@ -26,6 +26,16 @@ A more general way to clear the cache and get only the right files on the github
 4.	git commit
 5.	git push
 
+# removing a big file from commit
+
+Common situation:  I did `git add`, I did `git commit` and I got halfway through `git push` before I got a message that I have file(s) that are too big to store on github.  So I need to add that file to `.gitignore`, undo the commit and the add, and redo the commit.
+
+1. add file to .gitignore
+2. git reset HEAD~   
+3. git add --all .
+4. git commit -m "my commit message"
+5. git push
+
 # branches
 
 often a software development approach is to use one branch per issue, and merge that branch into main once the issue is complete/fixed.
