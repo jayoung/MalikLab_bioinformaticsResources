@@ -401,7 +401,7 @@ examples are here:
 
 Input format can be fasta or phylip
 
-First, change directory, because we have to run prottest from a particular directory (pushd is similar to cd, but remembers which directory we were in before, and lets us use "popd" to return to that directory later):
+First, change directory, because we have to run jmodeltest from a particular directory (pushd is similar to cd, but remembers which directory we were in before, and lets us use "popd" to return to that directory later):
 ```
 pushd /fh/fast/malik_h/grp/malik_lab_shared/jmodeltest-2.1.7
 ```
@@ -435,6 +435,7 @@ Model selected:
    Model = SYM
 
 ## Choose best evolutionary model for amino acid alignments
+
 Use `prottest` The help file is here: `/fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4.2/README`
 
 examples are here: `/fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4.2/examples`
@@ -443,7 +444,7 @@ Input format can be fasta or phylip.  Should not contain * for stop codons. Long
 
 First, change directory, because we have to run prottest from a particular directory (pushd is similar to cd, but remembers which directory we were in before, and lets us use "popd" to return to that directory later):
 ```
-pushd /fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4-20140123
+pushd /fh/fast/malik_h/grp/malik_lab_shared/prottest-3.4.2/
 ```
 
 We also load the java module
@@ -453,17 +454,17 @@ module load Java/1.8.0_181
 
 To get more help, including details on all options (need to do this from the prottest folder):
 ```
-java -jar prottest-3.4.jar  -help
+java -jar prottest-3.4.2.jar  -help
 ```
 Then run prottest. The general form of the command I use is as follows. 
 ```
-java -jar prottest-3.4.jar -i alignmentFile.phyml -all-distributions -F -AIC -BIC -tc 0.5 -threads xxxNumberOfThreads > outputFile.txt
+java -jar prottest-3.4.2.jar -i alignmentFile.phyml -all-distributions -F -AIC -BIC -tc 0.5 -threads xxxNumberOfThreads > outputFile.txt
 ```
 I specify the full path to my input file and output file (usually put the output file in the same folder as the input file).  Number of threads should be between 1 and 12, but you must have requested that number of CPUs from the gizmo node you logged in to.
 
 Here's an example on a real dataset:
 ```
-java -jar prottest-3.4.jar -i /home/jayoung/PARPs/alignments/bigAln10.phyml -all-distributions -F -AIC -BIC -tc 0.5 -threads 12 > /home/jayoung/PARPs/alignments/bigAln10.phyml.prottest
+java -jar prottest-3.4.2.jar -i /home/jayoung/PARPs/alignments/bigAln10.phyml -all-distributions -F -AIC -BIC -tc 0.5 -threads 12 > /home/jayoung/PARPs/alignments/bigAln10.phyml.prottest
 ```
 Then return to the original directory (wherever we were when we did pushd)
 ```
