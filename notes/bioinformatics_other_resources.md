@@ -48,6 +48,8 @@ EBI's [training materials](https://www.ebi.ac.uk/training/on-demand)
 
 [RuneStone Academy](https://runestone.academy) - open source textbooks. Don't know anything about the quality.
 
+Peter suggests this set of slides - [Introduction to Methods and Software for Phylogenomics](https://evomics.org/wp-content/uploads/2019/01/Introduction-to-methods-and-software-for-phylogenomics.pdf)
+
 # More detailed R stuff
 
 [regexpr](https://regexr.com) website - helps figure out regular expressions
