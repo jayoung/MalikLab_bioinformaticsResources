@@ -130,18 +130,41 @@ Ensembl
 
 Flybase, Wormbase, SGD
 
-## Orthology
+## Orthology / conservation
 
-OrthoDB (there is an R package for OrthoDB)
+OrthoDB (there is an R package for OrthoDB). Provides estimate of evolutionary rates
 
 TreeFam
 
-COG 
+COG: NCBI's database of clusters of orthologous genes.  [COG website](https://www.ncbi.nlm.nih.gov/research/cog) allows you to send selected protein sequences from COG to COBALT alignment generator, to tweak alignment parameters if needed, and then to download an alignment.
 
 PhyloPat
 Seems to be out-of-date and unmaintained
 June 2014: http://www.cmbi.ru.nl/cdd/phylopat/52/
 Based on Ensembl 52 (quite old:  Ensembl now up to v75)
+
+[Consurf-db](https://consurfdb.tau.ac.il/overview.php) 
+- per-residue rates for proteins that have structure in PDB. 
+- Uses up to 300 homologues, found in UniRef90, with some seq identity/coverage filters 
+- evolutionary rates for each site calculated based on tree+alignment using Rate4Site algorithm
+
+[orthogene](https://bioconductor.org/packages/release/bioc/vignettes/orthogene/inst/doc/orthogene.html) R package
+
+## Conservation / evolutionary rates
+
+### nucleotide
+
+dN/dS type methods
+
+genome-based methods (phyloP etc)
+
+[SLR](https://www.ebi.ac.uk/research/goldman/software/slr/)
+
+### protein
+
+[Evorator](https://evorator.tau.ac.il) - website not responding on 10/4/24
+
+[Rate4Site](https://www.tau.ac.il/~itaymay/cp/rate4site.html) (ref [Pupko et al, 2002](https://pubmed.ncbi.nlm.nih.gov/12169533/)) - given a multiple sequence alignment, it can generate a tree (or you can provide one) and it calculates the relative evolutionary rate at each site.
 
 ## Transcriptomics
 

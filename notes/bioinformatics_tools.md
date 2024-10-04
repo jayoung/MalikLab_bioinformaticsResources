@@ -586,6 +586,8 @@ But it might be easier to use one of these web servers:
 2.  https://academic.oup.com/bib/article/22/4/bbaa337/6042664   (it looks like you can access the linked website only from outside the Hutch firewall – it’s a Czech site, and I think they’re on some kind of list the Hutch is restricting - so you’ll need to be off campus and off the VPN)
 3. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4966924/ (the linked server is not responding for me!)
 
+This paper might be useful:
+[Ancestral Sequence Reconstruction as a Tool to Detect and Study De Novo Gene Emergence](https://academic.oup.com/gbe/article/16/8/evae151/7713604?login=false&utm_source=etoc&utm_campaign=gbe&utm_medium=email)  Vakirlis, et al, 2024 Genome Biology and Evolution
 
 
 # Detecting recombination
