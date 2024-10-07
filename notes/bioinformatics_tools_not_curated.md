@@ -160,6 +160,8 @@ genome-based methods (phyloP etc)
 
 [SLR](https://www.ebi.ac.uk/research/goldman/software/slr/)
 
+Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
+
 ### protein
 
 [Evorator](https://evorator.tau.ac.il) - website not responding on 10/4/24
