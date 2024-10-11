@@ -134,7 +134,11 @@ Flybase, Wormbase, SGD
 
 OrthoDB (there is an R package for OrthoDB). Provides estimate of evolutionary rates
 
-[OrthoMaM](https://academic.oup.com/nar/article/52/D1/D529/7318103)
+[OrthoMaM](https://academic.oup.com/nar/article/52/D1/D529/7318103) - 15,868 alignments from 190 mammalian genomes, should be 1-to-1 othologs. Nice alignment filtering: should be high quality? Should be in-frame.
+
+Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
+
+12-species alignments (10 mammals+chicken+tortoise) (nucleotide and amino acid) for 7445 genes from Shuler & Hagai paper 2022 in teh associated [github repo](https://github.com/galshuler/Evolution_of_host-virus_protein_protein_interactions). I downloaded and unpacked in `~/FH_fast_storage/paml_screen/Adrian_Pelin_vaccinia/references/2022-Shuler/git_repo/Evolution_of_host-virus_protein_protein_interactions`. See notes in `~/FH_fast_storage/paml_screen/Adrian_Pelin_vaccinia/Adrian_Pelin_vaccinia_NOTES.md`
 
 TreeFam
 
@@ -152,9 +156,10 @@ Based on Ensembl 52 (quite old:  Ensembl now up to v75)
 
 [orthogene](https://bioconductor.org/packages/release/bioc/vignettes/orthogene/inst/doc/orthogene.html) R package
 
-Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
 
 phyloP tracks from UCSC genome browser
+
+
 
 ## Methods for conservation / evolutionary rates
 
