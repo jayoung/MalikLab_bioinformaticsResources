@@ -130,9 +130,11 @@ Ensembl
 
 Flybase, Wormbase, SGD
 
-## Orthology / conservation
+## Orthology / conservation databases and data sources
 
 OrthoDB (there is an R package for OrthoDB). Provides estimate of evolutionary rates
+
+[OrthoMaM](https://academic.oup.com/nar/article/52/D1/D529/7318103)
 
 TreeFam
 
@@ -150,7 +152,11 @@ Based on Ensembl 52 (quite old:  Ensembl now up to v75)
 
 [orthogene](https://bioconductor.org/packages/release/bioc/vignettes/orthogene/inst/doc/orthogene.html) R package
 
-## Conservation / evolutionary rates
+Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
+
+phyloP tracks from UCSC genome browser
+
+## Methods for conservation / evolutionary rates
 
 ### nucleotide
 
@@ -159,8 +165,6 @@ dN/dS type methods
 genome-based methods (phyloP etc)
 
 [SLR](https://www.ebi.ac.uk/research/goldman/software/slr/)
-
-Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
 
 ### protein
 

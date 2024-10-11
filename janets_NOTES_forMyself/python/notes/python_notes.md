@@ -253,7 +253,7 @@ chr(65) # result = "A"
 ```
 print("my message") # paretheses not needed in python2 but they are in python3
 ```
-This primntes a number nicely:
+This prints a number nicely:
 ```
 print("gcPercent is %5.1f %%" % gcPercent)
 ```
