@@ -171,6 +171,8 @@ genome-based methods (phyloP etc)
 
 [SLR](https://www.ebi.ac.uk/research/goldman/software/slr/)
 
+Selecton, 2007 - [publication](https://pubmed.ncbi.nlm.nih.gov/17586822/) and [website](http://selecton.bioinfo.tau.ac.il). Website not responding on 10/11/2024. I don't see a way to download the algorithm. Looking at the paper, it looks like it uses various evolutionary models (e.g. codeml M7/M8 etc, or MEC, which takes protein models like JTT and converts them to codon models). Does some kind of hypothesis testing, chooses the best-fitting model.  Also uses a Bayesian method to estimate sitewise dN/dS - uses 8 discrete rate categories and does something with posteriors to get the estimate.
+
 ### protein
 
 [Evorator](https://evorator.tau.ac.il) - website not responding on 10/4/24
