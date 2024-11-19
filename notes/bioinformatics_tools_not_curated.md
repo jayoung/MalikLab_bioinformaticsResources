@@ -142,6 +142,8 @@ Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conse
 
 TreeFam
 
+[Genomicus browser v93](https://www.genomicus.bio.ens.psl.eu/genomicus-93.01/cgi-bin/search.pl) - uses orthology data from ensembl. Older versions like v93 represent paralogs better. 
+
 COG: NCBI's database of clusters of orthologous genes.  [COG website](https://www.ncbi.nlm.nih.gov/research/cog) allows you to send selected protein sequences from COG to COBALT alignment generator, to tweak alignment parameters if needed, and then to download an alignment.
 
 PhyloPat
@@ -156,10 +158,11 @@ Based on Ensembl 52 (quite old:  Ensembl now up to v75)
 
 [orthogene](https://bioconductor.org/packages/release/bioc/vignettes/orthogene/inst/doc/orthogene.html) R package
 
+eggNOG [database](http://eggnog6.embl.de) and [publication](https://pubmed.ncbi.nlm.nih.gov/36399505/)
 
 phyloP tracks from UCSC genome browser
 
-
+[OMA orthology database](https://pubmed.ncbi.nlm.nih.gov/29106550/) 
 
 ## Methods for conservation / evolutionary rates
 
