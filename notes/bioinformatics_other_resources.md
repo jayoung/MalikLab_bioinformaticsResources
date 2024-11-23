@@ -18,7 +18,8 @@ Risa recommends this [RNA-seq tutorial](https://www.melbournebioinformatics.org.
 
 # Other lists of resources
 
-Hutch new (summer 2022) Data Science Lab ([DaSL](https://hutchdatascience.org)) has a list of training [resources](https://hutchdatascience.org/code_review/more_resources.html).
+Hutch new (summer 2022) Data Science Lab ([DaSL](https://hutchdatascience.org)) has a list of of [Hutch-based training resources](https://hutchdatascience.org/training/#full-list-of-self-service-training-resources) and additional external training [resources](https://hutchdatascience.org/code_review/more_resources.html).
+
 
 A [list of courses/resources](https://sciwiki.fredhutch.org/scicomputing/reference_training) suggested by other Hutch people: includes Hutch stuff as well as resources elsewhere on the internet (scroll to the bottom).
 

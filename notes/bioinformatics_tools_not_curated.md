@@ -1,10 +1,12 @@
 # search tools
 
-NCBI's Edirect toolkit to help search and extract data from their databases:
-https://www.ncbi.nlm.nih.gov/books/NBK179288/
-https://ncbi-hackathons.github.io/EDirectCookbook/
+NCBI's Edirect toolkit to help search and extract data from their databases. There's an online [book](https://www.ncbi.nlm.nih.gov/books/NBK179288/) and [cookbook](https://ncbi-hackathons.github.io/EDirectCookbook/)
 
 NCBI's SRAtoolkit
+
+LOGAN search to search SRA database using kmers
+
+LexicMap - if you want to search millions of prokaryotic genomes at once, blast can be too slow. This is a quicker alternative.
 
 # Getting species trees
 
@@ -200,6 +202,13 @@ Human: 1000 genomes [selection browser](http://hsb.upf.edu/)
 Drosophila: [popfly](http://popfly.uab.cat/) (has data to allow M-K tests)
 
 
+# Variation
+
+SHAPEIT for phasing haplotypes
+
+## Variant callers for long reads
+
+Poster at Genome Informatics meeting said Clair3 works really well for nanopore bacterial sequencing
 
 # Electronic lab notebooks
 
