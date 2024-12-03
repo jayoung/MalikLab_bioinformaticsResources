@@ -18,8 +18,16 @@ module load BLAST+/2.10.1-gompi-2020a
 
 ## To blast a remote NCBI database 
 (notice the `-remote` option):
+
+You should be able to search the same databases you see when you do a web-NCBI blast search. The default there is the core_nt database ([details here](https://ncbiinsights.ncbi.nlm.nih.gov/2024/07/18/new-blast-core-nucleotide-database/))
+
 ```
-blastn -remote -query myNuclQuerySeq.fa -db nr -out myNuclQuerySeq.fa.blastnNR -task blastn
+blastn -remote -query myNuclQuerySeq.fa -db core_nt -out myNuclQuerySeq.fa.blastnNR -task blastn
+```
+
+This command should show you the names of all databases available for remote searches (I think?):
+```
+update_blastdb.pl --showall
 ```
 
 ## To format your own fasta format file as a blastable database:
@@ -43,25 +51,28 @@ Use an entrez-style query via the `-entrez_query` option: e.g. you can use commo
 You can use [NCBI's taxonomy database](https://ncbi.nlm.nih.gov/taxonomy) to help figure out the taxonomic terms you're looking for.  
 
 You can also test whether your entrez query is a good one by pasting the entire query into the [nucleotide](https://ncbi.nlm.nih.gov/nucleotide) or [protein](https://ncbi.nlm.nih.gov/protein) database search bars and seeing whether there are a reasonable number of matches, and whether the matches seem like what you wanted.
+
 ```
 # human using common name
-tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'human[Organism]'
+tblastn -remote -query myProtQuerySeq.fa -db core_nt -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'human[Organism]'
 
 # human using latin name
-tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'homo sapiens[Organism]'
+tblastn -remote -query myProtQuerySeq.fa -db core_nt -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'homo sapiens[Organism]'
 
 # rodents
-tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'rodentia[Organism]'
+tblastn -remote -query myProtQuerySeq.fa -db core_nt -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'rodentia[Organism]'
 
 # non-human simian primates:
-tblastn -remote -query myProtQuerySeq.fa -db nr -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'Simiiformes[Organism] NOT homo sapiens[Organism]'
+tblastn -remote -query myProtQuerySeq.fa -db core_nt -out myProtQuerySeq.fa.tblastnNRhuman -entrez_query 'Simiiformes[Organism] NOT homo sapiens[Organism]'
 ```
 
 ## Blast output formats
+
 Blast can give output in other formats - explore the `-outfmt` option. e.g. `-outfmt 6` gives a tabular output that you could sort and filter, perhaps in Excel:
 ```
 tblastn -query myProtQuerySeq.fa -db myNuclSeqs.fa -out myProtQuerySeq.fa.tblastn_tableOutput -outfmt 6
 ```
+
 If you already have a blast result you obtained using `-remote`, but you want to see that result in a different format, you first want to find the "result ID" you'll find near the top of the blast output, after `RID:`. For example (using grep to find that ID): 
 ```
 grep 'RID: ' myProtQuerySeq.fa.tblastnPrimate
@@ -71,7 +82,7 @@ Then you use that result ID in the blast_formatter command:
 ```
 blast_formatter -rid 1H0R3J40016 -outfmt 6 -out myProtQuerySeq.fa.tblastnPrimate.outfmt6
 ```
-I think results are only retained on the NCBI server for a week or so: if your blast is older than that, you may need to redo it.
+I think results are only retained on the NCBI server for 36 hours: if your blast is older than that, you may need to redo it.
 
 ## Extracting the sequences of blast matches
 

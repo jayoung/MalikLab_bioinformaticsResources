@@ -96,6 +96,11 @@ EDGE - seems to be mostly for bacterial / metagenomics analyses?
 
 for structure, Antoine used UCSF Chimera (Pettersen, et al. 2004).
 
+AFDB - alphaFold protein structure database
+
+BFVD - database of predicted virus structures
+https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkae1119/7906834#google_vignette
+
 # Deep sequencing
 
 GC normalization: John Huddleston advised using mrFAST or mrsFAST for read mapping and then mrcanavar for GC normalization and copy number estimation. But that was a while ago (<2017?)
@@ -133,6 +138,8 @@ Ensembl
 Flybase, Wormbase, SGD
 
 ## Orthology / conservation databases and data sources
+
+Ensembl and the BioMart interface
 
 OrthoDB (there is an R package for OrthoDB). Provides estimate of evolutionary rates
 
@@ -191,6 +198,10 @@ Multispecies developmental timecourse [browser](https://apps.kaessmannlab.org/ev
 - seven organs (cerebrum, cerebellum, heart, kidney, liver, ovary and testis)
 - developmental time points from early organogenesis to adulthood
 
+## Ribosomal profiling
+
+https://github.com/nzhang89/RiboSeeker
+
 ## Single cell data
 
 Brotman Baty's [Descartes](https://descartes.brotmanbaty.org) - gateway to single cell atlas for several species
@@ -206,9 +217,47 @@ Drosophila: [popfly](http://popfly.uab.cat/) (has data to allow M-K tests)
 
 SHAPEIT for phasing haplotypes
 
+## databases of variation
+
+### SNPs
+
+[gnomAD](https://gnomad.broadinstitute.org)
+
+[European Variant Archive](https://www.ebi.ac.uk/eva/) - I don't think it shows allele frequencies
+
+Ensembl browser also has table view that allows filtering. [Example](https://useast.ensembl.org/Homo_sapiens/Gene/Variation_Gene/Table?g=ENSG00000171497;r=4:158709127-158723396)  (but in this example, it's missing a variant that's common according to gnomAD)
+
+dbSNP
+
+dbVar for copy number/structural variants
+
+ClinVar for clinically significant variants
+
+UCSC browser
+
+[Human Genetic Variation Database](https://www.hgvd.genome.med.kyoto-u.ac.jp) (Kyoto)
+
+1000 genomes https://www.internationalgenome.org
+
+### Structural variants
+
+[Database of Genomic Variants](https://www.ebi.ac.uk/dgva/) - being phased out, transitioning to [European Variant Archive](https://www.ebi.ac.uk/eva/)
+
 ## Variant callers for long reads
 
 Poster at Genome Informatics meeting said Clair3 works really well for nanopore bacterial sequencing
+
+# protein stuff
+
+## EMBL-EBI ProtVar database ()
+
+https://www.ebi.ac.uk/ProtVar
+
+They've done functional predictions on every possible human missense variant.
+
+Many different types of variant predictor.
+- view on structure
+- score likelihood of having detrimental effect, e.g. AlphaFold missense score, CADD score, stability change
 
 # Electronic lab notebooks
 
