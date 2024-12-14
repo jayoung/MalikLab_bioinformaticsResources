@@ -4,6 +4,12 @@
 
 "biclustering" - cluster genes and samples simultaneously, rather than independently (I think?)
 
+## File formats
+
+### sam/bam format
+
+[Sam format specifications](http://samtools.github.io/hts-specs/SAMv1.pdf) and [optional fields](https://samtools.github.io/hts-specs/SAMtags.pdf)
+
 ## Algorithms
 
 ### Aligners

@@ -198,13 +198,19 @@ Multispecies developmental timecourse [browser](https://apps.kaessmannlab.org/ev
 - seven organs (cerebrum, cerebellum, heart, kidney, liver, ovary and testis)
 - developmental time points from early organogenesis to adulthood
 
-## Ribosomal profiling
+## Ribosomal profiling (ribo-seq)
 
 https://github.com/nzhang89/RiboSeeker
+
+This paper PROBABLY has some sort of accessible database associated [High-quality peptide evidence for annotating non-canonical open reading frames as human proteins](https://www.biorxiv.org/content/10.1101/2024.09.09.612016v1)
 
 ## Single cell data
 
 Brotman Baty's [Descartes](https://descartes.brotmanbaty.org) - gateway to single cell atlas for several species
+
+[This paper](https://www.nature.com/articles/s41586-024-08411-y) from Aviv Regev's lab shodescribes a tool called `SCimilarity` that allows you to take a single cell profile query and search all known existing single cell data to find datasets that contain cells with matching profiles.
+
+[This 2024 perspective paper](https://www.nature.com/articles/s41586-024-08338-4) from Aviv Regev and colleagues might be a good starting point for learning about uses of single cell data
 
 ## Variation 
 
