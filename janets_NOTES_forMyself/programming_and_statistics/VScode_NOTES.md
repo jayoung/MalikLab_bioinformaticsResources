@@ -28,6 +28,14 @@ sync is ON on both my laptop and my desktop mac (and from a window running throu
 
 in a rhino-based VScode session on the desktop computer (no folder open) I messed around and created a 'profile'. Don't think it is syncing to anything? Not sure what that did
 
+Within each git repo, I do NOT want to sync the .vscode folder that gets put there (because it is being synced in a different way, through VScode application itself).  Make sure that `vscode` is in the `.gitignore` file, and if I accidentally sync it, here are the steps to remove it from the repo:
+```
+git add --all .
+git rm -r .vscode
+git commit -m "remove .vscode"
+git push
+```
+
 ## Python
 on my mac (desktop and laptop) I have Python 3.9.6
 
