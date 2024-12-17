@@ -1,0 +1,53 @@
+# cpanm thinks that:
+HTTP::Date is up to date. (6.05)
+    #!/usr/bin/perl
+
+# whichpm could not find it until I edited the shebang
+whichpm HTTP::Date
+whichpm: ERROR: The following module(s) could not be located:
+  HTTP::Date
+To see the search path, run: perl -e "print join(\"\n\", @INC), \"\n\""
+    #!/usr/bin/env perl
+
+# taxid2wgs.pl cannot find it
+/home/jayoung/malik_lab_shared/linux_gizmo/bin/taxid2wgs.pl
+    #!/usr/bin/env perl
+
+# which perl
+/home/jayoung/malik_lab_shared/linux_gizmo/bin/perl
+
+
+
+
+/usr/bin/perl -V
+Summary of my perl5 (revision 5 version 26 subversion 1) configuration:
+
+
+
+
+
+should I uninstall perl and my cpan modules?
+
+should I load a module for perl in my login script, 
+e.g. BioPerl/1.7.8-GCCcore-11.2.0      
+
+/usr/bin/perl is 5.26.1
+
+
+/home/jayoung/malik_lab_shared/linux_gizmo/bin/perl
+/home/jayoung/malik_lab_shared/linux_gizmo/bin/perldoc
+
+when I have env perl in the shebang, it does NOT find the perl modules I installed. 
+when I have /usr/bin/perl, it DOES.
+
+
+if a perl script shows me the source code rather than the pod documentation, that means it cannot find perldoc
+
+
+
+
+/usr/bin/perl -V
+Summary of my perl5 (revision 5 version 26 subversion 1) configuration:
+
+
+

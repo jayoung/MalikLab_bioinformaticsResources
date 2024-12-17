@@ -212,6 +212,11 @@ Brotman Baty's [Descartes](https://descartes.brotmanbaty.org) - gateway to singl
 
 [This 2024 perspective paper](https://www.nature.com/articles/s41586-024-08338-4) from Aviv Regev and colleagues might be a good starting point for learning about uses of single cell data
 
+## Proteomics
+
+[π-HuB: the proteomic navigator of the human body](https://www.nature.com/articles/s41586-024-08280-5)
+
+
 ## Variation 
 
 Human: 1000 genomes [selection browser](http://hsb.upf.edu/)
