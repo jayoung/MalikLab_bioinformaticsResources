@@ -1,5 +1,4 @@
-##### set up password-less ssh access to rhino
-
+# set up password-less ssh access to rhino
 
 On the Mac, Terminal, in my home dir, do this:
 ```
@@ -14,8 +13,30 @@ ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
      # and entered my password
 ```
 
-#### done, and I think I set them up:
+# configure git for automatic sign-in
 
+```
+cd
+git config --global user.email "jayoung@fredhutch.com"
+git config --global user.name "Janet Young"
+
+git config --global core.fileMode false
+
+git credential-store --file ~/.git-credentials store 
+    # appears to hang, but enter this:
+protocol=https
+host=github.com
+username=jayoung
+password=my_personal_access_token_string
+
+git config --global credential.helper store
+```
+
+
+
+# installed these applications, and I think I set them up:
+
+```
 seaview
 dendroscope
 geneious - haven't activated free trial yet
@@ -33,6 +54,7 @@ set up druva backups
 vscode
 endnote
 pymol (no license!)
+```
 
 # changed default shell to bash:
 - system preferences - users and groups - control-click over my user name, advanced options, change login shell to /bin/bash
@@ -116,7 +138,7 @@ BiocManager::install("taxize")
 
 
 
-#### not installing (at least for now)
+# not installing (at least for now)
 linebreak? (not sure it exists any more)
 
 netskope client? (Hutch thing to let me get through firewalls for websites in some countries. needed it to look at ggtree website but I don't know if that's true any more)

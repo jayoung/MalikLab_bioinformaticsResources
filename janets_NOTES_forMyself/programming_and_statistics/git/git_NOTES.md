@@ -183,6 +183,7 @@ protocol=https
 host=github.com
 username=mygithub_username
 password=the_personal_access_token_string
+    (then a blank line to exit)
 This should create a file called ~/.git-credentials stored in your home drive. There is a bit more detail on the git documentation but I didn't think it really described it very well (I had to ask SciComp for help). https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage (edited)
 
 Turned out it was using the stored credentials for one repo but not another. The repo where it DOES use stored credentials has a couple of lines in the .git/config file:  
