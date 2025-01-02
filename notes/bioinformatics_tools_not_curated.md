@@ -101,6 +101,13 @@ AFDB - alphaFold protein structure database
 BFVD - database of predicted virus structures
 https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkae1119/7906834#google_vignette
 
+STRINGdb - database of known and predicted protein-protein interactions
+
+[DHR](https://pubmed.ncbi.nlm.nih.gov/39123049/) - dense homolog retrieval. Use cases: 
+- distand homology
+- when speed is important
+Alignment-free. Mysterious encoding of protein seqs, allows comparison really fast. 
+
 # Deep sequencing
 
 GC normalization: John Huddleston advised using mrFAST or mrsFAST for read mapping and then mrcanavar for GC normalization and copy number estimation. But that was a while ago (<2017?)
@@ -172,6 +179,8 @@ eggNOG [database](http://eggnog6.embl.de) and [publication](https://pubmed.ncbi.
 phyloP tracks from UCSC genome browser
 
 [OMA orthology database](https://pubmed.ncbi.nlm.nih.gov/29106550/) 
+
+INPARANOID (?) maybe old
 
 ## Methods for conservation / evolutionary rates
 

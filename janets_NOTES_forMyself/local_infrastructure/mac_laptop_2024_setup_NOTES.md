@@ -1,3 +1,56 @@
+# other setup
+
+prevent mac going to sleep?
+
+chrome/safari bookmarks?  how to set up home versus work and sync?  (profiles?)
+
+# sidebar links
+
+Sidebar links periodically disappear - [this](https://discussions.apple.com/thread/253196430) is what I'm trying, to prevent that:
+
+I [mount malik_h at login](https://superuser.com/questions/125189/how-do-i-have-a-network-share-mount-in-mac-os-x-persist-between-reboots) (System Preferences - Login Items & Extensions - drag `malik_h` from Finder into the "Open at Login" list)
+
+Also, in Mac Terminal
+```
+cd 
+mkdir links_to_server_folders
+cd links_to_server_folders
+
+ln -s /Volumes/malik_h/ .
+ln -s /Volumes/malik_h/user/jayoung/ .
+ln -s /Volumes/malik_h/grp/h2av_RNAseq/  .
+ln -s /Volumes/malik_h/grp/abo_janet_analysis/ .
+ln -s /Volumes/malik_h/grp/worm_mitoNuc/  .
+ln -s /Volumes/malik_h/user/jayoung/paml_screen/ .
+```
+
+Use Finder to make sidebar shortcuts using those links
+
+
+
+# [Safari profiles](https://support.apple.com/en-us/105100)
+
+most bookmarks are shared between profiles, but the 'favorites bar' can be set to be shared or not shared
+
+can customize so that certain web domains are opened in particular profiles
+
+# haven't installed (at least for now)
+
+netskope client? (Hutch thing to let me get through firewalls for websites in some countries. needed it to look at ggtree website but I don't know if that's true any more)
+
+inkscape?
+
+MEGA
+
+linebreak? (not sure it exists any more)
+
+homebrew version of perl and cpanm and perl modules ?
+
+python? (python3 is installed)
+
+haven't signed in to eDynamic dropbox
+
+
 # set up password-less ssh access to rhino
 
 On the Mac, Terminal, in my home dir, do this:
@@ -32,6 +85,7 @@ password=my_personal_access_token_string
 git config --global credential.helper store
 ```
 
+I think that worked. I can sync to github from VScode now, at least for this repository
 
 
 # installed these applications, and I think I set them up:
@@ -136,12 +190,4 @@ BiocManager::install("plyranges")
 BiocManager::install("seqLogo")
 BiocManager::install("taxize")
 
-
-
-# not installing (at least for now)
-linebreak? (not sure it exists any more)
-
-netskope client? (Hutch thing to let me get through firewalls for websites in some countries. needed it to look at ggtree website but I don't know if that's true any more)
-
-inkscape?
 

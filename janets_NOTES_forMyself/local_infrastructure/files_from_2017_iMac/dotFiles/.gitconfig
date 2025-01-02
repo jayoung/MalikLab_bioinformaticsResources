@@ -1,0 +1,9 @@
+[credential]
+	helper = osxkeychain
+[user]
+	name = jayoung
+	email = jayoung@fredhutch.org
+[core]
+	filemode = false
+[safe]
+	directory = /usr/local/Homebrew

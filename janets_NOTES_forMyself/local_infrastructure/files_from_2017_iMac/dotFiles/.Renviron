@@ -1,0 +1,7 @@
+ENTREZ_KEY=e9e901b80c0eedeb4712c5f0ca0646793e08
+
+### adding to PATH so that ensemblVEP works
+# this component allows it to see my perlbrew-installed version of perl and libs: /Users/jayoung/perl5/perlbrew/perls/perl-5.34.0/bin
+# this component allows it to see my installation of vep: /Users/jayoung/bin/ensembl-vep-release-104.3
+
+PATH=/Users/jayoung/perl5/perlbrew/perls/perl-5.34.0/bin:/Users/jayoung/bin/ensembl-vep-release-104.3:${PATH}
