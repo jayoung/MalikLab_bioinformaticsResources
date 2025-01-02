@@ -341,11 +341,13 @@ module purge
 
 ## trimming/masking alignments
 
-There are block-filter methods (remove entire columns from alignment) and segment-filter methods (remove part of whole of individual sequences).
+There are block-filter methods (remove entire columns from alignment) and segment-filter methods (remove part of whole of individual sequences).  I think also some hybrid methods?
 
-I think also some hybrid methods?
+MACSE has some sort of mode where it trims non-homologous fragments
 
 Figure 1 of [the OrthoMam paper](https://academic.oup.com/nar/article/52/D1/D529/7318103) shows the pipeline they used for alignments - they do a lot of filtering. 15,868 alignments from 190 mammalian genomes. Website isn't working well as of Oct 11 2024.
+
+
 
 ### Filter out entire sequences
 - [PhylteR](https://academic.oup.com/mbe/article/40/11/msad234/7330000)
