@@ -26,13 +26,9 @@ There are two ways to work on the cluster:
 
 Each node has multiple "CPUs" (also known as "threads") (central processing unit): some nodes have 4 CPUs, others 6, 14, 24, 36 CPUs. Often we just use one CPU per program we're running, but some programs (e.g. `blastn`) are written so they can use >1 CPU at once ("parallel processing"). We will probably be sharing a node with other people using it at the same time: try to stick to the number of CPUs you requested, and don't exceed that. 
 
-Cluster specifications, last time I looked: (up-to-date version should be [here](https://sciwiki.fredhutch.org/scicomputing/compute_platforms/)):  
-There are four classes of gizmo nodes (e.g. gizmok27 is an K class node).  
-- G class (18 computers) each = 6 CPUs, 256Gb RAM
-- H class (3 computers) each = 14 CPUs, 768Gb RAM
+Cluster specifications, last time I looked, are as follows (up-to-date version should be [here](https://sciwiki.fredhutch.org/scicomputing/compute_platforms/)).  There are two main classes of gizmo nodes (e.g. gizmok27 is an K class node):  
 - J class (42 computers) each = 24 CPUs, 384Gb RAM
 - K class (170 computers) each = 36 CPUs, 768Gb RAM
- -(D class nodes are obsolete: they had 12 CPUs, 48Gb RAM) 
 
  
 
@@ -121,27 +117,44 @@ To look for modules whose name contains ‘bowtie’: `module avail bowtie` (it 
 
 If there's a program you're interested in trying that doesn't seem to be available, ask me if I have installed it for our lab - I have a few additional tools that scicomp haven't installed as modules. You can also ask them to install things - sometimes they respond very quickly, sometimes it takes a few days or a week.  If you're feeling brave you can install it yourself, for your own use.
 
-To load a module (i.e. make it ready to use). This only applies in your current terminal window, and will reset when you exit that window:  
+To load a module (i.e. make it ready to use):  
     `module load Cufflinks`  
-That loads the default version of cufflinks, usually the most recent version that's been installed. In the output of `module avail`, the D indicates the default version of each tool, which can change with time. To make your work more reproducible, you probably want to get in the habit of choosing a specific version of each tool for each project, and sticking to it:  
-`module load Cufflinks/2.2.1-foss-2018b`
+That loads the default version of cufflinks, usually the most recent version that's been installed. In the output of `module avail`, the D indicates the default version of each tool, which can change with time. 
+
+This `module load` command only applies in your current terminal window, and will reset when you exit that window.
+
+To make your work more reproducible, it's good practise to choose a specific version of each tool for each project, and record that, e.g.:  `module load Cufflinks/2.2.1-foss-2018b`
 
 To see all modules currently loaded in your session: `module list`
 
 To unload all modules currently loaded in your session: `module purge`
 
+
+# Running a series of commands
+
+Multiple commands can be run one after the other by concatenating them with ";".  For example, to run `command1` then `command2`, you would do this:  `command1 ; command2`
+
+An alternative, tidier way to run a series of commands is to create a "**shell script**". It’s a plain text file that contains all the commands you want to run – in this very simple example the file is called `myCommands.sh` and here are the contents:
+```
+#!/bin/bash
+echo "hello 1"
+echo "hello 2"
+```
+
+To run it from the command line, type `bash myCommands.sh` (alternatively, `source myCommands.sh`).
+
 # Running commands on the cluster in batch mode
 
 More info [here](https://sciwiki.fredhutch.org/scicomputing/compute_jobs/), but basically you do this:
 
-1. figure out the command or set of commands you want to run.  Multiple commands can be run one after the other by concatenating them with ";".  For example, to run `command1` then `command2`, you would do this:  
-`command1 ; command2`
+1. figure out the command(s) you want to run.  
 
-2. in the simplest form, you can run the job on a cluster node by wrapping the command by issuing a command like this from a rhino/gizmo command line:  
-`sbatch --wrap="command1 ; command2"`
+2. in the simplest form, you can run the job on a cluster node by wrapping the command(s) you want to run in quotes, and run them using `sbatch --wrap` -  like this from a rhino/gizmo command line:  
+```
+sbatch --wrap="command1 ; command2"
+```
 
-
-3. but we might also want to specify some options for the sbatch job, for example:
+3. we might also want to specify some options for the sbatch job, for example:
 ```
 sbatch --job-name=testJob -t 0-2 --cpus-per-task=4 --partition=largenode --wrap="command1 ; command2"
 ```
@@ -158,15 +171,15 @@ The jobID (a number, shown when you submit the job and in squeue output) can be 
 `scontrol show job myJobID`  
 If the commands you ran resulted in any screen output, or gave errors, that output is sometimes (but maybe not always) captured in a file called `slurm-myJobID.out`
 
-5. sometimes we want to wrap a command that includes using a `module load` function - this is how we do it (it looks  conplex, but it works)
-`sbatch  --wrap="/bin/bash -c \"source /app/Lmod/lmod/lmod/init/bash; module load BWA; bwa\""`
+5. sometimes we want to wrap a command that includes using a `module load` function - this is how we do it (it looks conplex, but it works):
+```
+sbatch  --wrap="/bin/bash -c \"module load BWA; bwa\""
+```
 
-6. an alternative, tidier way to run a series of commands within a single sbatch job is to create a "shell script". It’s a plain text file that contains all the commands you want to run – in this very simple example the file is called `myCommands.sh` and here are the contents:
-```
-#!/bin/bash
-echo ‘hello 1’
-echo ‘hello 2’
-```
+
+6. a tidier way to run a series of commands within a single sbatch job is to create a "shell script" - see above.
+
+To run a shell script in sbatch mode, type `sbatch myCommands.sh`.
 
 If we want to load modules within a shell script, we need to include a ‘source’ line exactly like the second line in this more complicated shell script:
 ```

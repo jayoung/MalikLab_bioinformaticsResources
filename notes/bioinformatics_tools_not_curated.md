@@ -189,7 +189,7 @@ EDGE - seems to be mostly for bacterial / metagenomics analyses?
 GC normalization: John Huddleston advised using mrFAST or mrsFAST for read mapping and then mrcanavar for GC normalization and copy number estimation. But that was a while ago (<2017?)
 
 ## RNA-seq
-Ching-Ho likes HISAT2 (new version of tophat) for RNA-seq., partly because it has fewer options than STAR, but he also thinks STAR might do better with multi-mapping genes.  HISAT2 may be able to directly take SRA accessions and map without downloading reads.
+Ching-Ho likes HISAT2 (new version of tophat) for RNA-seq, partly because it has fewer options than STAR, but he also thinks STAR might do better with multi-mapping genes.  HISAT2 may be able to directly take SRA accessions and map without downloading reads.
 
 Ching-Ho also notes that some RNA-seq datasets have high rRNA contamination. This could be affecting my RPKMs quite a lot.
 
