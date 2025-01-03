@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=0-08:00:00
 #SBATCH --array=[0-2]%3        ### in square parentheses, we specify a range of numerical indices - the final index will be one fewer than the number of jobs, because we start counting at 0.  After the %, we specify the batch size (i.e. max number of sbatch jobs that should run simultaneously). When there aren't many jobs, you can probably run them all at once. When you have a lot of jobs, or if each job is intensive, you might want to run only a limited number at once, e.g. 20 or 40.
@@ -26,7 +25,6 @@ SINGLE_ID="${SAMPLE_IDS[$SLURM_ARRAY_TASK_ID]}"
 BAM_FILE="${SINGLE_ID}.bam"
 
 #### specify output file names - filenames contain the sample names
-INDEX_FILE="${SINGLE_ID}.bam.bai"
 STATS_FILE="${SINGLE_ID}.bwa.flagstats"
 
 #### now actually run the code. Echo statements help us track what's going on - they'll appear in the slurm.JOBID.out files

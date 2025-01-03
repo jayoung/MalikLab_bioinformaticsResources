@@ -177,19 +177,21 @@ sbatch  --wrap="/bin/bash -c \"module load BWA; bwa\""
 ```
 
 
-6. a tidier way to run a series of commands within a single sbatch job is to create a "shell script" - see above.
+6. a tidier way to run a series of commands within a single sbatch job is to create a "shell script" - [see above](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/notes/FHCRC_compute_resources.md#running-a-series-of-commands).
 
 To run a shell script in sbatch mode, type `sbatch myCommands.sh`.
 
-If we want to load modules within a shell script, we need to include a ‘source’ line exactly like the second line in this more complicated shell script:
+If we want to load modules within an sbatch script, we need to include a `source` line exactly like the second line in this more complicated shell script. Sometimes it still seems to work without the `source` line, but sometimes it doesn't, so let's keep it.
 ```
 #!/bin/bash
 source /app/lmod/lmod/init/profile
-module load Bowtie2
+module load Bowtie2/2.5.4-GCC-13.2.0
 bowtie2 --help
+module purge
 ```
 Here’s how you actually run the shell script:  
 `sbatch myCommands.sh`  
+
 or, with additional options:  
 `sbatch --cpus-per-task=8 -t 1-0 --job-name=myJob1 myCommands.sh`
 
@@ -199,11 +201,11 @@ You can also do this to cancel all your running jobs - e.g. to cancel all jobs f
 
 # Running a bunch of sbatch jobs, on multiple samples
 
-If you want to get fancy, and run the same command on a set of inputs, you might want to set up a **"slurm script"** (a.k.a. **"sbatch script"**) that will look something like this:
+If you want to get fancy, and run the same command on a set of inputs, you might want to set up a **"slurm script"** (a.k.a. **"sbatch script"**) that will look something like the following. 
+A version of that script with detailed comment lines to help you understand it is [here](../example_scripts/simple_slurm_script.sh). 
 
 ```
 #!/bin/bash
-#SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=0-08:00:00
 #SBATCH --array=[0-2]%3 
@@ -222,15 +224,12 @@ SINGLE_ID="${SAMPLE_IDS[$SLURM_ARRAY_TASK_ID]}"
 
 #### specify input/output file names
 BAM_FILE="${SINGLE_ID}.bam"
-INDEX_FILE="${SINGLE_ID}.bam.bai"
 STATS_FILE="${SINGLE_ID}.bwa.flagstats"
 
 #### run commands
 samtools index ${BAM_FILE}
 samtools flagstat ${BAM_FILE} > ${STATS_FILE}
 ```
-
-A version of that script with detailed comment lines to help you understand it is [here](../example_scripts/simple_slurm_script.sh). 
 
 To run an slurm script: `sbatch myScript.sbatch`
 
