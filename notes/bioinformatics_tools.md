@@ -339,43 +339,6 @@ java -jar /fh/fast/malik_h/grp/malik_lab_shared/bin/macse_v2.06.jar -prog enrich
 module purge
 ```
 
-## trimming/masking alignments
-
-There are block-filter methods (remove entire columns from alignment) and segment-filter methods (remove part of whole of individual sequences).  I think also some hybrid methods?
-
-MACSE has some sort of mode where it trims non-homologous fragments
-
-Figure 1 of [the OrthoMam paper](https://academic.oup.com/nar/article/52/D1/D529/7318103) shows the pipeline they used for alignments - they do a lot of filtering. 15,868 alignments from 190 mammalian genomes. Website isn't working well as of Oct 11 2024.
-
-
-
-### Filter out entire sequences
-- [PhylteR](https://academic.oup.com/mbe/article/40/11/msad234/7330000)
-
-### Block methods:
-
-- trimal - can trim gappy positions out of an alignment (nucleotide or protein). Example usage:
-```
-trimal -in myAln.fa -out myAln.trimal.fa -automated1 -htmlout myAln.trimal.html -colnumbering > myAln.trimal.retainedColumns.txt
-```
-Some papers say trimal isn't as good as GUIDANCE and/or ZORRO
-
-Also:
-- BMGE
-- GBLOCKs - some papers say this isn't as good as GUIDANCE
-
-### Segment methods
-- [HMMCleaner](https://bmcecolevol.biomedcentral.com/articles/10.1186/s12862-019-1350-2)
-
-### Other methods - maybe segment, maybe hybrid, or I just haven't looked
-
-I think 
-- `SWAMP`
-- GUIDANCE (I used this in the kinetochore pipeline)
-- ZORRO (Wu, Chatterji, Eisen, PLoS ONE, 2012)
-- PREQUAL
-- MACSEv2 "trimNonHomologousFragments" module
-
 
 # Phylogenetic trees
 

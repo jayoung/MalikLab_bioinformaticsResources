@@ -62,9 +62,13 @@ OrthoDB (there is an R package for OrthoDB). Provides estimate of evolutionary r
 
 Zoonomia project: >240 mammals analyzed. Precomputed genome-wide mammalian conservation scores, and codon alignments are here https://zoonomiaproject.org/the-data/ 
 
+[CESAR tool](https://github.com/hillerlab/CESAR2.0) somehow extracts gene/exon alignments from whole genome multiple alignments. 
+
 12-species alignments (10 mammals+chicken+tortoise) (nucleotide and amino acid) for 7445 genes from Shuler & Hagai paper 2022 in teh associated [github repo](https://github.com/galshuler/Evolution_of_host-virus_protein_protein_interactions). I downloaded and unpacked in `~/FH_fast_storage/paml_screen/Adrian_Pelin_vaccinia/references/2022-Shuler/git_repo/Evolution_of_host-virus_protein_protein_interactions`. See notes in `~/FH_fast_storage/paml_screen/Adrian_Pelin_vaccinia/Adrian_Pelin_vaccinia_NOTES.md`
 
-144-vertebrate whole genome alignment described in this 2017 paper by [Sharma and Hiller](https://academic.oup.com/nar/article/45/14/8369/3875570) - data are available [here](https://bds.mpi-cbg.de/hillerlab/144VertebrateAlignment_CESAR/). The CESAR tool takes whole genome alignments and humna exon coordinates, and uses that to extract orthologous exons.
+120-mammal alignment described in this 2019 paper by [Hecker and Hiller](https://pubmed.ncbi.nlm.nih.gov/31899510/) and available [in a genome browser](https://genome-public.pks.mpg.de/) and [for download](https://bds.mpi-cbg.de/hillerlab/120MammalAlignment/).
+
+144-vertebrate whole genome alignment described in this 2017 paper by [Sharma and Hiller](https://academic.oup.com/nar/article/45/14/8369/3875570) - data are available [here](https://bds.mpi-cbg.de/hillerlab/144VertebrateAlignment_CESAR/). The CESAR tool takes whole genome alignments and human exon coordinates, and uses that to extract orthologous exons.
 
 TreeFam
 
@@ -113,6 +117,8 @@ NOTUNG for tree reconciliation
 CAFE for tree reconciliation (David Liberles says may be too simplistic)
 
 David Liberles: expectation maximization for missing data
+
+OrthoMCL for clustering genes/orthologs
 
 ## Getting species trees
 
@@ -187,19 +193,6 @@ Ching-Ho likes HISAT2 (new version of tophat) for RNA-seq., partly because it ha
 
 Ching-Ho also notes that some RNA-seq datasets have high rRNA contamination. This could be affecting my RPKMs quite a lot.
 
-
-# Coding
-
-## R
-"escape excel" tool to get tab-delimited files ready to import into excel, without gene names getting mangled
-https://github.com/pstew/escape_excel
-
-## Python
-Evolution python tools: http://etetoolkit.org/
-
-## Markdown
-To print a markdown file, use VScode. Right-click when the file is open to get a menu.
-
 # Datasets/resources
 
 ## Genome browsers
@@ -213,6 +206,11 @@ Ensembl
 ## Species-specific databases
 
 Flybase, Wormbase, SGD
+
+Virus Pathogen Resource (ViPR) is now part of [BV-BRC](https://www.bv-brc.org), the bacterial and viral bioinformatics resource center
+
+
+
 
 ## Methods for conservation / evolutionary rates
 
@@ -312,6 +310,8 @@ STRINGdb - database of known and predicted protein-protein interactions
 - when speed is important
 Alignment-free. Mysterious encoding of protein seqs, allows comparison really fast. 
 
+[`miniprot`](https://github.com/lh3/miniprot) spliced alignment of protein seq to genome seq (similar to genewise and exonerate). Not optimized for distant comparisons but it's doable.
+
 ## EMBL-EBI ProtVar database
 
 https://www.ebi.ac.uk/ProtVar
@@ -332,7 +332,7 @@ Many different types of variant predictor.
 
 LabArchive
 
-# Not biology
+# Not biology or coding
 
 ## Drawing programs
 
@@ -341,3 +341,17 @@ Some free alternatives to Adobe Illustrator:
 - gimp
 - paint.net
 - AffinityDesigner Shirleen recommended, says it costs a $50 (one-time, not subscription) 
+
+
+
+# Coding
+
+## R
+"escape excel" tool to get tab-delimited files ready to import into excel, without gene names getting mangled
+https://github.com/pstew/escape_excel
+
+## Python
+Evolution python tools: http://etetoolkit.org/
+
+## Markdown
+To print a markdown file, use VScode. Right-click when the file is open to get a menu.
