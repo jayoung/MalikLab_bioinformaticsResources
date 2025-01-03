@@ -181,6 +181,8 @@ sbatch  --wrap="/bin/bash -c \"module load BWA; bwa\""
 
 To run a shell script in sbatch mode, type `sbatch myCommands.sh`.
 
+Or, with additional options:  `sbatch --cpus-per-task=8 -t 1-0 --job-name=myJob1 myCommands.sh`
+
 If we want to load modules within an sbatch script, we need to include a `source` line exactly like the second line in this more complicated shell script. Sometimes it still seems to work without the `source` line, but sometimes it doesn't, so let's keep it.
 ```
 #!/bin/bash
@@ -189,11 +191,6 @@ module load Bowtie2/2.5.4-GCC-13.2.0
 bowtie2 --help
 module purge
 ```
-Here’s how you actually run the shell script:  
-`sbatch myCommands.sh`  
-
-or, with additional options:  
-`sbatch --cpus-per-task=8 -t 1-0 --job-name=myJob1 myCommands.sh`
 
 
 7. if there's a problem, use scancel to kill a job or jobs. The simplest way is to use the job ID: `scancel myJobID`
