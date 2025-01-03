@@ -1,4 +1,4 @@
-# AI / chatGPT / etc
+# artificial intelligence - AI / chatGPT / etc
 
 xxx move these notes!  leave a link to the course I will likely do next and to the location of my notes
 
@@ -49,4 +49,9 @@ Some opinions on when to use AI, and when not to ["AI, LLMs, and BS"](https://da
 
 [60 min webinar](https://view6.workcast.net/register?cpak=1730348999509149&referrer=OD&utm_campaign=webinars2024&et_rid=35352606&et_cid=5260285) on large language models being used for biological problems 
 
-Maria says github copilot does well for python
+Maria says github copilot does well for python (older)
+
+
+Dec 2024:
+- Maria/Pravrutha say PerplexityAI is really good for literature search type questions (it gives citations and doesn't make stuff up)
+- Maria says Claude Sonnet 3.5 is good for coding

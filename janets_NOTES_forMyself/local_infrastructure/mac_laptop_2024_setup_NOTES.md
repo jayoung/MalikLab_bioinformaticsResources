@@ -2,8 +2,6 @@
 
 prevent mac going to sleep?
 
-chrome/safari bookmarks?  how to set up home versus work and sync?  (profiles?)
-
 # sidebar links
 
 Sidebar links periodically disappear - [this](https://discussions.apple.com/thread/253196430) is what I'm trying, to prevent that:
