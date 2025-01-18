@@ -81,10 +81,13 @@ Seems to be out-of-date and unmaintained
 June 2014: http://www.cmbi.ru.nl/cdd/phylopat/52/
 Based on Ensembl 52 (quite old:  Ensembl now up to v75)
 
-[Consurf-db](https://consurfdb.tau.ac.il/overview.php) 
+[xProtCAS](https://slim.icr.ac.uk/projects/xprotcas) server has precalculated scores for many protein structures (or perhaps just structural modules within many protein structures). Can also view/download the underlying alignments
+
+[Consurf-db](https://consurfdb.tau.ac.il/overview.php) (that data also used/displayed in Proteopedia database)
 - per-residue rates for proteins that have structure in PDB. 
 - Uses up to 300 homologues, found in UniRef90, with some seq identity/coverage filters 
 - evolutionary rates for each site calculated based on tree+alignment using Rate4Site algorithm
+- Proteopedia warns that the homolog gathering is automated, and may include proteins of similar ancestry but divergent function. To truly understand which residues are important for a particular function, you'd want to filter input protein alignment based on functional knowledge
 
 [orthogene](https://bioconductor.org/packages/release/bioc/vignettes/orthogene/inst/doc/orthogene.html) R package
 
