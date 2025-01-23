@@ -1,0 +1,86 @@
+---
+title: "mod-mdg4_processAnnotations"
+author: "Janet Young\n"
+date: "`r Sys.Date()`\n"
+output: github_document
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(tidyverse)
+library(plyranges)
+library(rtracklayer)
+library(kableExtra)
+```
+
+Read in gtf file and filter for just the mod(mdg4) annotations, and subset that for just the CDS annotations
+
+```{r}
+annot <- import(here("codeBits/forSage/dmel-all-r6.61.gtf"))
+
+annot_modMdg4 <- annot %>% 
+  filter(grepl("mod\\(mdg4\\)", gene_symbol))
+
+annot_modMdg4_cds <- annot_modMdg4 %>% 
+  filter(type=="CDS") 
+```
+
+
+```{r, eval=FALSE}
+annot_modMdg4 %>% 
+  as.data.frame() %>% 
+  View()
+```
+
+
+How many features of each type?
+
+```{r}
+annot_modMdg4 %>% 
+  as.data.frame() %>% 
+  dplyr::count(type)
+```
+
+Considering just the CDS features, how many unique transcript IDs (etc) are represented?
+
+```{r}
+tibble(gene_id = length(unique(annot_modMdg4_cds$gene_id)),
+       gene_symbol = length(unique(annot_modMdg4_cds$gene_symbol)),
+       transcript_id = length(unique(annot_modMdg4_cds$transcript_id)),
+       transcript_symbol = length(unique(annot_modMdg4_cds$transcript_symbol))) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  setNames("num_unique_IDs") %>% 
+  as_tibble(rownames="ID_type")
+```
+
+Show gene-to-transcript relationship
+
+```{r}
+genes_to_transcripts <- annot_modMdg4_cds %>% 
+  as.data.frame() %>% 
+  as_tibble() %>% 
+  select(gene_symbol, transcript_symbol) %>% 
+  unique() %>% 
+  arrange(gene_symbol, transcript_symbol)
+genes_to_transcripts %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+
+Looking at the Flybase "gene model and products" viewer, I suspect we might want to do this:
+
+- for the features where gene symbol is "mod(mdg4)" (without the "pre"), we take all the transcript isoforms
+- for the gene symbols starting "pre", we chould choose a single transcript isoform per gene symbol, because I think they've assigned a new gene name when the predicted protein differs
+
+But maybe we think about that later.
+
+
+
+# How can we convert per-sequence coordinates to alignment coordinates?
+
+
+
