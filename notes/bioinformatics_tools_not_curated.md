@@ -196,6 +196,14 @@ Ching-Ho likes HISAT2 (new version of tophat) for RNA-seq, partly because it has
 
 Ching-Ho also notes that some RNA-seq datasets have high rRNA contamination. This could be affecting my RPKMs quite a lot.
 
+## Gene set enrichment analysis
+
+e.g. GO analysis (gene ontology)
+
+The [ShinyGO tool](https://bioinformatics.sdstate.edu/go/) seems nice (and can handle FlyBase gene IDs)
+
+NCBI/DAVID has a tool
+
 # Datasets/resources
 
 ## Genome browsers
