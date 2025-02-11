@@ -152,6 +152,20 @@ interactive Tree Of Life [iTOL](https://itol.embl.de) has some nice-looking plot
 
 [ggtree](https://bioconductor.org/packages/release/bioc/vignettes/ggtree/inst/doc/ggtree.html) for R
 
+FigTree
+
+Dendroscope
+
+TreeViewer
+
+Geneious
+
+## Note on obscure node label/rerooting bug in some programs 
+
+[FigTree MAY have a bug](https://github.com/rambaut/figtree/issues/10 https://github.com/YuLab-SMU/treeio/issues/120) and may move node labels around when re-rooting.  
+
+I noticed something similar in R, comparing old/new versions of `treeio`
+
 # Transposons
 
 TEtools - [paper](https://www.ncbi.nlm.nih.gov/pubmed/27924026) and [repo](https://github.com/l-modolo/TEtools)
