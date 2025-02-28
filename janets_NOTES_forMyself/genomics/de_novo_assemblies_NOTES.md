@@ -16,6 +16,10 @@
 Algorithms:
 - metaMDBG - [github](https://github.com/GaetanBenoitDev/metaMDBG) and [paper](https://www.nature.com/articles/s41587-023-01983-6) a metagenomics assembler for PacBio HiFi reads (and I think ONT reads)
 
+- Flye. Long reads. I've used it (worm mitoNuc, dicty)
+
+- Hifiasm (Heng Li) sometime in early 2025 Ching-Ho said there is a new version of this that's quite good.
+
 Often for assembly there is a stage of graph trimming (loose ends) and error correction
 
 ## Pangenome and variation graphs

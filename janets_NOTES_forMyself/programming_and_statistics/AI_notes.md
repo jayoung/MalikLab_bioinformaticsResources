@@ -95,3 +95,39 @@ Positron (similar to Rstudio and VScode)
 Codeium - an AI 'code accelleration toolkit' that works on a ton of langauges
 
 command-shift-P, type codium, and you get a sidebar that lets you chat with codeium, and it uses context of your code effectively
+
+# Seminar from T (Tara) Templin (University of North Carolina), early 2025
+
+AI can be useful for refining ideas, and for project management.
+
+copilot - good for coding
+
+chatGPT - coding and everything else. Quite good at explaining existing code, for novie coders.
+
+Perplexity - literature searching. You CAN specify that you only want to consider peer-reviewed articles.
+
+ResearchRabbit
+
+Consensus - literature searching
+
+AI models are only as good as the data they are trained on.
+
+Large Language Models (LLMs)
+- given the input (question) and the training data, what's the most likely next token?
+- Steps, in 'transformer architecture':
+  - interpret the input (the user's question)
+  - understand the CONTEXT of the question (build "embeddings") - maps tokens from the question onto the training data, figure out what's nearby
+  - search for best response
+  - craft answer
+  - refine answer
+  - deliver answer
+- autocomplete is a very primitive LLM, similar to AI but with very limited context (e.g. 10 word window)
+- 'domain-specific' AIs are usually (at the moment) better than very large LLMs
+- in SOME LLMs you can tune the 'temperature' - i.e. the level of creativity or variance
+- transformer architecture:
+  - can be trained in parallel
+  - context can exist between quite distant tokens
+  - customizable
+
+Advice on writing questions/prompts for AI:
+- ask for creativity, e.g. "give me 20 ideas for ..."

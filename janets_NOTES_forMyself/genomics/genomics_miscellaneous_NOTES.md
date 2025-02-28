@@ -48,6 +48,33 @@ There's a rapid release version of the Ensembl site that might have more than th
 
 ### Expression
 
+#### Recount project 
+
+The `recount` project aims to uniformly process all public RNA-seq data (for human only?)
+
+`recount2` pipeline:
+- published 2017 in [Nature Biotechnology](https://www.nature.com/articles/nbt.3838)
+- mapping with [Rail-RNA](https://docs.rail.bio/tutorial/) ([published](https://academic.oup.com/bioinformatics/article/33/24/4033/2525684) in 2016) against hg38 generates
+    - "cross-sample tables" (tsv)
+    - bigwig coverage data
+    - junction files (jx format)
+- that gets wrangled to a `RangedSummarizedExperiment` R object
+- more info in the [recount-contributions](https://github.com/leekgroup/recount-contributions) git repo
+
+
+[`recount3`](https://rna.recount.bio):
+- human and mouse
+- ~ 10,000 studies for each species
+- "raw sequencing data were processed with the Monorail system as described in the recount3 paper which created the coverage bigWig files and the recount-unified text files."
+- published in [Genome Biology](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02533-6)
+- Sophie Kogut told me that recount3 R package might not have all the functions that are in previous recount package versions.
+
+There's an R package called recount - see [vignette](https://bioconductor.org/packages/release/bioc/vignettes/recount/inst/doc/recount-quickstart.html). There's a separate `recount3` bioconductor package
+
+There's a [recount shiny app](https://jhubiostatistics.shinyapps.io/recount/). Not sure what it does, but I think it lets you find useful datasets and download gene expression.
+
+Sophie also told me that Daniel Blanco-Melo has had advice from Leo (Leonardo Collado-Torres, recount author), and Monica from their lab has been using recount a bit. Also Jeff Leek was involved in this project (unclear whether he still is).
+
 #### Single cell expression
 
 [Human Common Cell Atlas](https://www.humancellatlas.org) is a repository of uniformly processed public single cell data
