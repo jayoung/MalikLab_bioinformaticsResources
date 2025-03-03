@@ -48,6 +48,18 @@ There's a rapid release version of the Ensembl site that might have more than th
 
 ### Expression
 
+#### Databases/browsers for expression data
+
+##### Kaessman lab
+
+Kaessmann Lab's [EvoDevo mammalian organs](https://apps.kaessmannlab.org/alternative-splicing/) app. Uses their data from 8 tissues across development, 7 species (human, macaque, mouse, rat, rabbit, opossum, chicken).
+
+Kaessman lab has other shiny apps:
+- SpermEvol: "allows the interactive exploration of individual gene expression profiles of adult testis across ten mammalian species and a bird at the single-cell resolution.". Data from this paper [Murat, Mbengue et al. The molecular evolution of spermatogenesis across mammals (2021)](https://www.nature.com/articles/s41586-022-05547-7)
+- SexBiasApp: "Evo-devo sex-biased mammalian genes" allows the interactive exploration of sex-biased gene expression profiles across organs, developmental stages and species.
+- Ex2plorer: from the publication: [Wang, Z.Y., Leushkin, E. et al. Transcriptome and translatome co-evolution in mammals. Nature (2020)](https://www.nature.com/articles/s41586-020-2899-z)
+
+
 #### Recount project 
 
 The `recount` project aims to uniformly process all public RNA-seq data (for human only?)
