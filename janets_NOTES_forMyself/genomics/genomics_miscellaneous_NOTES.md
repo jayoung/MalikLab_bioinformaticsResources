@@ -32,11 +32,15 @@ E.g. LexicMap (Zamin Iqbal lab) aligns queries >500bp long to millions of prokar
 Clustering very large databases of sequences - [MMseqs2](https://github.com/soedinglab/MMseqs2) for protein or DNA. See [paper](https://www.nature.com/articles/nbt.3988). It's much faster than BLAST. Starts with kmer analysis, progresses to alignments.
 
 
-## Projects/resources
+## Projects/resources/datasets
 
 xxxx I'm sure I have other lists like this elsewhere that I need to combine
 
 There's a rapid release version of the Ensembl site that might have more than the main site.
+
+### Orthology
+
+This 2025 paper - [Subcellular Enrichment Patterns of New Genes in Drosophila Evolution](https://academic.oup.com/mbe/article/42/2/msaf038/8005449) - seems like generated a good dataset of Drosophila orthology focussed on when new genes arose
 
 ### Human variation
 
@@ -48,8 +52,6 @@ There's a rapid release version of the Ensembl site that might have more than th
 
 ### Expression
 
-#### Databases/browsers for expression data
-
 GTEX
 
 TCGA
@@ -58,7 +60,8 @@ Human Protein Atlas
 
 
 
-##### Kaessman lab
+#### Kaessman lab expression in many species
+
 
 Kaessmann Lab's [EvoDevo mammalian organs](https://apps.kaessmannlab.org/alternative-splicing/) app. Uses their data from 8 tissues across development, 7 species (human, macaque, mouse, rat, rabbit, opossum, chicken).
 
