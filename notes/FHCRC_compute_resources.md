@@ -167,9 +167,14 @@ sbatch --job-name=testJob -t 0-2 --cpus-per-task=4 --partition=largenode --wrap=
 `squeue -u jayoung`  
 `squeue`  
 `hitparade`  
-The jobID (a number, shown when you submit the job and in squeue output) can be useful to diagnose problems if your job fails to start:
-`scontrol show job myJobID`  
+
 If the commands you ran resulted in any screen output, or gave errors, that output is sometimes (but maybe not always) captured in a file called `slurm-myJobID.out`
+
+The jobID (a number, shown when you submit the job and in squeue output) can be useful to diagnose problems if your job fails to start:
+`scontrol show job myJobID`, although this doesn't work after some time has elapsed. For older jobs the [XDMOD tool](https://sciwiki.fredhutch.org/scicomputing/compute_xdmod/) may be useful (but I'm not sure it works very well).
+
+
+
 
 5. sometimes we want to wrap a command that includes using a `module load` function - this is how we do it (it looks conplex, but it works):
 ```
