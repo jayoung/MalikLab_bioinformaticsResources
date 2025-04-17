@@ -6,6 +6,9 @@
 #SBATCH --output=slurm.%J.out
 #SBATCH --job-name="fastqDump"
 
+source /app/lmod/lmod/init/profile
+module load SRA-Toolkit/3.1.1-gompi-2023b 
+
 ACCESSIONS=(SRR2927735 SRR2927736 SRR2927737 SRR2927738 SRR2927739 SRR2927740 SRR2927741 SRR2927742 SRR2927743)
 
 CACHE="/fh/fast/malik_h/grp/public_databases/NCBI/SRA/cache/sra"
@@ -23,4 +26,4 @@ fi
 
 echo ""
 echo "running fastq-dump"
-fastq-dump --split-spot --split-e --gzip  ${SRAFILE}
+fastq-dump --split-spot --split-3 --gzip  ${SRAFILE}
