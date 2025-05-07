@@ -129,13 +129,15 @@ OrthoMCL for clustering genes/orthologs
 
 [phyloT](https://phylot.biobyte.de) for getting accepted species trees
 
-NCBI taxonomy
+NCBI taxonomy - taxonomic classifications, not actual trees
 
-Open Tree of Life
-https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott93302
+[Lifemap](https://lifemap.cnrs.fr/tree?efficiency-mode=false&tool=search) - I think this uses NCBI taxonomic classifications, not actual teres,  [Lifemap](http://lifemap.univ-lyon1.fr/) might also be able to display the open tree of life
 
-Lifemap displays of NCBI taxonomy, or the open tree of life:
-http://lifemap.univ-lyon1.fr/
+
+
+[Open Tree of Life](https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott93302) Can download a tree file from from https://tree.opentreeoflife.org/about/synthesis-release/v15.1
+
+
 
 # Molecular evolution
 

@@ -80,7 +80,11 @@ print("Hello World")
 ```
 
 
-## Perl (2022 notes)
+## Perl syntax highlighting
+
+See `janets_NOTES_forMyself/local_infrastructure/mac_laptop_2024_setup_NOTES.md` for installing the right stuff on my Mac to get Perl::LanguageServer working
+
+## Perl debugger (2022 notes)
 
 I have the perl debugger working (I think?) on my work mac, at least in the bat_reproduction VScode workspace, but probably more generally. 
 
@@ -128,7 +132,7 @@ Notes:
 ## this is a script I'm adding to try to make VScode able to use perl debugger. See https://github.com/richterger/Perl-LanguageServer/issues/1
 ```
 
-### general perl stuff on my work mac:
+### general perl stuff on my work mac (the pre-2025 computer):
 ```
 which perl
 /Users/jayoung/perl5/perlbrew/perls/perl-5.34.0/bin/perl
@@ -156,3 +160,9 @@ sudo cpanm --force Perl::LanguageServer
 ```
 
 For all `cpanm` installs on my work mac, I think I should use `sudo cpanm --force`
+
+
+## VSCode troubleshooting
+
+Some google searches advise opening the logs folder. You do this by typing in the bar at the top: `> open logs folder`
+

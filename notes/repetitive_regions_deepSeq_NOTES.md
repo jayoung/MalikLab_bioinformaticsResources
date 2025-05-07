@@ -39,7 +39,17 @@ TCGA, Human Protein Atlas, GTEX - Sophie says there is documentation of how they
 
 # tools to check out!
 
-check out [Telescope](https://github.com/mlbendall/telescope?tab=readme-ov-file) tools for transposon expression analysis
+
+# Helena Reyes Gopar, April 2025
+
+We had a visit in April 2025 from Helena Reyes Gopar hreyesgopar@northwell.edu who is a postdoc who recently started in the lab that wrote Telescope (?) and has developed a similar tool to work on single cell data called Stellarscope.
+
+
+[Telescope](https://github.com/mlbendall/telescope?tab=readme-ov-file) is for transposon expression analysis (bulk data)
+
+They seem very motivated to get expression estimates of individual repeat instances. Uses some sort of EM to assign read counts to the most likeluy unique copy. Bayesian model-based reassignment.
+
+UMI-based deduplication will be messed up for multimappers because it uses map location as well as the barcode sequence, so I think she talked about ways around that.
 
 
 

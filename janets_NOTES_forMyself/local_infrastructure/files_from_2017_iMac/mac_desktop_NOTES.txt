@@ -1,4 +1,4 @@
-Dec 20, 2021
+# Dec 20, 2021
 
 
 1. update homebrew on my mac

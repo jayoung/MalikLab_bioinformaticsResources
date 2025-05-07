@@ -461,3 +461,53 @@ coverageBed  -split  -counts -abam ../hup_tophat.bam -b /home/jayoung/malik_lab/
 ```
 I then use various R/Bioconductor commands to read in the gene annotations and convert those to RPKMs. For that calculation, need length of each transcript, and total number of reads in each dataset (could use overall total, or number of mapped reads).
 
+# ChIP-seq stuff
+
+## heatmaps around TSSs
+
+Deeptools computeMatrix + plotHeatmap
+
+
+color schemes
+- https://matplotlib.org/2.0.2/users/colormaps.html
+- https://matplotlib.org/2.0.2/examples/color/named_colors.html
+
+See [my request](https://github.com/deeptools/deepTools/issues/1400) to be able to center the color scale in plotHeatmap
+
+
+Example script:
+
+```
+#!/bin/bash
+source /app/lmod/lmod/init/profile
+
+module purge
+module load deepTools/3.5.4.post1-gfbf-2022b
+
+MATRIXFILE="heatmap_computeMatrix_one_sample.mat.gz"
+PLOTFILE="heatmap_computeMatrix_one_sample.plot.png"
+
+if [ ! -f $MATRIXFILE ]; then
+    computeMatrix reference-point  \
+        -S ../ibar_ChIP_H2Av_ctrl_st5_bothReps_trim.bwa.bamComp_subtract.bwAve.bw \
+        --samplesLabel ChIP_H2Av_ctrl_st5 \
+        -R TSSs_activeSt5_zldDep.bed TSSs_activeSt5_zldIndep.bed \
+        --beforeRegionStartLength 500 \
+        --afterRegionStartLength 1500 \
+        --binSize 1 \
+        --sortRegions descend \
+        -p 4 \
+        -o $MATRIXFILE
+fi
+
+if [ ! -f $PLOTFILE ]; then
+    plotHeatmap -m $MATRIXFILE \
+            -out $PLOTFILE \
+            --colorList lavender,white,darkblue \
+            --zMin -150 --zMax 150 \
+            --regionsLabel zld_dep zld_indep \
+            --legendLocation lower-center
+fi
+
+module purge
+```
