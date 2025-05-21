@@ -312,6 +312,8 @@ UCSC browser
 
 1000 genomes https://www.internationalgenome.org
 
+primate SNPs - [primateAI-3D](https://primateai3d.basespace.illumina.com/), Illumina. "The primateAI v1.0 data set contains primate variants from 811 samples of 236 primate species. The variants of these primate samples are first mapped to either its own genome assembly or the assembly of its close species (if the species genome assembly is not available) and then lifted-over to the GRCh38 reference." Published in [Science](https://www.science.org/doi/10.1126/science.abn8197). It's mostly about trying to classify human variation as being pathogenic or not, but it also nicely catalogs primate variation in many species. 
+
 ### Structural variants
 
 [Database of Genomic Variants](https://www.ebi.ac.uk/dgva/) - being phased out, transitioning to [European Variant Archive](https://www.ebi.ac.uk/eva/)

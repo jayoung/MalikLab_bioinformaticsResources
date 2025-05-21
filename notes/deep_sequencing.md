@@ -35,6 +35,21 @@ example, running on all the R2 files in a specified directory to create a single
 fastqc --casava --outdir Sample_1_Control_DNA/R2 --format fastq --threads 3 --contaminants /fh/fast/malik_h/user/jayoung/general_notes/NextGenSeqStuff/adapterSequences/variousAdaptersBothStrands.fa.txt ../FASTQ_files/Sample_1_Control_DNA/*R2*gz
 ```
 
+## detecting fastq quality encoding
+
+Some older sequencing data [encode the quality scores](https://en.wikipedia.org/wiki/FASTQ_format) differently.
+
+BBMap `testformat.sh` can check encoding, although it says "Note that ASCII-33 (sanger) and ASCII-64 (old Illumina/Solexa) cannot always be differentiated."
+```
+module purge
+module load BBMap/38.91-GCC-10.2.0
+testformat.sh -in=sample1.fq.gz > sample1.fq.testformat.txt
+module purge
+```
+
+
+
+
 # quality filtering, trimming, etc
 
 There are many tools for this, e.g.:
