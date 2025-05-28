@@ -18,7 +18,9 @@ Algorithms:
 
 - Flye. Long reads. I've used it (worm mitoNuc, dicty)
 
-- Hifiasm (Heng Li) sometime in early 2025 Ching-Ho said there is a new version of this that's quite good.
+- Hifiasm (Heng Li) sometime in early 2025 Ching-Ho said there is a new version of this that's quite good. Haplotype aware (I think)
+
+- VERRKO is another haplotype aware assembler
 
 Often for assembly there is a stage of graph trimming (loose ends) and error correction
 

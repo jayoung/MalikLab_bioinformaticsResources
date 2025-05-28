@@ -322,6 +322,8 @@ primate SNPs - [primateAI-3D](https://primateai3d.basespace.illumina.com/), Illu
 
 Poster at Genome Informatics meeting said Clair3 works really well for nanopore bacterial sequencing
 
+Sniffer for long read variant calling
+
 
 # Protein sequence analysis
 
