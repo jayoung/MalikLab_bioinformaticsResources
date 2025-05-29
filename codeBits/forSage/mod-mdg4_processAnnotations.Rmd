@@ -19,6 +19,9 @@ Read in gtf file and filter for just the mod(mdg4) annotations, and subset that 
 
 ```{r}
 annot <- import(here("codeBits/forSage/dmel-all-r6.61.gtf"))
+#### codeBits/forSage contained links to these files (links now deleted):
+## /fh/fast/malik_h/grp/public_databases/FlyBase/r6.61/dmel-all-r6.61.gff
+## /fh/fast/malik_h/grp/public_databases/FlyBase/r6.61/dmel-all-r6.61.gtf
 
 annot_modMdg4 <- annot %>% 
   filter(grepl("mod\\(mdg4\\)", gene_symbol))
