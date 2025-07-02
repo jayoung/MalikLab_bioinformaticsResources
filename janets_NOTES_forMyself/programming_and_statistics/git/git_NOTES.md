@@ -261,17 +261,32 @@ bsjanetmacmalik:FH_WDL101_Cromwell jayoung$ ls -l README.md
 -rwx------  1 jayoung  staff  1486 Nov 30 12:21 README.md
 ```
 
-This can sometimes make VScode (running on the Mac) think that there have been a lot of changes to a file, when it's simply that it understands the permissions differently than it should.
+This can sometimes make VScode's git module (running on the Mac) think that there have been a lot of changes to a file, when it's simply that it understands the permissions differently than it should.
 
-To turn off permissions checking globally:
+By default git will try to track ‘filemode’ i.e. permissions on a file.  This can cause it to think are way more changes to track than actually exist, especially when I sometimes edit files via the mac and sometimes via rhino/gizmo.
+
+I turned off filemode tracking as follows:
+
+To turn off permissions-checking for an individual repo, make sure you are in the top-level folder for the repo, then do this.
+```
+git config core.filemode false
+```
+
+You can look at the config settings for each repo using this command (from the top-level folder) – within this file, you would want to see “fileMode = false” (among other things)
+```
+more .git/config 
+```
+
+To turn off permissions-checking globally (affects new repos but not existing ones):
 ```
 git config --global core.filemode false
 ```
 
-and/or for an individual repo:
+You can look at the global config settings like this:
 ```
-git config core.filemode false
+more ~/.gitconfig 
 ```
+
 
 There will be situations where I DO want to track file permissions. A [Stack Overflow post](https://stackoverflow.com/questions/1257592/how-do-i-remove-files-saying-old-mode-100755-new-mode-100644-from-unstaged-cha/1257613#1257613) suggests a couple of ways to do that:
 - toggle the config back and forth for particular commits (`git config core.filemode false` / `git config core.filemode true`)
