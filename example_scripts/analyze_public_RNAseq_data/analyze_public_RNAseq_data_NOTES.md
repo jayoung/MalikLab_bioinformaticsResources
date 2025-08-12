@@ -17,9 +17,10 @@ SRR306840       human_Brain_prefrontal_cortex
 
 
 2. download fastq.gz files
-- use a shell script similar to `fastqDump_sbatch.sh`. Perhaps use another script (e.g. `run_FastqDump.pl`) to parse my tab-delimited file ofSRR IDs to create this shell script.
+- use a shell script similar to `fastqDump_sbatch.sh`. Perhaps use another script (e.g. `run_FastqDump.pl`) to parse my tab-delimited file of SRR IDs to create this shell script.
 - at this step I like to create aliases for each sample's fastq files that have more informative file names, e.g. using a script like this: `makeLinksUsingAliasFile.pl`
 - maybe also get total counts of fastq read (pairs) sequenced for each sample, e.g. use my script `countFastqReads.pl *fq.gz`
+- once we have fastq files downloaded, delete the intermediate .sra files (in the "cache" directory specified in the fastq dump script)
 
 
 3. map reads to reference genome assembly. I used STAR mapper, with settings `-outMultimapperOrder Random -outSAMmultNmax 1 -twopassMode Basic`. I also run `samtools flagstat` to get counts of total number of mapped reads.

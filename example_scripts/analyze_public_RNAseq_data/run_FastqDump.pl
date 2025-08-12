@@ -146,6 +146,10 @@ if ($use_sbatch eq "createSbatchScript") {
     print OUT "CACHE=\"$sraCacheDir\"\n";
     print OUT "SINGLE_ACCESSION=\"\${ACCESSIONS[\$SLURM_ARRAY_TASK_ID]}\"\n";
     print OUT "SRAFILE=\"\${CACHE}/\${ACCESSIONS[\$SLURM_ARRAY_TASK_ID]}.sra\"\n\n";
+
+    print OUT "source /app/lmod/lmod/init/profile\n";
+    print OUT "module load SRA-Toolkit/3.1.1-gompi-2023b\n\n";
+
     print OUT "echo \"My accession: \${SINGLE_ACCESSION}\"\n";
     
     ## run prefetch if the sra file does not already exist
