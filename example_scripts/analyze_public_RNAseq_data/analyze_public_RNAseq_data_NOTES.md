@@ -33,7 +33,7 @@ SRR306840       human_Brain_prefrontal_cortex
 - example command: `runBedtoolsCount.pl -outfileTag=human_Brawand ../../Hum_genes.blat_hg38.besthits.psl.bed  /fh/fast/malik_h/grp/public_databases/NCBI/SRA/data/mammalian_expression_profiles/human/human_Brawand/STAR_hg38_maxMultiHits1_renamed/*.bam` 
 
 
-5. Do some sort of normalization to account for total number of reads sequenced, etc, and then plot the counts obtained. I do this in R, e.g. see files in `getRPKMs` folder
+5. Do some sort of normalization to account for total number of reads sequenced, etc, and then plot the counts obtained. I do this in R, e.g. see `public_RNAseq_getRPKM.Rmd` script
 
 
 6. perhaps also view gene(s) of interest using IGV to see how reads map
