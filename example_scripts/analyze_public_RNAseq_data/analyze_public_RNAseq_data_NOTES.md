@@ -2,6 +2,8 @@
 
 Learn how to use public RNA-seq data to get estimates of expression levels of certain genes of interest
 
+xxx I want to update all these scripts to use SH scripts rather than system calls.  I also need to add module load for some scripts e.g. STAR bedtools
+
 # Details
 
 1. identify relevant public RNA-seq datasets, obtain list of SRA identifiers. 
@@ -24,7 +26,6 @@ SRR306840       human_Brain_prefrontal_cortex
 
 
 3. map reads to reference genome assembly. I used STAR mapper, with settings `-outMultimapperOrder Random -outSAMmultNmax 1 -twopassMode Basic`. I also run `samtools flagstat` to get counts of total number of mapped reads.
-
 
 4. count reads for each gene (genes of interest, probably also the rest of the transcriptome).
 - you need to make a bed file (or similar) that gives the reference genome coordinates of all regions you want counts for 

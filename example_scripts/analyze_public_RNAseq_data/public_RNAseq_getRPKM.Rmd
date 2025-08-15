@@ -1,0 +1,187 @@
+---
+title: "public_RNAseq_getRPKM"
+output: html_document
+date: "2025-08-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+```
+
+Define where some files of interest are
+
+```{r}
+## malik_h_dir, if working on rhino/gizmo: 
+# malik_h_dir <- "/fh/fast/malik_h/"
+
+## malik_h_dir, if working on a mac: 
+# it's probably this, but if not, use the Mac command line to do 'ls /Volumes' and find it
+malik_h_dir <- "/Volumes/malik_h/"
+
+top_level_dir <- paste0(malik_h_dir,  "grp/public_databases/NCBI/SRA/data/mammalian_expression_profiles/")
+
+flagstats_dir <- paste0(top_level_dir, "human/human_Brawand/STAR_hg38_maxMultiHits1_renamed/")
+
+
+## check a directory exists
+dir.exists(flagstats_dir)
+```
+
+Get filenames of flagstats files:
+
+```{r}
+## list files in a directory
+
+# list.files() 
+# list.files(flagstats_dir)
+
+flagstats_files <- list.files(flagstats_dir,
+                              pattern="flagstats")
+```
+Define a function to read in flagstat files:
+```{r}
+
+readFlagstatsFile <- function (myFile, 
+                               myDir=NULL,
+                               asPercent="no") {
+  
+  if(!is.null(myDir)) {
+    myFileFullPath <- paste(myDir, myFile, sep="")
+  } else {
+    myFileFullPath <- myFile
+    myDir <- getwd()
+  }
+  if(!file.exists(myFileFullPath)) {
+    stop("ERROR! the file you specified does not exist. Maybe use the myDir option?")
+  }
+  
+  ## read each line of the file 
+  dat <- scan(myFileFullPath, sep="\n", what="character", quiet=TRUE)
+  
+  ## split each line at space characters, i.e. split into "words"
+  dat <- strsplit(dat, " ")
+  
+  ## get the first word in each line (the number of reads)
+  numReads <- as.numeric(sapply(dat,"[[",1))
+  
+  ## get the rest of the information in each line
+  # get words 4-end from each line and put them back together as a single string
+  readCategory <- lapply( dat, function(x) { 
+    y <- x[4:length(x)] 
+    y <- paste(y, collapse=" ") 
+    return(y)
+  })
+  # make some substitutions
+  readCategory <- gsub(" \\(QC-passed reads \\+ QC-failed reads\\)","",readCategory)
+  readCategory <- gsub(" \\(.+?nan\\%\\)","",readCategory, perl=TRUE)
+  readCategory <- gsub(" \\(\\d+\\.\\d+\\% : N\\/A\\)","",readCategory, perl=TRUE)
+  readCategory <- gsub(" \\(N\\/A\\ : N\\/A\\)","",readCategory, perl=TRUE)
+  dat <- data.frame(numReads=numReads, 
+                    description=readCategory,
+                    file=myFile,
+                    dir=myDir) %>% 
+    mutate(file=gsub("\\.bam\\.flagstats", "", file)) %>% 
+    mutate(file=gsub("_STAR", "", file))
+  # weirdly, I get the occasional flagstat file that has three extra lines, that all include 'primary' Did I use a different version of samtools, or something? I'm going to drop them because it makes it more difficult to combine across tables
+  dat <- dat %>% 
+    filter(!str_detect(description, "primary"))
+  dat
+}
+
+## test that function on one file
+readFlagstatsFile(flagstats_files[1],
+                  myDir=flagstats_dir)
+```
+
+
+Read all flagstats files:
+
+```{r}
+brawand_flatstats_output <- lapply(flagstats_files, function(x) {
+  flagstats_this_file <- readFlagstatsFile(x,  myDir=flagstats_dir) %>% 
+    ## get ONLY the mapped row
+    filter(description=="mapped") 
+}) %>% 
+  bind_rows() %>% 
+  select(-description)
+
+## show first few rows
+brawand_flatstats_output %>% 
+    head(3)
+```
+
+Read bedtools multicov counts file: 
+
+```{r}
+counts_dir <- paste0(malik_h_dir, "user/praman/EZHIP_RNAseq/Counts/")
+
+brawand_counts_file <- paste0(
+  counts_dir,
+  "Human_AncDup_hg38.bed.counts.human_Brawand.split.multicov")
+
+brawand_counts <- brawand_counts_file %>% 
+  read_tsv(show_col_types = FALSE)
+
+brawand_counts
+```
+
+Pivot longer, show first few rows
+
+```{r}
+brawand_counts_long <- brawand_counts %>% 
+  mutate(gene_width=end-start) %>% 
+  select(-c(chr, start, end)) %>% 
+  pivot_longer(cols = -c(name,gene_width),
+               names_to="RNAseq_sample",
+               values_to="count")
+brawand_counts_long %>% 
+  head(6)
+```
+
+Add total number of reads sequenced for each sample (from flagstats files)
+
+```{r}
+
+brawand_counts_long <- left_join(brawand_counts_long, 
+                                 brawand_flatstats_output %>% 
+                                   select(file, totReads=numReads), 
+                                 by=c("RNAseq_sample"="file"))
+brawand_counts_long %>% 
+  head(3)
+```
+
+Calculate reads per million sequenced, per kb of gene_width
+
+```{r}
+brawand_counts_long <- brawand_counts_long %>% 
+  mutate(rpkm = (count  /  (totReads/10^6)) / (gene_width/10^3) )
+
+brawand_counts_long %>% 
+  select(name, RNAseq_sample, count, rpkm)
+```
+
+Get sample name without replicate ID and sex, so we can plot those together
+
+```{r}
+brawand_counts_long <- brawand_counts_long %>% 
+  mutate(RNAseq_sample_noRep = gsub("\\d","",RNAseq_sample )) %>% 
+  mutate(RNAseq_sample_noRep = gsub("_Male","",RNAseq_sample_noRep )) %>% 
+  mutate(RNAseq_sample_noRep = gsub("_Female","",RNAseq_sample_noRep )) %>% 
+  relocate(RNAseq_sample_noRep, .after=RNAseq_sample)
+
+```
+
+Now plot grouping by RNAseq_sample_noRep
+
+```{r}
+brawand_counts_long %>% 
+  ggplot(aes(x=RNAseq_sample_noRep, y=rpkm)) +
+  geom_boxplot() +
+  geom_point() +
+  labs(x="") +
+  theme_classic() +
+  theme(axis.text.x=element_text(angle = 90, hjust=1, vjust=0.5)) 
+```
+
+
