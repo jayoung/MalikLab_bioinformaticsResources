@@ -345,7 +345,7 @@ Alignment-free. Mysterious encoding of protein seqs, allows comparison really fa
 
 ## EMBL-EBI ProtVar database
 
-https://www.ebi.ac.uk/ProtVar
+[ProtVar(]https://www.ebi.ac.uk/ProtVar)
 
 They've done functional predictions on every possible human missense variant.
 
