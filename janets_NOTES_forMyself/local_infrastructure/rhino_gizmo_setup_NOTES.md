@@ -64,6 +64,22 @@ ln -s /fh/fast/malik_h/malik_lab_shared/help/loginFileTemplates/gizmo_login_item
 `.bash_logout` simply clears console when I log out for privacy
 
 
+### trying (not hard) to set up password-less ssh access to rhino
+
+This is what I did on the Mac to have it give me password-less access to rhino03.  But I don't know how to do it in a more general way that would work across all rhino/gizmo computers. So I haven't done it.
+```
+cd
+ssh-keygen -t ed25519 -b 4096
+    # that creates id_ed25519 and id_ed25519.pub in ~/.ssh
+    # do not require a passcode
+chmod 400 ~/.ssh/id_ed25519
+export USER_AT_HOST="jayoung@rhino03.fhcrc.org"
+export PUBKEYPATH="$HOME/.ssh/id_ed25519.pub"
+ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
+     # and entered my password
+```
+
+
 
 ## spring/summer 2020
 

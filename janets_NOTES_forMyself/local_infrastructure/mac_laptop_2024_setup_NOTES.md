@@ -189,8 +189,10 @@ BiocManager::install("org.Hs.eg.db")
 BiocManager::install("plyranges")
 BiocManager::install("seqLogo")
 BiocManager::install("taxize")
-
 ```
+
+pandoc (base Mac, not within R) - got pandoc-3.8-arm64-macOS.pkg from [here](https://github.com/jgm/pandoc/releases/tag/3.8) and used the installer. 
+
 
 # homebrew version of perl, cpanm and perl modules 
 
