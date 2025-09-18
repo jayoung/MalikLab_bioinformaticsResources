@@ -596,7 +596,7 @@ LDhat (McVean et al 2002).  Ziheng Yang used this in a 2004 paper.  He also used
 
 # Dotplots using `dotter`, to compare two sequences visually
 
-(need to install X11 on your Mac for this to work, if it's not already installed.  Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
+(need to install X11 on your Mac for this to work, if it's not already installed. You can find it [here](https://www.xquartz.org/) Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
 
 `dotter` is installed on rhino/gizmo in the `seqtools` module:
 ```
