@@ -594,7 +594,7 @@ GARD (DataMonkey / Hyphy)
 LDhat (McVean et al 2002).  Ziheng Yang used this in a 2004 paper.  He also used PLATO and PIST but commented that PLATO is susceptible to interpreting different selective pressures on different parts of the alignment as recombination, when it's not really. Can maybe get around that by analyzing only the third codon position.
 
 
-# dotter, to compare two sequences visually
+# Dotplots using `dotter`, to compare two sequences visually
 
 (need to install X11 on your Mac for this to work, if it's not already installed.  Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
 
