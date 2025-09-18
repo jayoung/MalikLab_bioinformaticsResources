@@ -598,25 +598,36 @@ LDhat (McVean et al 2002).  Ziheng Yang used this in a 2004 paper.  He also used
 
 (need to install X11 on your Mac for this to work, if it's not already installed.  Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
 
-For dotter, human-versus-mouse is quite a distant comparison (mouse evolves fast).   You can usually see conservation of exons, but not much in introns or intergenic regions.   Try to choose more closely related species pairs, or use slowly evolving species as reference (I've had OK luck with dog, or elephant).
+`dotter` is installed on rhino/gizmo in the `seqtools` module:
+```
+module load seqtools/4.44.1-foss-2019b
+```
 
-Look at options: `dotter --help`.  
+To see usage and options:
+```
+dotter --help
+```
+
 Notice in the help output that many options have a short form with one dash, e.g. `-b` and long form with two dashes e.g. `--batch-save`.  This form is common.  
 
 Also, notice that after each option, the help page tells you whether it expects:
 - a file name (<file>), 
 - a whole number (<int>), 
 - a number that might not be a whole number (<float>), 
-- or nothing (e.g. the -w option - just tells the program to do something or not)
+- or nothing (e.g. the `-w` option - just tells the program to do something or not)
 
 There's also a manual file here: `~/malik_lab/unix_program_documentation/dotter/Dotter_manual.pdf`
 
 Dotter can take time to run for larger files, so we'll first run it in "batch" mode (-b), where it saves output to a file but does not display it:
-`dotter -b seq1vsSeq2.dot seq1.fa seq2.fa`
+```
+dotter -b seq1vsSeq2.dot seq1.fa seq2.fa
+```
 
-Then we'll display the output ("-l" means "load previously saved dotter output":
-`dotter -l seq1vsSeq2.dot seq1.fa seq2.fa &`
-Another window should pop up. The "&" at the end of the command simply lets the command run "in the background", giving us the command like back to do other things.
+Once that finishes, we'll display the output (`-l` means "load previously saved dotter output"):
+```
+dotter -l seq1vsSeq2.dot seq1.fa seq2.fa &
+```
+Another window should pop up. The `&` at the end of the command simply lets the command run "in the background", giving us the command like back to do other things.
 
 Features files help us understand dotter output (they annotate where known genes are). They're in gff3 format (see the pdf manual). That's a bit annoying to generate by hand, but here's one way to get a gff3 file for gene annotations available through the Ensembl browser.  As an example, let's get annotations for the region of the human genome containing Mx1 and Mx2:
 1. Show your region of interest of the human genome (GRCh37 version) in the Ensembl browser: 21:42730351-42834838
@@ -636,7 +647,9 @@ Make sure the annotated sequence you're comparing has the same name as the seque
 Also, editing that gff3 file to find-replace "gene" with "mRNA" seems to work a bit better.
 
 Now run dotter loading that features file, using the -q option to tell it that the first sequence we looked at starts at position 42730351 relative to the annotations (those give positions on the whole chromosome):
+```
 dotter -f seq1geneAnnotations.gff3 -q 42730351 -l seq1vsSeq2.dot seq1.fa seq2.fa &
+```
 
 We'll look at how to use the Greyramp tool to alter the comparison stringency, and how to zoom in and out to reveal more detail.
 
@@ -645,6 +658,7 @@ Another, even more annoying way to generate a features file:
 - convertUCSCgtfToDotterFeature.pl humanIFITlocusRefGeneTrack.gtf humanIFITlocus.fa
 
 
+For `dotter`, human-versus-mouse is quite a distant comparison (mouse evolves fast).   You can usually see conservation of exons, but not much in introns or intergenic regions.   Try to choose more closely related species pairs, or use slowly evolving species as reference (I've had OK luck with dog, or elephant).
 
 
 
