@@ -596,14 +596,26 @@ LDhat (McVean et al 2002).  Ziheng Yang used this in a 2004 paper.  He also used
 
 # Dotplots using `dotter`, to compare two sequences visually
 
-(need to install X11 on your Mac for this to work, if it's not already installed. You can find it [here](https://www.xquartz.org/) Also, in X11 preferences, under Input, make sure "Emulate three button mouse" is on)
+First, get your Mac set up (this is a one-time task): 
+- make sure XQuartz is installed - you can find it [here](https://www.xquartz.org/).
+- start up XQuartz, and make sure the preferences are set right: nagivate to XQuartz_menu - then Settings - then Input tab - make sure "Emulate three button mouse" has a check mark
 
-`dotter` is installed on rhino/gizmo in the `seqtools` module:
+Then, when you want to use dotter:
+
+1. use grabnode to get yourself access to a gizmo node
+
+2. in a fresh mac terminal window, use `ssh -Y` to get access to that gizmo node. The `-Y` tells the Mac to pass along information to the gizmo node to allow it to open up GUI windows on your mac.
+
+3. use `cd` to navigate to your working directory. Here you should have the two sequences you want to compare, both in fasta format.
+
+4. load the `seqtools` module, which contains `dotter`
 ```
 module load seqtools/4.44.1-foss-2019b
 ```
 
-To see usage and options:
+Now we're ready to start.
+
+To see `dotter` usage and options:
 ```
 dotter --help
 ```
