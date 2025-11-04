@@ -4,9 +4,27 @@ NCBI's Edirect toolkit to help search and extract data from their databases. The
 
 NCBI's SRAtoolkit
 
+LexicMap - if you want to search millions of prokaryotic genomes at once, blast can be too slow. This is a quicker alternative.
+
+## LOGAN search (SRA) 
+
 LOGAN search to search SRA database using kmers
 
-LexicMap - if you want to search millions of prokaryotic genomes at once, blast can be too slow. This is a quicker alternative.
+LOGAN web search interface is [here](https://logan-search.org/) - click 'query the planet' to do a search.
+
+Sept 2025 notes on LOGAN
+- query must be a single sequence, up to 1kb
+- makes sense to limit the search otherwise results can be overwhelming
+- the dashboard can show plots, albeit slowly
+- can download results - either just a `data.tsv`, which contains scores for the matching SRA datasets and their metadata, or as a small zip file, which contains the same tsv file (named after the sequence) as well as a json file that lets you view hits locally
+
+The downloaded README.md file says I can view a local version of the dashboard. Isn't working for me right now (home laptop) - I get errors about not being able to establish a secure connection. I could try when I don't have the VPN running - that might or might not work. On a mac (did this on my home laptop)
+```
+pip install kmviz
+python -m kmviz app start session --no-seq-tab
+```
+Then tried connecting using a web browser to https://localhost:8050/dashboard 
+
 
 
 # Multiple sequence alignments
@@ -328,6 +346,10 @@ Sniffer for long read variant calling
 # Protein sequence analysis
 
 for structure, Antoine used UCSF Chimera (Pettersen, et al. 2004).
+
+Uniprot has Alphafold predictions for many proteins. 
+
+[Viro3D](https://viro3d.cvr.gla.ac.uk/), published [here](https://www.embopress.org/doi/full/10.1038/s44320-025-00147-9) hosts these predictions: "Using AlphaFold2-ColabFold and ESMFold, we predicted structures for >85,000 proteins from >4400 viruses" 
 
 AFDB - alphaFold protein structure database
 

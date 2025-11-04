@@ -158,10 +158,11 @@ sbatch --wrap="command1 ; command2"
 ```
 sbatch --job-name=testJob -t 0-2 --cpus-per-task=4 --partition=largenode --wrap="command1 ; command2"
 ```
-- job-name:  helps track the job using squeue  
-- t:  "walltime" = how much time to allot to the job. 0-2 means 0 days, 2 hours.  Default is 3 days.  
-- cpus-per-task: number of CPUs  
-- partition: FHCRC has a default queue called `campus` - those nodes have 4 CPUs and 32 Gb memory. The `largenode` queue gets you on a machine with 28 CPUs and 768 Gb memory.
+- `job-name`:  helps track the job using squeue  
+- `t`:  "walltime" = how much time to allot to the job. 0-2 means 0 days, 2 hours.  Default is 3 days.  
+- `cpus-per-task`: number of CPUs  
+- `partition`: FHCRC has a default queue called `campus` - those nodes have 4 CPUs and 32 Gb memory. The `largenode` queue gets you on a machine with 28 CPUs and 768 Gb memory.
+- `mem`: memory. The default unit is megabytes- to specify the unit, append K, M, G, or T for kilobytes, megabytes, gigabytes, or terabytes.  Example: `--mem=8G`
 
 4. some useful commands to see if your job is still going, and to monitor cluster usage are:  
 `squeue -u jayoung`  

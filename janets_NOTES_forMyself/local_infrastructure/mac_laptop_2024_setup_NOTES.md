@@ -46,6 +46,10 @@ python? (python3 is installed)
 
 haven't signed in to eDynamic dropbox
 
+# Weird thing where typing double space inserts period
+
+Ecountered a weird thing where typing a double space inserts period. To turn it off, in Mac Ventura: System Settings -> Keyboard -> Text Input -> Input Sources -> Edit. (New dialog appears). "Add full stop to double space" -> toggle OFF.
+
 
 # set up password-less ssh access to rhino
 
