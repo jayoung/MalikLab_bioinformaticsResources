@@ -1,5 +1,70 @@
 # documentation
 
+
+# Nov 2025 notes
+[AWS access credentials](https://sciwiki.fredhutch.org/scicomputing/access_credentials/#amazon-web-services-aws)
+- login to AWS on browser via Hutch MyApps, AWS portal
+- can get access keys for `fh-pi-malik-h` there (click the triangle next to `fh-pi-malik-h`)
+
+Most of these notes are from July 2022. Updated some in Nov 2025
+
+Also done Nov 2025:
+- SSO credentials last for 12 hours
+- updated `~/.aws/credentials` (using info found through portal login)
+
+```
+which aws
+/app/bin/aws
+
+module purge
+module load awscli/2.17.54-GCCcore-12.3.0 
+
+which aws
+/app/software/awscli/2.17.54-GCCcore-12.3.0/bin/aws
+
+aws configure sso
+
+SSO session name (Recommended): my-sso
+SSO start URL [None]: https://d-92674cb6d7.awsapps.com/start/#
+SSO region [None]: us-west-2
+SSO registration scopes [sso:account:access]:
+Attempting to automatically open the SSO authorization page in your default browser.
+If the browser does not open or you wish to use a different device to authorize this request, open the following URL:
+
+https://d-92674cb6d7.awsapps.com/start/#/device
+
+Then enter the code:
+
+FZLB-BVFP
+The only AWS account available to you is: 891846948394
+Using the account ID 891846948394
+The only role available to you is: PowerUserWRoleAccess
+Using the role name "PowerUserWRoleAccess"
+CLI default client Region [us-west-2]:
+CLI default output format [None]:
+CLI profile name [PowerUserWRoleAccess-891846948394]: default
+
+To use this profile, specify the profile name using --profile, as shown:
+
+aws s3 ls --profile default
+```
+
+Motuz works for transfer.
+
+Some command line stuff:
+```
+module purge
+module load awscli
+# the / on the end is important otherwise we don't see the contents
+aws s3 ls s3://fh-pi-malik-h-eco/user/
+
+# to remove stuff:
+aws s3 rm 
+aws s3 rm --recursive
+```
+
+# Earlier notes
+
 https://sciwiki.fredhutch.org/scicomputing/access_credentials/#gui-instructions
 
 # Ways to access AWS storage
@@ -24,9 +89,10 @@ aws s3 ls s3://fh-pi-malik-h-eco/*/
 module purge
 ```
 
-## setting AWS credentials for command-line use (a one-time thing)
+## setting AWS credentials for command-line use 
 
-they're stored in `.aws/credentials`
+they're stored in `.aws/credentials`. They'll expire about once a day, so update that file when you get new ones.
+
 ```
 cd 
 module purge

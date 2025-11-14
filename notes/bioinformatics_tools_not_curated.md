@@ -6,6 +6,10 @@ NCBI's SRAtoolkit
 
 LexicMap - if you want to search millions of prokaryotic genomes at once, blast can be too slow. This is a quicker alternative.
 
+[Elastic-blast](https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/overview.html#overview) tool from NCBI allows us to run searches on AWS (or google cloud), in parallel - should be better/quicker than remote blastn.  [Quickstart guide](https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/quickstart-aws.html#quickstart-aws). It will cost some money. 
+
+
+
 ## LOGAN search (SRA) 
 
 LOGAN search to search SRA database using kmers
