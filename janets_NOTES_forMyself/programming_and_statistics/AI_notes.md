@@ -6,15 +6,25 @@ This is a rapidly changing field. Older notes might not apply, models and interf
 
 ## Acronyms
 
-"LLM": large language model
-"GPT": Generative Pre-trained Transformer (a type of LLM)
-"IDE": Integrated Development Environment
+- "LLM": large language model
+- "GPT": Generative Pre-trained Transformer (a type of LLM)
+- "IDE": Integrated Development Environment
 
 ## List of different LLMs
 
+- Github Copilot - a "pair programmer". Uses OpenAI's Codex (descendent of GPT-3, and itself gets updated)
+- Claude (from Anthropic) (Claude Sonnet)
+- OpenAI chatGPT 3.5 (doesn't include training post-2021)
+- OpenAI chatGPT 4  
+- Perplexity (for summarizing literature)
+- Bard (from google)
+- Phind (formerly known as Hello) - designed for software development
+- Llama (from Meta = Facebook) 
+
+
 ## Ways to access the LLMs
 
-- copy-paste into the LLM's own web interface 
+- Use the LLM's own web interface, and copy-paste into it
 - VScode has an interface
 - Rstudio does it via the [`chattr` package](https://blogs.rstudio.com/ai/posts/2024-04-04-chat-with-llms-using-chattr/) 
 - Positron
@@ -31,16 +41,13 @@ Yet to read/view:
 - DASL course on [using AI for more efficient programming](https://hutchdatascience.org/AI_for_Efficient_Programming/)
 - some opinions on when to use AI, and when not to ["AI, LLMs, and BS"](https://datavizf24.classes.andrewheiss.com/resource/ai-bs.html)
 - [60 min webinar](https://view6.workcast.net/register?cpak=1730348999509149&referrer=OD&utm_campaign=webinars2024&et_rid=35352606&et_cid=5260285) on large language models being used for biological problems 
-- [LLM Visualization](https://bbycroft.net/llm)
 
 
 Already read, might want to come back to:
 - [Using AI with R](https://rfortherestofus.com/courses/ai) short course from R for the rest of us. Notes [BELOW](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/janets_NOTES_forMyself/programming_and_statistics/AI_notes.md#using-ai-with-r-notes).
 
-
-
-# Other learning
-
+Maybe less useful?
+- [LLM Visualization](https://bbycroft.net/llm). Quite technical - perhaps goes beyond what I care about.
 
 # Reading
 
@@ -107,7 +114,12 @@ Large Language Models (LLMs)
 Advice on writing questions/prompts for AI:
 - ask for creativity, e.g. "give me 20 ideas for ..."
 
-# Online viedo resources
+## Erick Matsen talk/demo, Hutch, Dec 3 2025
+
+xxx
+
+
+# Online video resources
 
 ## Short course from R for the rest of us - [Using AI with R](https://rfortherestofus.com/courses/ai)
 
@@ -158,7 +170,7 @@ Part 5 - analyze data with AI: that video mostly about analyzing survey response
 
 
 
-### [5 minute youtube](https://www.youtube.com/watch?v=t7NrkAeosog) - R with chatGPT and github copilot 
+### [R with chatGPT and github copilot](https://www.youtube.com/watch?v=t7NrkAeosog) (a 5 minute youtube)
 
 Nov 12 2023
 
