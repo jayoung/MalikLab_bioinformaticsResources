@@ -87,6 +87,62 @@ git config --global credential.helper store
 
 I think that worked. I can sync to github from VScode now, at least for this repository
 
+Later (Dec 2025), I had trouble when I tried a command-line push of a new repo. I was getting errors about permission and keys
+
+Trying to solve that, using advice from these pages:
+- https://docs.github.com/en/authentication/troubleshooting-ssh/error-permission-denied-publickey
+- https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port
+- https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+Neither of these give the correct output.
+```
+ssh -vT git@github.com
+ssh -T -p 443 git@ssh.github.com
+```
+
+So I try generating a new ssh key
+```
+eval "$(ssh-agent -s)"
+    # Agent pid 69561
+ssh-add -l -E sha256
+    # The agent has no identities.
+# create new ssh key:
+ssh-keygen -t ed25519 -C "jayoung@fredhutch.org"
+    # the default file already existed so I told it /Users/jayoung/.ssh/janet_new_gitkey_Dec2025
+    # I did NOT specify a passphrase
+    # it seemed to work
+    # it created two files, ~/.ssh/janet_new_gitkey_Dec2025 and ~/.ssh/janet_new_gitkey_Dec2025.pub
+
+# add it to the ssh agent:
+eval "$(ssh-agent -s)"
+    # Agent pid 74003
+
+# create a config file (I checked, there wasn't one)
+touch ~/.ssh/config
+
+# edit that file to contain:
+Host github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/janet_new_gitkey_Dec2025
+
+# add key
+ssh-add --apple-use-keychain ~/.ssh/janet_new_gitkey_Dec2025
+   # Identity added: /Users/jayoung/.ssh/janet_new_gitkey_Dec2025 (jayoung@fredhutch.org)
+
+# Add the SSH public key to your account on GitHub.  https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+
+# Get the key onto my clipboard - it starts with `ssh-ed25519` and ends with my email address and is about one line long. 
+pbcopy < ~/.ssh/janet_new_gitkey_Dec2025.pub
+
+# On github website, click the green blocky thing at the top-right, go to settings-SSH and GPG keys, and create an authentication key
+```
+
+Now, in a new Mac Terminal window, I can see that the mac can connect to github using ssh 
+```
+ssh -T git@github.com
+    #  Hi jayoung! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
 
 # installed these applications, and I think I set them up:
 
@@ -139,8 +195,9 @@ sudo xcodebuild -license accept
 
 # wget
 from Terminal: 
+```
 brew install wget
-
+```
 
 # figtree - had a problem running it at first, but I think I fixed it. Notes:
 
@@ -469,3 +526,87 @@ PERL5LIB=/home/jayoung/malik_lab_shared/perl:/home/jayoung/malik_lab_shared/perl
 
 
 xxx so in order to get the scripts I store on the server to work right I need to think about the shebang line. I think on the server `#!/usr/bin/env perl` as a first line does not work because it points to `/home/jayoung/malik_lab_shared/linux_gizmo/bin/perl` and then it can't fund my perl modules, and somehow when I use `#!/usr/bin/perl` it DOES find my modules.  Perhaps all I need to do is make `#!/usr/bin/perl` be higher up in my PATH than `/home/jayoung/malik_lab_shared/linux_gizmo/bin/perl` on the server, then I could use `env perl` on both server and mac?
+
+# Ivanti AutomationEngine
+
+CenterIT wants to install Ivanti's AutomationEngine, and it comes with very confusing instructions.  Jerome from CenterIT helped figure it out.
+
+Tricks:
+
+AutomationEngine gets installed in a hidden place: /usr/local/com.ivanti.cloud.agent/IvantiAgent/Engines/UNO.AUTOMATION.ENGINEMAC64
+
+/usr is not shown by default in the Finder, so you have to do Command-Shift-. to get the hidden files to show.
+
+The instructions on the install window don't match what's shown in the System Prefs. In Privacy+Security-Full Disk Access, we granted permission to stagentd.app - that is probably the Ivanti thing. Then we were able to more or less follow the instructions on the installer window to grant permissions to AutomationEngine
+
+# libpng (for Bioconductor package ggiraph)
+
+Dec 2 2025 
+
+I got an error trying to install that package - libpng doesn't seem to be installed. 
+
+```
+raster.cpp:7:10: fatal error: 'png.h' file not found
+    7 | #include <png.h>
+      |          ^~~~~~~
+2 warnings and 1 error generated.
+make: *** [raster.o] Error 1
+ERROR: compilation failed for package ‘ggiraph’
+* removing ‘/Volumes/fh/fast/malik_h/user/jayoung/git_more_repos/use_renv_to_test_package_updates_Rproj/renv/library/macos/R-4.5/aarch64-apple-darwin20/ggiraph’
+```
+
+Advice [here](https://stackoverflow.com/questions/75806764/fatal-error-png-h-file-not-found-how-to-point-r-install-package-from-source) led me to try this:
+
+Install libpng (a version specifically for R)
+
+```
+curl -LO https://mac.r-project.org/bin/darwin20/arm64/libpng-1.6.50-darwin.20-arm64.tar.xz  
+
+sudo tar -xvf libpng-1.6.50-darwin.20-arm64.tar.xz -C /
+```
+
+Now we have a file called `/opt/R/arm64/include/png.h`
+
+I restart R and try again 
+
+# Install cairo (for various R packages)
+
+Installing cairo using regular Terminal window
+
+Show contents of `Cellar` before I start:
+```
+ls /opt/homebrew/Cellar/
+    # ca-certificates	gettext		libidn2		libunistring	openssl@3	wget
+```
+
+First, because I haven't used brew in a while, I update brew itself
+
+```
+# update brew itself
+brew update
+    # That works, and ends with this message:
+      # You have 5 outdated formulae installed.
+      # You can upgrade them with brew upgrade
+
+# upgrade those outdated formulae
+brew upgrade
+```
+
+Then I install cairo
+```
+brew install cairo
+
+ls /opt/homebrew/Cellar/
+    # ca-certificates	freetype	libidn2		libx11		libxdmcp	lzo		pixman
+    # cairo		gettext		libpng		libxau		libxext		openssl@3	wget
+    # fontconfig	glib		libunistring	libxcb		libxrender	pcre2		xorgproto
+```
+
+freetype2 - thought I needed that, but brew says it's the same as freetype
+```
+brew install freetype2
+    # Warning: freetype 2.14.1_1 is already installed and up-to-date.
+    # To reinstall 2.14.1_1, run:
+    #     brew reinstall freetype
+```
+
