@@ -4,16 +4,22 @@
 
 This is a rapidly changing field. Older notes might not apply, models and interfaces and pricing improve all the time.
 
-## Acronyms
+## Acronyms / terminology
 
 - "LLM": large language model
 - "GPT": Generative Pre-trained Transformer (a type of LLM)
 - "IDE": Integrated Development Environment
 
+AI - artificial intelligence.
+
+Machine learning is a subset of AI. Can train on large or smaller datasets.  Human intervention needed to fix mistakes.
+
+Deep learning is a subset of machine learning. Requires large datasets for training and use neural nets. Deep learning models can learn from their own mistakes.
+
 ## List of different LLMs
 
 - Github Copilot - a "pair programmer". Uses OpenAI's Codex (descendent of GPT-3, and itself gets updated)
-- Claude (from Anthropic) (Claude Sonnet)
+- [Claude](https://platform.claude.com/docs/en/home) (from Anthropic) (Claude Sonnet)
 - OpenAI chatGPT 3.5 (doesn't include training post-2021)
 - OpenAI chatGPT 4  
 - Perplexity (for summarizing literature)
@@ -37,11 +43,14 @@ Hutch resources I might need to come back to:
 - DASL course on [AI considerations applicable to leaders/decision makers](https://hutchdatascience.org/AI_for_Decision_Makers/introduction.html)
 
 
-Yet to read/view:
+Yet to read/view (may or may not be useful):
+- [Erick Matsen's blog posts](https://matsen.group/agentic.html)
+- YouTube video on machine learning by Christian Dallago of NVIDIA
 - DASL course on [using AI for more efficient programming](https://hutchdatascience.org/AI_for_Efficient_Programming/)
 - some opinions on when to use AI, and when not to ["AI, LLMs, and BS"](https://datavizf24.classes.andrewheiss.com/resource/ai-bs.html)
 - [60 min webinar](https://view6.workcast.net/register?cpak=1730348999509149&referrer=OD&utm_campaign=webinars2024&et_rid=35352606&et_cid=5260285) on large language models being used for biological problems 
-
+- [Coursera links](https://www.coursera.org/articles/ai-vs-deep-learning-vs-machine-learning-beginners-guide)
+- description of [AI/ML/DL on AWS](https://aws.amazon.com/compare/the-difference-between-machine-learning-and-deep-learning/)
 
 Already read, might want to come back to:
 - [Using AI with R](https://rfortherestofus.com/courses/ai) short course from R for the rest of us. Notes [BELOW](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/janets_NOTES_forMyself/programming_and_statistics/AI_notes.md#using-ai-with-r-notes).
@@ -116,7 +125,88 @@ Advice on writing questions/prompts for AI:
 
 ## Erick Matsen talk/demo, Hutch, Dec 3 2025
 
-xxx
+Erick programs in python using the VSCode IDE, doing version control with git.  He does pair programming using `Claude`, through [Claude's command-line interface](https://code.claude.com/docs/en/quickstart) in VScode.
+
+This [quickstart guide to Claude](https://code.claude.com/docs/en/quickstart) seems very helpful.
+
+(there is a thing called Claude Code interface, but Erick does not like it as much)
+
+Each time you 'onboard' Claude to a project it will read all the code in that git repo.  It's good practise to stay in a virtuous cycle of staging CLEAN code (partly because we don't want Claude to learn from bad code)
+
+Good programming practise is also helpful if we want to use AI:
+- functions should be SMALL, each performing one task
+- code should be split into multiple files, not one giant one. Erick likes about one viewable page per file.
+- ideally we have good tests for our functions and/or for the code as a whole
+
+Using Claude:
+- talk to it like you would a junior programmer. Use plain English. 
+- ask Claude to make planning documents for each task. E.g. "make a .md document with a plan to refactor code from v1 to v2".  Then you can edit that planning document, or give Claude prompts that result in edits. This is an important step.
+- the human stays "in the loop" - we should be involved in the coding process at every step.
+- Claude can interact with github (meaning github.com not git). `gh` command-line tools allows you to create issues, for example, or to browse the repo.
+- Erick thinks Claude is good at coding in Python. Might be less good in R. Definitely works to rewrite R code into python.  python has a package called pytorch that lets you write your own deep learning models 
+- tell Claude whether you want to simply accept its changes, or ask for approocal each time
+
+Using any LLM, even in a more conversational way 
+- Think of it as a brainstorming partner
+- specifically ask it to be critical and not unduly praiseful (that's their tendency)
+
+Erick's coding cycle:
+- 1. make a plan
+- 2. edit the plan
+- 3. file the plan as a github issue
+- 4. reset Claude's context (I think meaning ask it to look at the repo again from a fresh start)
+- 5. tell Claude to implement the github issue. Be very specific, saying things like "don't get creative" "stop and ask when there's an error", "create a new git branch"
+- 6. use git diffs to look at the proposed changes. Maybe fix stuff.
+- 7. ask Claude to make a git pull request
+- 8. manually review the pull request 
+
+We can use a SANDBOX environment on our computer if we want to isolate Claude's environment. Like a dev-container.  That would prevent it accessing all your ssh keys, for example. I wrote `devcontainer.json` but I don't know why.
+
+"Sub-agents" - these allow us to start a new process with separate context
+
+We might cycle through `make`, running tests, and fixing errors.
+
+Tips for interacting with Claude on the command-line:
+- `!` means run an actual command
+- `/` I think is how commands to Claude start. 
+- without any leading character, I think stuff you type on the command-line is plain text that's part of your conversation with it. E.g. "what does this project do?" or "explain the folder structure" or "here's a bug where users can submit empty forms - fix it"
+- `@` refers to a file
+- we typical WATCH as it writes code. Can interrupt with `escape` key if it seems to be going in the wrong direction. Pressing `escape` twice REWINDS to coding.
+- can send messages to it while it is working.
+
+Some things I wrote down that I'm not totally sure what they mean
+- Planning mode 
+- exit / claude --resource (? or something). 
+
+`/context` - I think this is how we see how many tokens are being used in our current tasks and how much context is being stored/ sent up and down to the Claude server.
+
+Custom agents - we can create custom agents, e.g. Erick has one called 'clean code reviewer'. You tell it what coding style you like and it'll make an [appropriate .md file](https://github.com/matsen/fake-comp-bio-project/blob/main/.claude/agents/clean-code-reviewer.md) to instruct the sub-agent how to scan your code. You might invoke the subagent using `@clean-code-reviewer` (it is stored in a .md file)
+
+`CLAUDE.md` file - this is where you can set/store your expectations for how Claude interacts with you. Claude may update it as you tell it more expectations. You create that file using `/init` command. You might tell it to "fail fast with no fallbacks" and you might tell it about your usual coding style/rules.
+
+
+`/config` allows you to adjust Claude setup:
+- there's an auto-compact setting. Erick turns it off because he wants to keep the entire conversation, not a compacted version.
+- how much context is best to keep?  More is not always better, as performance can degrade.  Claude's context of ~200,000 is roughly the size of a pdf of a longish paper. Google AI context might be 1,000,000.
+
+Can paste in a screenshot (e.g. a plot) and ask Claude what it thinks of it.
+
+Erick says Claude doesn't do as well with python NOTEBOOKS. GGood for doing analysis tasks, but cannot recode them very well.
+
+Use Claude to help you follow coding best practices;
+- test-driven development
+- type annotations (i.e. object types)
+- perhaps include interactive visualizations to help see that data is clean and processed appropriately. I wrote down "Alterra plot" here but don't know what I mean. Perhaps he was referring to the [Vega-Altair python package](https://altair-viz.github.io/index.html) (a.k.a `altair`) for plotting graphs - seems very similar to ggplot
+
+
+Erick's follow-up email:
+- Thanks for coming today!
+- https://matsen.group/agentic.html is the blog series, BlueSky and LinkedIn posts if you want to share socially
+- https://github.com/matsen/fake-comp-bio-project is the template we played with today. It has the [devcontainer](https://github.com/matsen/fake-comp-bio-project/tree/main/.devcontainer), [subagents](https://github.com/matsen/fake-comp-bio-project/tree/main/.devcontainer), and [slash command](https://github.com/matsen/fake-comp-bio-project/tree/main/.claude/commands) I described. It also has a nice [statusline](https://github.com/matsen/fake-comp-bio-project/tree/main/.claude/statusline) that shows the context that isn't default and I didn't call out.
+- AI policy at the center: https://centernet.fredhutch.org/u/data-science-lab/data-governance/ai/artificial-intelligence-review.html
+- Guidelines for using AI agents: https://sciwiki.fredhutch.org/datascience/ai_coding/
+- Learn about git: https://hutchdatascience.org/catalog/#reproducible-research
+
 
 
 # Online video resources
