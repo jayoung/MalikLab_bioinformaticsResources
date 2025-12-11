@@ -34,6 +34,7 @@ Deep learning is a subset of machine learning. Requires large datasets for train
 - VScode has an interface
 - Rstudio does it via the [`chattr` package](https://blogs.rstudio.com/ai/posts/2024-04-04-chat-with-llms-using-chattr/) 
 - Positron
+  - Databot in Positron (from Posit, uses Claude)
 
 
 ## More resources
@@ -199,6 +200,7 @@ Use Claude to help you follow coding best practices;
 - perhaps include interactive visualizations to help see that data is clean and processed appropriately. I wrote down "Alterra plot" here but don't know what I mean. Perhaps he was referring to the [Vega-Altair python package](https://altair-viz.github.io/index.html) (a.k.a `altair`) for plotting graphs - seems very similar to ggplot
 
 
+
 Erick's follow-up email:
 - Thanks for coming today!
 - https://matsen.group/agentic.html is the blog series, BlueSky and LinkedIn posts if you want to share socially
@@ -276,6 +278,24 @@ Can use them together within Rstudio (need more recent Rstudio, and to enable co
 `chattr` package allows use of chatGPT
 - maintained by chattr, sends extra info to the chatbot (e.g. tells it about some R references)
 - allows use of chatGPT but many other LLMs
+
+# Databot in Positron, for R-based data analysis
+
+Databot demo videos from Ted Laderas (Hutch DASL): Using Databot on the NHANES dataset: 
+- [part 1](https://www.youtube.com/watch?v=qs2GozYUUOk)
+- [part 2](https://www.youtube.com/watch?v=lT2J71Jg_ug)
+- [part 3](https://www.youtube.com/watch?v=j0KdDMIgcLY)
+
+Databot in Positron:
+- command-shift-P gives us the command pane, and there's an option to open databot. 
+- Select which LLM to use (choose Claude Sonnet)
+- then we type requests in plain english. 
+- It generates code but doesn't run it without our permission.  
+- You would probably want to copy the useful code chunks into your own qmd/Rmd document. 
+- It can make plots and tables and plain-english summaries of what the tables show.
+- After it runs it offers options for next steps, like to save its code/findings into markdown files
+
+I have installed the extension but I haven't set it up to connect to a particular LLM yet (because I don't have accounts with the LLMs). 
 
 
 # Notes on other people's experience
