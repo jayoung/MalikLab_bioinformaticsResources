@@ -103,6 +103,8 @@ A command to check file/folder size:
 `du -sm *`        = shows total size of each item in the current directory  
    (`du` = disk usage, `-s` = summary, `-m` = megabytes)
 
+More sophisticated set of options (can't remember why I got excited about this): `du -sch .[!.]* * | sort -h`
+
 Some programs or bioinformatic pipelines generate a lot of large intermediate files that can be deleted after the program has run (e.g. de novo assembly programs).
 
 

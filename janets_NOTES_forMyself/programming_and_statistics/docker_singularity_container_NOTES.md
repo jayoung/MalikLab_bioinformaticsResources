@@ -125,6 +125,8 @@ Example:  inside paml_wrapper-v1.3.5 container, `cat /etc/*-release` includes th
 Outside the container, on gizmo/rhino, `cat /etc/*-release` includes `DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"` (and I can't even run the cat command on the mac, because those release files don't exist)
 
 
+Read this somewhere:  Docker containers are just the "user space" of a system, they don't contain a Linux kernel themselves, they use the underlying host's kernel, so that's why you see Gizmo's kernel info.  When you run docker on your Mac or Windows system it needs to leverage some form of system virtualization to provide a Linux kernel to the containers.
+
 
 # public images
 

@@ -29,7 +29,23 @@ python -m kmviz app start session --no-seq-tab
 ```
 Then tried connecting using a web browser to https://localhost:8050/dashboard 
 
+# Spliced alignment tools
 
+Mostly transcript-to-genomic alignments, but there are also protein-to-genomic tools
+
+Sim4
+
+[SIBSim4](https://sibsim4.sourceforge.net/manpage.html) (an updated algorithm that should do the same as sim4). "...employs a blast-based technique to first determine the basic matching blocks representing the "exon cores"...."   "... second stage, the exon cores are extended into the adjacent as-yet-unmatched fragments using greedy alignment algorithms, and heuristics are used to favor configurations that conform to the splice-site recognition signals (e.g., GT-AG). If necessary, the process is repeated with less stringent parameters on the unmatched fragments."
+
+Minimap2
+
+GSNAP
+
+Minprot (protein to genomic)
+
+Spider
+
+Illumina read aligners:  STAR, HISAT2 Tophat, etc
 
 # Multiple sequence alignments
 
@@ -159,10 +175,9 @@ NCBI taxonomy - taxonomic classifications, not actual trees
 
 [Lifemap](https://lifemap.cnrs.fr/tree?efficiency-mode=false&tool=search) - I think this uses NCBI taxonomic classifications, not actual teres,  [Lifemap](http://lifemap.univ-lyon1.fr/) might also be able to display the open tree of life
 
-
-
 [Open Tree of Life](https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott93302) Can download a tree file from from https://tree.opentreeoflife.org/about/synthesis-release/v15.1
 
+[Interactive Tree of Life](https://itol.embl.de/itol.cgi) (ITOL). From animals to bacteria
 
 
 # Molecular evolution
@@ -180,13 +195,12 @@ interactive Tree Of Life [iTOL](https://itol.embl.de) has some nice-looking plot
 
 [ggtree](https://bioconductor.org/packages/release/bioc/vignettes/ggtree/inst/doc/ggtree.html) for R
 
-FigTree
-
-Dendroscope
-
-TreeViewer
-
-Geneious
+GUIs:
+- FigTree
+- [TreeViewer](https://github.com/arklumpus/TreeViewer/wiki)
+- Dendroscope
+- TreeViewer
+- Geneious
 
 ## Note on obscure node label/rerooting bug in some programs 
 
@@ -194,7 +208,9 @@ Geneious
 
 I noticed something similar in R, comparing old/new versions of `treeio`
 
-# Transposons
+# Repeats / transposons
+
+UCSC [Repeat Browser](https://repeatbrowser.ucsc.edu/), published [here](https://link.springer.com/article/10.1186/s13100-020-00208-w)
 
 TEtools - [paper](https://www.ncbi.nlm.nih.gov/pubmed/27924026) and [repo](https://github.com/l-modolo/TEtools)
 
@@ -310,7 +326,7 @@ Brotman Baty's [Descartes](https://descartes.brotmanbaty.org) - gateway to singl
 Human: 1000 genomes [selection browser](http://hsb.upf.edu/)
 
 Drosophila: [popfly](http://popfly.uab.cat/) (has data to allow M-K tests)
-
+Older [D. simulans study](https://pmc.ncbi.nlm.nih.gov/articles/PMC2062478/)
 
 # Variation
 

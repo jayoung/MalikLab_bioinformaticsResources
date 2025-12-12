@@ -52,6 +52,7 @@ Yet to read/view (may or may not be useful):
 - [60 min webinar](https://view6.workcast.net/register?cpak=1730348999509149&referrer=OD&utm_campaign=webinars2024&et_rid=35352606&et_cid=5260285) on large language models being used for biological problems 
 - [Coursera links](https://www.coursera.org/articles/ai-vs-deep-learning-vs-machine-learning-beginners-guide)
 - description of [AI/ML/DL on AWS](https://aws.amazon.com/compare/the-difference-between-machine-learning-and-deep-learning/)
+- [Using AI with R video demo](https://posit.co/workflow-demo/ai-powered-data-science-in-positron/)
 
 Already read, might want to come back to:
 - [Using AI with R](https://rfortherestofus.com/courses/ai) short course from R for the rest of us. Notes [BELOW](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/janets_NOTES_forMyself/programming_and_statistics/AI_notes.md#using-ai-with-r-notes).
