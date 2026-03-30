@@ -56,14 +56,15 @@ Yet to read/view (may or may not be useful):
 - Sonali Tamhankar (FHCC) made a series of [YouTube videos](https://www.youtube.com/playlist?list=PLlrtwawxw7_MQDM-hEhH0QSQoSIu1niRf) explaining various AI concepts
 
 
-There's an R package called `btw` which allows Claude to read the documentation for any packages your code uses, and include the help pages in it's context for helping you code. Info from [this post](https://www.linkedin.com/posts/sharonmachlis_rstats-genai-activity-7414502094738599937-5pvE/): 
+
+R resources to check out:
+- [A Few Claude Skills for R Users](https://rworks.dev/posts/claude-skills-for-r-users/)   ** this could be a good place to start if I want to try AI
+- [Claude Code: Setting up ast-grep with R support](https://emilhvitfeldt.com/post/ast-grep-r-claude-code/). Allowing a more 'natural language' style search through code, e.g. find “All functions with 5-6 arguments”
+- There's an R package called `btw` which allows Claude to read the documentation for any packages your code uses, and include the help pages in it's context for helping you code. Info from [this post](https://www.linkedin.com/posts/sharonmachlis_rstats-genai-activity-7414502094738599937-5pvE/): 
 "Soooo if you use hashtag#RStats and Claude Code:
-- In your R console: `install.packages("btw")`
-- In your terminal: `claude mcp add -s "user" r-btw -- Rscript -e "btw::btw_mcp_server()"`
-
-And now Claude code can answer questions about ANY R package installed on your system."
-
-
+    - In your R console: `install.packages("btw")`
+    - In your terminal: `claude mcp add -s "user" r-btw -- Rscript -e "btw::btw_mcp_server()"`
+    - And now Claude code can answer questions about ANY R package installed on your system."
 
 Already read, might want to come back to:
 - [Using AI with R](https://rfortherestofus.com/courses/ai) short course from R for the rest of us. Notes [BELOW](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/janets_NOTES_forMyself/programming_and_statistics/AI_notes.md#using-ai-with-r-notes).
