@@ -32,4 +32,4 @@ See also `~/FH_fast_storage/getSameSpeciesGenomicEquivalent` where I'm trying to
 
 # WDL
 
-See `~/FH_fast_storage/cromwell-home/janet-learning-WDL`
+See `pipelines_using_WDL_NOTES.md` 

@@ -1,0 +1,10 @@
+{
+    "workflow_failure_mode": "ContinueWhilePossible",
+    "write_to_cache": true,
+    "read_from_cache": true,
+    "default_runtime_attributes": {
+        "maxRetries": 2
+    },
+    "final_workflow_outputs_dir": "/fh/fast/malik_h/grp/public_databases/NCBI/SRA/data/mammalian_expression_profiles/mouse/mouse_CardosoMoreira_expressionSurvey/try_WILDS_library_scripts/git_branch_fix-sra-star-jyoung/try1",
+    "use_relative_output_paths": true
+}

@@ -1,0 +1,10 @@
+{
+  "sra_star.sra_id_list": ["ERR2588370", "ERR2588371"],
+  "sra_star.ref_genome": {
+    "name": "mm39",
+    "fasta": "/fh/fast/malik_h/grp/public_databases/UCSC/mouse_Jun2020/mm39.fa",
+    "gtf": "/fh/fast/malik_h/grp/public_databases/UCSC/mouse_Jun2020/miscTracks/mm39.ncbiRefSeq.2026_03_17.gtf"
+  },
+  "sra_star.ncpu": 12,
+  "sra_star.memory_gb": 64
+}
