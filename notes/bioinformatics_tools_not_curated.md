@@ -433,6 +433,8 @@ Evolution python tools: http://etetoolkit.org/
 ## Markdown
 To print a markdown file, use VScode. Right-click when the file is open to get a menu.
 
+From Ted Laderas (DASL:) "a web browser called [md-browse](https://github.com/needle-tools/md-browse) that translates everything to Markdown (thanks, Bob Rudis)".  Can convert HTML to `.md`
+
 
 # Statistics
 

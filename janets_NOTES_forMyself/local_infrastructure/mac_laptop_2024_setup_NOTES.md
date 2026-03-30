@@ -2,6 +2,44 @@
 
 prevent mac going to sleep?
 
+# Backups
+
+## Druva
+
+Until sometime in 2026 Hutch is paying for licences for Druva InSync. This laptop is set up to use Druva.
+
+However, they're not going to continue paying for the license. 
+
+## OneDrive
+
+The solution is to use MS OneDrive. Luna will send instructions on how to do that. Each user gets 2Tb, can request 5Tb if needed
+
+To access the backups, go to office.com and log in with hutch username and ID.
+
+On a PC, OneDrive backups will be on by default. 
+
+On a Mac, we turn on OneDrive backups by
+- installing OneDrive.app
+- allowing disk access to OneDrive (System Prefs - Privacy and Security - Full disk access)
+- click the OneDrive icon (cloud symbol) in the top bar, and then preferences icon (cog/gear symbol), select Backup tab, click Manage backup, and turn on backups for the Documents and/or Desktop folders.
+- files will be stored on the Hutch's OneDrive cloud account.
+
+- it looks like we can, in the OneDrive cloud web interface, move the backup folders so that they are subfolders of another, so that, for example, we can use OneDrive to backup >1 computer, without merging the folders containing the backups.
+
+DOWNSIDE - on a Mac, OneDrive will only backup the `Documents` and `Desktop` folders, so you need to store everything you care about in there. Some things that won't be backed up:
+- computer setup
+- `Downloads` folder
+- application-specific data folders, e.g. Geneious. 
+
+Geneious backups:
+- It complains if you move the Geneious data folder to a OneDrive accessible location, and says you should store the data on a local drive, and regularly "use the built-in Geneious backup feature" (under File-Backup_data). Alternative: "If you want to directly store data in a central location and optionally share it with other people, you can use Geneious Cloud or set up a Shared Database."  Probably requires paid plan.
+- Geneious Cloud [instructions](https://help.geneious.com/hc/en-us/articles/10894316694676-How-to-start-using-Geneious-Cloud)
+
+
+## Hard drives
+
+For our communal computers (e.g. microscope), the answer is probably to use an external hard drive. Make sure everyone is saving their files off the microscope into the same drive (e.g. D: drive) and have the entire D drive backed up.   For communal Macs, TimeMachine software handles the automatic backups. For communal PCs, the hard drive we purchase will likely come with software that'll handle the backup.
+
 # sidebar links
 
 Sidebar links periodically disappear - [this](https://discussions.apple.com/thread/253196430) is what I'm trying, to prevent that:
@@ -610,3 +648,161 @@ brew install freetype2
     #     brew reinstall freetype
 ```
 
+# Install python and pip
+
+March 18 2026
+
+Installed XCode
+
+```
+brew install python
+```
+
+Seems like it worked. Messages:
+
+```
+==> Caveats
+==> python@3.14
+Python is installed as
+  /opt/homebrew/bin/python3
+
+Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
+`python3`, `python3-config`, `pip3` etc., respectively, are installed into
+  /opt/homebrew/opt/python@3.14/libexec/bin
+
+`idle3.14` requires tkinter, which is available separately:
+  brew install python-tk@3.14
+
+See: https://docs.brew.sh/Homebrew-and-Python
+```
+
+Check whether things are in my PATH:
+```
+which python
+which python3
+    /opt/homebrew/bin/python3
+which pip
+which pip3
+    /opt/homebrew/bin/pip3
+python3 --version
+    Python 3.14.3
+```
+
+kmviz (for viewing LOGAN search results)
+
+The LOGAN results download README.md tells me to do `pip install kmviz` but I don't think I can:
+```
+pip3 install kmviz
+    # error: externally-managed-environment
+× This environment is externally managed
+╰─> To install Python packages system-wide, try brew install
+    xyz, where xyz is the package you are trying to
+    install.
+    
+    If you wish to install a Python library that isn't in Homebrew,
+    use a virtual environment:
+    
+    python3 -m venv path/to/venv
+    source path/to/venv/bin/activate
+    python3 -m pip install xyz
+    
+    If you wish to install a Python application that isn't in Homebrew,
+    it may be easiest to use 'pipx install xyz', which will manage a
+    virtual environment for you. You can install pipx with
+    
+    brew install pipx
+    
+    You may restore the old behavior of pip by passing
+    the '--break-system-packages' flag to pip, or by adding
+    'break-system-packages = true' to your pip.conf file. The latter
+    will permanently disable this error.
+    
+    If you disable this error, we STRONGLY recommend that you additionally
+    pass the '--user' flag to pip, or set 'user = true' in your pip.conf
+    file. Failure to do this can result in a broken Homebrew installation.
+    
+    Read more about this behavior here: <https://peps.python.org/pep-0668/>
+
+note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+hint: See PEP 668 for the detailed specification.
+mwgfg6yl26:~ jayoung$ 
+```
+
+Install pipx - that worked
+```
+brew install pipx
+
+which pipx
+    /opt/homebrew/bin/pipx
+```
+
+## kmviz (a python tools to visualize LOGAN results)
+
+Now try to use pipx to install kmviz - no. I think kmviz is not an app, so pipx won't work?
+
+```
+pipx install kmviz
+
+No apps associated with package kmviz. Try again with '--include-deps' to include apps of dependent packages, which are listed above. If you are attempting to install a library, pipx should not be used.
+Consider using pip or a similar tool instead.
+```
+
+Install kmviz inside a virtual environment:
+```
+cd /Users/jayoung/logan_kmviz
+
+# create a venv in the specified directory:
+python3 -m venv /Users/jayoung/logan_kmviz/logan_kmviz_venv
+
+# activate that venv
+source /Users/jayoung/logan_kmviz/logan_kmviz_venv/bin/activate
+
+# use pip to install kmviz within the venv
+python3 -m pip install kmviz
+    # seems like it worked
+
+# exit the venv:
+exit
+```
+
+Now try to use kmviz for real:
+```
+# cd to a dir with LOGAN results in it:
+cd /Volumes/malik_h/user/jayoung/forOtherPeople/forPravrutha/EZHIP_janet/data/rodents/LOGAN_results/kmviz-5e7cfa63-5d4f-4c53-a764-003e1cce0991 
+
+# activate the venv: 
+source /Users/jayoung/logan_kmviz/logan_kmviz_venv/bin/activate
+
+# check python version:
+which python
+    # /Users/jayoung/logan_kmviz/logan_kmviz_venv/bin/python
+python --version
+    # Python 3.14.3
+
+## start kmviz app - I get an error 
+python -m kmviz app start session --no-seq-tab
+
+ModuleNotFoundError: No module named 'pkg_resources'
+
+python3 -m pip install pkg_resources
+ERROR: No matching distribution found for pkg_resources
+
+python3 -m pip install setuptools
+Requirement already satisfied: setuptools in /Users/jayoung/logan_kmviz/logan_kmviz_venv/lib/python3.14/site-packages (82.0.1)
+
+## try upgrading the uplink package - I get an error that kmviz will be unhappy but I'll try it anyway
+pip install uplink --upgrade
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+kmviz 0.8.0 requires uplink[aiohttp]<0.10.0,>=0.9.7, but you have uplink 0.10.0 which is incompatible.
+
+## now try kmviz - doesn't work
+python -m kmviz app start session --no-seq-tab
+
+/Users/jayoung/logan_kmviz/logan_kmviz_venv/lib/python3.14/site-packages/uplink/converters/pydantic_.py:37: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+
+## revert uplink to v 0.9.7
+pip install --upgrade uplink==0.9.7
+
+# kmviz still doesn't work.  Giving up.
+```
