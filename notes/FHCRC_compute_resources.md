@@ -201,8 +201,9 @@ module purge
 ```
 
 
-7. if there's a problem, use scancel to kill a job or jobs. The simplest way is to use the job ID: `scancel myJobID`
-You can also do this to cancel all your running jobs - e.g. to cancel all jobs for user `jayoung` you do this:  `scancel -u jayoung `
+7. if there's a problem, use scancel to kill a job or jobs. Examples: 
+- cancel a single job using its numerical ID: `scancel myJobID`
+- cancel all your own running jobs - e.g. to cancel all jobs for user `jayoung` you do this:  `scancel -u jayoung`
 
 # Running a bunch of sbatch jobs, on multiple samples
 
