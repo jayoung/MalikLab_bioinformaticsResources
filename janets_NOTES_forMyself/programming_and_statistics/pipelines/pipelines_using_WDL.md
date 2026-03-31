@@ -191,7 +191,7 @@ WILDS also has a [library of docker images](https://github.com/getwilds/wilds-do
 # WDL coding
 
 
-# WDL-related habits I want to think about
+## WDL-related habits I want to think about
 
 How to handle copying output files out of scratch, given that directory structure is not what I'm used to. See how it looks once I get my bat-Orr-batch2 WDL running
 
@@ -202,17 +202,17 @@ How to split work - one giant WDL script, or break it up into separate ones?
 Naming workflows - the name used in the WDL file's workflow block is used elsewhere too, e.g. it's what the output dir in /fh/scratch is called, and is found in the JSON input files. To me it makes sense to use the same name for the wdl script file, too. I probably want to try NOT to reuse the workflow block name in different projects, as the output dirs will get muddled up and they'll try to reuse each others' results.
 
 
-# WDL syntax questions
+## WDL syntax questions
 - indents don't matter: is that correct?  is that true for WDL files AND json files?
 
-# WDL syntax notes
+## WDL syntax notes
 
 The order of `call` statements in the `workflow{}` block does NOT matter.  the WDL interpreter magically figures out which tasks depend on each other and runs any that it can run at appropriate times.
 
-## Command block
+### Command block
 The `command` block can be enclosed with `<<< >>>` or `{ }`.   If the command itself might use `{}` (e.g. perl or python stuff) then the `<<< >>>` notation is better.   When we use `<<< >>>`, variables used in the command block are in the form `~{var}`.  If we use the {} format, variables could also be specified as `${}`. This all seems confusing: I think I will stick to this format: `command <<< ~{var} >>>`.
 
-## String manipulation
+### String manipulation
 
 [Basename](https://wdl-docs.readthedocs.io/en/stable/WDL/basename/) gets a file name without the path.  Simplest usage:
 ```
@@ -227,17 +227,17 @@ String stripped = basename(input_file, ".bam")
     # Result: input
 ```
 
-## Input data files (e.g fq.gz)
+### Input data files (e.g fq.gz)
 
 Specifying input data files that are actually links: I thought I might do this so that my fastq file aliasing would be used.  But it seems like Cromwell follows the link through to its source and uses the original filename instead. So my trick of using a link to make a shorter file alias is not useful.
 
-## Using directories as intermediate results files
+### Using directories as intermediate results files
 
 Turns out you can't pass around directories between tasks (at least not right now, in version 1.0 of WDL+Cromwell) - you have to tar.gz them. This seems like an unnecessary step when running on a local cluster (but sounds like there's a good reason to do it when running on the cloud - hard to pass around directories, easier to pass around files)
 
 See `~/FH_fast_storage/cromwell-home/janet-workflow-tests/janet_caching_question/janet_caching_question.md`
 
-## Specifying workflow inputs
+### Specifying workflow inputs
 
 Specify inputs using:
 - JSON file
@@ -275,20 +275,20 @@ jq -s '.[0] * .[1]' file1 file2 > out.json
 jq -s '.[0] * .[1] * .[2]' file1 file2 file3 > out.json
 ```
 
-## Scattering
+### Scattering
 
 Scattering over a map can be done - it is described [here](https://bioinformatics.stackexchange.com/questions/16100/extracting-wdl-map-keys-as-a-task) and [here](https://github.com/openwdl/wdl/issues/106#issuecomment-356047538). It may or may not be possible in v1.0 of WDL - there were some changes in v1.1.
 
-## Map structures
+### Map structures
 
 Nested map structures might be possible, or might not - see [here](https://bioinformatics.stackexchange.com/questions/14673/reading-nested-map-data-structures-in-wdl)
 
-## Outputs
+### Outputs
 
 To get output files properly listed, if I don't know what they're called ahead of time, I may at some point need to use a trick involving glob - see [example](https://github.com/FredHutch/tg-wdl-cellRanger/blob/main/cellRanger.wdl): `Array[File] outputDir = glob("./countrun/outs/*")`
 
 
-## modularizing code
+### modularizing code
 
 See example [here](https://github.com/theiagen/terra_utilities/blob/main/workflows/wf_cat_column.wdl)
 
@@ -298,11 +298,11 @@ import "../tasks/task_file_handling.wdl" as file_handling
 ```
 after which a task called `cat_files` (found in `task_file_handling.wdl`) is available in the importing workflow via the name `file_handling.cat_files`
 
-### using sub-workflows
+#### using sub-workflows
 
 If I want to include additional WDL files, e.g. if I have split some tasks into sub-workflows, I need to supply the extra WDL files to the Cromwell server when I submit the job. I have two options.
 
-#### Option 1: use https
+##### Option 1: use https
 
 I make the sub.wdl files web-accessible (e.g. on a public github), and import the raw version, like this:
 ```
@@ -313,7 +313,7 @@ Sometimes I might want to specify a particular commit. For example, I was having
 import "https://raw.githubusercontent.com/jayoung/janet-learning-WDL/dfed3d18be8c7150d01f420b60312470e8b3749c/scripts_for_import/dnaseq_fq_to_vcf.skeleton.subworkflow.eachPair.wdl" as sub_eachPair
 ```
 
-#### Option 2 - make a zip bundle
+##### Option 2 - make a zip bundle
 
 I put the extra WDLs into a zip bundle like this:
 ```
