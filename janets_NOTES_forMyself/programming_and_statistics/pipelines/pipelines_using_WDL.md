@@ -161,35 +161,6 @@ Should be able to do a nested scatter (e.g. scatter over samples, then scatter e
 In my case (bat SNP calling) I will want to hard-code the ~100 bed file names into a json file to specify them as inputs. Amy says it's unlikely I can use their sequential numbering to help me.
 
 
-# using sub-workflows
-
-If I want to include additional WDL files, e.g. if I have split some tasks into sub-workflows, I need to supply the extra WDL files to the Cromwell server when I submit the job. I have two options.
-
-## Option 1: use https
-
-I make the sub.wdl files web-accessible (e.g. on a public github), and import the raw version, like this:
-```
-import "https://raw.githubusercontent.com/jayoung/janet-learning-WDL/main/scripts_for_import/dnaseq_fq_to_vcf.skeleton.subworkflow.eachPair.wdl" as sub_eachPair
-```
-Sometimes I might want to specify a particular commit. For example, I was having trouble seeing the updated version of a wdl soon after I synced to git, because github only updates the raw cache every 5 minutes. See [this post](https://stackoverflow.com/questions/62785962/get-raw-file-from-github-without-waiting-for-5-minute-cache-update). I do it like this:
-```
-import "https://raw.githubusercontent.com/jayoung/janet-learning-WDL/dfed3d18be8c7150d01f420b60312470e8b3749c/scripts_for_import/dnaseq_fq_to_vcf.skeleton.subworkflow.eachPair.wdl" as sub_eachPair
-```
-
-## Option 2 - make a zip bundle
-
-I put the extra WDLs into a zip bundle like this:
-```
-zip subwdls sub1.wdl sub2.wdl
-```
-And I can submit ththe zip bundle to Cromwell via `fh.wdlR` using the `Dependencies` option:
-```
-thisJob <- cromwellSubmitBatch(WDL = "my_workflow.wdl", 
-                               Params = "my_inputs.json", 
-                               Dependencies = "subwdls.zip")
-```
-
-
 ## April 4th, 2024: DaSL PROOF demo session
 
 PROOF (Production Research On-ramp for Optimization and Feasibility) - new tool to run WDLs at the Hutch
@@ -327,7 +298,36 @@ import "../tasks/task_file_handling.wdl" as file_handling
 ```
 after which a task called `cat_files` (found in `task_file_handling.wdl`) is available in the importing workflow via the name `file_handling.cat_files`
 
-# Misc notes
+### using sub-workflows
+
+If I want to include additional WDL files, e.g. if I have split some tasks into sub-workflows, I need to supply the extra WDL files to the Cromwell server when I submit the job. I have two options.
+
+#### Option 1: use https
+
+I make the sub.wdl files web-accessible (e.g. on a public github), and import the raw version, like this:
+```
+import "https://raw.githubusercontent.com/jayoung/janet-learning-WDL/main/scripts_for_import/dnaseq_fq_to_vcf.skeleton.subworkflow.eachPair.wdl" as sub_eachPair
+```
+Sometimes I might want to specify a particular commit. For example, I was having trouble seeing the updated version of a wdl soon after I synced to git, because github only updates the raw cache every 5 minutes. See [this post](https://stackoverflow.com/questions/62785962/get-raw-file-from-github-without-waiting-for-5-minute-cache-update). I do it like this:
+```
+import "https://raw.githubusercontent.com/jayoung/janet-learning-WDL/dfed3d18be8c7150d01f420b60312470e8b3749c/scripts_for_import/dnaseq_fq_to_vcf.skeleton.subworkflow.eachPair.wdl" as sub_eachPair
+```
+
+#### Option 2 - make a zip bundle
+
+I put the extra WDLs into a zip bundle like this:
+```
+zip subwdls sub1.wdl sub2.wdl
+```
+And I can submit ththe zip bundle to Cromwell via `fh.wdlR` using the `Dependencies` option:
+```
+thisJob <- cromwellSubmitBatch(WDL = "my_workflow.wdl", 
+                               Params = "my_inputs.json", 
+                               Dependencies = "subwdls.zip")
+```
+
+
+## Misc notes
 
 WDL arrays are 0-indexed
 
