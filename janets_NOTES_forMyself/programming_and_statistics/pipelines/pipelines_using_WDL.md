@@ -186,6 +186,50 @@ Resources for pre-made WDLs:
 
 WILDS also has a [library of docker images](https://github.com/getwilds/wilds-docker-library) that can be used by WDLs
 
+## March 11th, 2026, Hutch Deep Dive on Building Computational Workflows 
+
+All materials available [here](https://fredhutch.github.io/data-deep-dives/translational-data-science-series/building-computational-workflows/2026-winter/slides/)
+
+Presented by :
+- Sita (Sitapriya Moorthi)
+- Taylor Firman
+- Emma Bishop
+
+Most useful slide (to me) from the presentation: ![](when_to_use_a_workflow.png)
+
+
+Final outputs dir: 
+- specified in the workflow options json.
+- files will be organized in subfolders according to task in the WDL script
+- can be on Hutch server or on S3 (need to set up SSE credentials, may need to send a special request to scicomp)
+
+Other ways to submit jobs at the Hutch (maybe)
+- sprocket
+- miniWDL (e.g. https://bashforbio.netlify.app/04_assignment.html)
+- Cirro (for the cloud). If we use the cloud, make sure to test the workflow locally on the Hutch cluster before deploying to the cloud (can get expensive). Each lab has a subsidy of $300/yr on AWS, which is ~100Tb of storage
+
+Ways to submit jobs ELSEWHERE (not set up on Hutch server)
+- miniWDL
+- Terra
+- Anvil
+
+For SMALL tests at the Hutch, miniWDL and sprocket might work. But they're not set up to use sbatch/parallelizing
+
+Inputs.tsv type files must still be converted to json file to be used in a wdl.
+
+Try workflows from wilds_wdl_library repo
+
+VScode and Rstudio both have plugins that can do syntax highlighting for WDLs and jsons
+
+Think of json format as being equivalent to named lists in R
+
+To throttle an entire workflow we can probably limit the number of nodes it's allowed to use. I imagine that's done in the workflow options json.
+
+ALternative to using NCBI's fastq-dump, suggested by Sean Bennett (Tapscott lab):
+- use `aria2c`   (`module load aria2/1.35.0-GCCcore-10.2.0`) 
+- use ENA rather than NCBI
+- ENA has some tool that lets you get a json of ftp links for a set of samples, and you can feed that into aria2c
+- use mdsum to verify a complete download
 
 
 # WDL coding
