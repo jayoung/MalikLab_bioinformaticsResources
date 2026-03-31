@@ -1,12 +1,3 @@
-
-# notes files reorg xxxx
-
-xxx to do after reorge
-- get rid of my janet-learning-WDL repo
-- any other repos to get rid of?
-- any links to that repo?
-
-
 # Running WDLs at the Hutch 
 
 ## Current notes
