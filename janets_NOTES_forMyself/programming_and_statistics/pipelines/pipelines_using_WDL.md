@@ -62,6 +62,10 @@ WILDS-WDL
 
 Broad's [WARP repository](https://github.com/broadinstitute/warp): WDL Analysis Research Pipelines (WARP) repository is a collection of cloud-optimized pipelines for processing biological data from the Broad Institute Data Sciences Platform and collaborators.
 
+GATK workflows
+
+BioWDL
+
 [Dockstore](https://www.dockstore.org/search?descriptorType=WDL&entryType=workflows&searchMode=files)
 
 ## Other resources 
