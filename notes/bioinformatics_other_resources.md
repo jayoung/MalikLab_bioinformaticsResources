@@ -51,6 +51,9 @@ EBI's [training materials](https://www.ebi.ac.uk/training/on-demand)
 
 Peter suggests this set of slides - [Introduction to Methods and Software for Phylogenomics](https://evomics.org/wp-content/uploads/2019/01/Introduction-to-methods-and-software-for-phylogenomics.pdf)
 
+DASL newsletter suggests these these [lecture notes](https://mpop.gitbook.io/bioinformatics-lecture-notes) and [tutorials](https://mpop.gitbook.io/bioinformatics-tutorials) from Mihai Pop, computer scientist and professor. DASL said "a full set of bioinformatics and genomic algorithms lecture notes online, spanning undergraduate through graduate-level material. If you’ve ever wanted a structured path through topics like genome assembly, sequence alignment, and algorithmic thinking for genomics, this is a great start."
+
+
 # More detailed R stuff
 
 [regexpr](https://regexr.com) website - helps figure out regular expressions
