@@ -104,3 +104,28 @@ rm ~/Library/Caches/CloudKit/CloudKitMetadata*;killall cloudd
 `htop`   
 `uptime`
 
+
+# Looking at Ubuntu versions
+
+On April 2, 2026:
+```
+jayoung@gizmoj3:~$ more /etc/os-release
+
+NAME="Ubuntu"
+VERSION="18.04.6 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.6 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+```
+
+
+Ubuntu [version info](https://documentation.ubuntu.com/project/release-team/list-of-releases/) tells me that this version was released on September 17, 2021. End of "standard support" is June 2023. "End of life" is April 2033.
+
+Bionic is too old to support versions of R that are newer than Bionic. On Slack in Aug 2025 John Dey told me "coming soon, we will be updating the older G nodes to Noble. R4.5.1 is already built for Noble on the G nodes". The first Noble release was April 25, 2024.

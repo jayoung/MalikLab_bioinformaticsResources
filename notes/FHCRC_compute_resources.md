@@ -75,15 +75,15 @@ Occasionally, we have large files that we want to be visible to people from outs
 
 ## Mounting Hutch storage on a Mac
 
-[This link](https://centernet.fredhutch.org/cn/u/center-it/help-desk/network_drive_paths_mac.html) might help.
+See [this link](https://sciwiki.fredhutch.org/scicomputing/store_posix/#how-to-access-fred-hutch-storage).
 
 Use the Mac's Finder application, and choose `Go` - `Connect to server`. You'll get a menu where you can enter the address of the storage server you want to connect to.
 
-For your home directory, enter this address, replacing jayoung with your own user name:  `smb://FHCRC;jayoung@file.fhcrc.org/home`  
+For your home directory, enter this address, replacing HUTCHID with your Hutch user name:  `smb://fhcrc.org;HUTCHID@home.fhcrc.org/homes`  
 
 For the `fast` directory, there are two possible different addresses. In Jan 2020, Luna told me that the first way responds quicker. However, links are not visible that way, so for some people/purposes, the second way might be better: scicomp (scientific computing staff) have told me to use the second way.
-1.	`smb://center.fhcrc.org/fh/fast/malik_h/`
-2.	`smb://FHCRC;jayoung@file.fhcrc.org/fast/malik_h` ()
+1.	`smb://center.fhcrc.org/fh/fast/malik_h/` 
+2.	`smb://fhcrc.org;HUTCHID@center.fhcrc.org/fh/fast/malik_h`
 
 If you're working on the command line on your Mac (i.e. not working on the cluster, but interacting with your Mac using the Terminal application), the fast directory can be found in `/Volumes/fh/fast/malik_h/` or sometimes `/Volumes/malik_h/`
 
@@ -91,7 +91,7 @@ If you're working on the command line on your Mac (i.e. not working on the clust
 
 ## Mounting Hutch storage on a PC:
 
-[This link](https://centernet.fredhutch.org/cn/u/center-it/help-desk/network_drive_paths_windows.html) might help.
+See [This link](https://sciwiki.fredhutch.org/scicomputing/store_posix/#how-to-access-fred-hutch-storage).
 
 
 # Storage on disk (large files)

@@ -26,7 +26,7 @@ Deep learning is a subset of machine learning. Requires large datasets for train
 - Bard (from google)
 - Phind (formerly known as Hello) - designed for software development
 - Llama (from Meta = Facebook) 
-
+- Posit AI - built in to Rstudio and/or Positron, from the Posit team.
 
 ## Ways to access the LLMs
 
