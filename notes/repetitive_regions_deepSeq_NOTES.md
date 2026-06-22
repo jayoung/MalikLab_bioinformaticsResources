@@ -23,6 +23,9 @@ Ching-Ho thinks STAR might do better with multi-mapping reads
 
 #### bwa
 
+`bwa mem` does not document what it does with multiply mapping reads, but [this post](https://www.biostars.org/p/304614/) suggests that
+- "When a read matches in its entirety, with an equal score in multiple locations, one of the locations is picked at random, is labeled as primary, will be given mapq=0 and will have an XA tag that contains the alternative locations (this is identical to how bwa aln worked)"
+
 ## Read counting tools
 
 ### htseq-count

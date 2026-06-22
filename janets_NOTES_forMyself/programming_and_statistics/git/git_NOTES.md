@@ -310,8 +310,55 @@ git config --global core.filemode false
 git config core.filemode false
 ```
 
+### core.autocrlf
+
+CRLF = windows-style line breaks
+LF = unix-style
+CR = legacy Mac-style
+
+[`core.autocrlf`](https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings) setting, regarding line break style: to avoid a warning `LF will be replaced by CRLF the next time Git touches it`, [this page](https://github.com/orgs/community/discussions/66838) recommends that for both macOS and linux, we should set:
+```
+git config --global core.autocrlf input
+```
+
+As of May 28 2026 on rhino, it is showing:
+```
+git config --global core.autocrlf 
+false
+```
+
+As of May 28 2026 on the home laptop (16" MBPro), it is showing:
+```
+git config --global core.autocrlf 
+true
+```
+
+I'll change both to be `input` instead, using this command:
+```
+git config --global core.autocrlf input
+```
+
+Also relevant:  VScode - settings - eol (global and local):  changed it to \n (16" MBPro) (was auto, and I think that was creating Windows linebreaks).
 
 
+
+### http.postBuffer
+
+I also (May 28 2026) got an error that looks like this, trying to `git push` from the Mac, remotely from UK:
+
+```
+error: RPC failed; HTTP 400 curl 22 The requested URL returned error: 400
+send-pack: unexpected disconnect while reading sideband packet
+Writing objects: 100% (60/60), 53.89 MiB | 42.42 MiB/s, done.
+Total 60 (delta 18), reused 7 (delta 0), pack-reused 0
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+```
+
+Looks like the solution is this, which I've done on the 16" MBPro Mac. `git push` worked after doing this - took a while, so I think there were some large files involved.a
+```
+git config --global http.postBuffer 157286400
+```
 
 
 
