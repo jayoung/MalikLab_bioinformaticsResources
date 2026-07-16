@@ -696,7 +696,8 @@ How to look at Ensembl’s trees:
 
 Note: unfortunately there is no direct link to pan-taxonomic Compara for human genes (or any vertebrate). This might get fixed in future releases.  It’s annoying.  If your starting point is a human gene, you can use the tree you see on the main Ensembl site to (hopefully) pick out a fly or worm ortholog, get the gene ID, then look it up on the Enseml Metazoa site where you should be able to accesss the pan-taxonomic tree. 
 
-Note: at some point Ensembl changed the algorithms/parameters that group genes before making trees, and now they are more conservative. For genes that are not super well conserved, distant orthologs/paralogs are not always in the same pan-taxonomic compara tree. Sometimes it helps to go to an OLDER version of the Ensembl database to see if there was a larger gene grouping. See http://www.ensembl.info/2018/10/24/changes-to-paralogy-in-release-94/ for details, and maybe use this site: http://jul2018.archive.ensembl.org/index.html 
+Note: at some point Ensembl changed the algorithms/parameters that group genes before making trees, and now they are more conservative. For genes that are not super well conserved, distant orthologs/paralogs are not always in the same pan-taxonomic compara tree. Sometimes it helps to go to an OLDER version of the Ensembl database to see if there was a larger gene grouping - [details](http://www.ensembl.info/2018/10/24/changes-to-paralogy-in-release-94/). Maybe use [this site](http://jul2018.archive.ensembl.org/index.html) or [this one](https://may2015.archive.ensembl.org/Homo_sapiens/Info/Index?db=core;g=ENSG00000117148;r=1:17755313-17827063)
+
 Note: in April 2021 there is a bug in pan-taxonomic trees where many sequences appear listed as ‘ancestral sequence’ instead of the species they’re actually from. Not useful. This should be fixed when release 51 comes out in early May.
 
 
