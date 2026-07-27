@@ -11,20 +11,41 @@ To change preferred editor (for all projects):  `git config --global core.editor
 To show which files were added during a particular commit:
 `git show --pretty="" --name-only d09fb87` (where d09fb87 is the commit ID)
 
+
+# Large files
+
+Github doesn’t want to accept large files. Ideally I include large files/dirs in my .gitignore file before I try to push changes to github. A couple of times I’ve forgotten to do that before I do ‘git push’ and I get an error. Not only do I get an error on that ‘git push’ attempt, but even if I add the file to .gitignore and then try again, it persists in trying to sync the large file. 
+
+See [removing a cached file](https://github.com/jayoung/MalikLab_bioinformaticsResources/blob/main/janets_NOTES_forMyself/programming_and_statistics/git/git_NOTES.md#removing-a-cached-file) section below.
+
+Also: I installed a tool called [`git-sizer`](https://github.com/github/git-sizer) that helps you track down large files - use it when a repo is responding slowly during add/commit/push steps.
+
+
 # removing a cached file:
 
 `git rm --cached otherDataFiles/kyleFowler/GEO/suppData/GSE49977_Rec12_multimap.txt`
 
 `git rm --cached otherDataFiles/kyleFowler/GEO/suppData/GSE49977_Rec12_unique.txt`
 
-`git filter-branch -f --index-filter 'git rm -r --cached --ignore-unmatch otherDataFiles/kyleFowler/GEO/suppData' HEAD`
+`git filter-branch -f --index-filter "git rm -r --cached --ignore-unmatch otherDataFiles/kyleFowler/GEO/suppData" HEAD`
 
 A more general way to clear the cache and get only the right files on the github server:
 1.	Make sure all changes are committed
-2.	git rm -rf --cached .
-3.	git add --all .
-4.	git commit
-5.	git push
+2.	`git rm -rf --cached .`
+3.	`git add --all .`
+4.	`git commit`
+5.	`git push`
+
+
+You might want to remove a large file from older commits, even if it's not present in the current commit. Advice [here](https://stackoverflow.com/questions/8740187/git-how-to-remove-file-from-historical-commit) is:
+```
+git filter-branch --index-filter \
+    'git rm -r --cached --ignore-unmatch otherDataFiles/kyleFowler/GEO/suppData' \
+    --tag-name-filter cat -- --all
+rm -Rf .git/refs/original       # careful
+git gc --aggressive --prune=now # danger
+```
+
 
 # removing a big file from commit
 
@@ -63,8 +84,6 @@ git check-ignore -v -- knownDomesticatedGenes
 To see every file git is ignoring:
 git ls-files -o -i --exclude-standard
 
-# Large files
-Github doesn’t want to accept large files. Ideally I include large files/dirs in my .gitignore file before I try to push changes to github. A couple of times I’ve forgotten to do that before I do ‘git push’ and I get an error. Not only do I get an error on that ‘git push’ attempt, but even if I add the file to .gitignore and then try again, it persists in trying to sync the large file. Some combination of these commands seemed to fix it (not sure which ones were key):
 
 
 # file mode Nov 19 2021

@@ -683,6 +683,9 @@ other metazoa (mostly invertebrates flies): http://metazoa.ensembl.org/index.htm
 https://ensemblgenomes.org/
 Non-vertebrates:  https://ensemblgenomes.org/
 The multiple sites will eventually get merged in a future Ensembl release.  
+
+Summer 2026 note - Ensembl are overhauling their website.  Right now [gene trees are NOT available](https://www.ensembl.info/2026/07/21/feature-profile-between-new-and-legacy-ensembl-july-2026-update/) in the new version of the website but they will be at some point in the future. There are other features that aren't yet available on the new site. Use [archive site](https://beta.ensembl.org/help/articles/archives) for those
+
 Ensembl databases house a TON of information, but for now we are just looking at their phylogenetic treees. These have been generated in an automated way, so will give you a good first pass view of what’s going on with orthology and paralogy, but they might not be totally accurate.
 
 The phylogenetic trees are at two levels:
