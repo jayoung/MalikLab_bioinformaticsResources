@@ -1,12 +1,9 @@
 # Learning R
 
-A [four-part course](https://fredhutchio.github.io/r_intro/) put together by Kate Hertweck (former Hutch instructor). I think it's good.  Was updated in 2020 - not sure it will continue to be updated, but not many of the basics change.
+See [Rtest_and_Rnotes](https://github.com/jayoung/Rtest_and_Rnotes) for all my R notes and resources. 
 
-Another, more in-depth [R course](https://stat545.com/r-basics.html).
+If you don't want to learn R, maybe try [grafify online](https://grafifyonline.shinyapps.io/grafify/)
 
-RStudio's [on-demand webinars](http://rstudio.com/resources/webinars). 
-
-RStudio's [cheatsheets](http://rstudio.com/resources/cheatsheets) on various aspects of R coding.  Helps you remember function names when you're coding.
 
 # Using Hutch computer resources
 

@@ -4,8 +4,10 @@
 .Ruserdata
 *DS_Store*
 .vscode
+slurm*
 
 alphafold_results
+fold_output
 logs_cluster
 nextflow_test
 UW_SummerInstitutes_2021

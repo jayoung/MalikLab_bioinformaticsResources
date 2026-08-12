@@ -1,0 +1,13 @@
+#### janet quick script to help me view this in ChimeraX
+
+## need to reset before doing anything
+close all
+
+## open the structure
+open fold_output/2pv7/2pv7_model.cif
+
+## color chain A
+# color /A:1-298 #00fdffff
+
+## color chain B
+color /B:1-298 #aa7942ff

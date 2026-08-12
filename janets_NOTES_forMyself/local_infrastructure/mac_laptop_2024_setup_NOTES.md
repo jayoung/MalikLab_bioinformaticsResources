@@ -806,3 +806,19 @@ pip install --upgrade uplink==0.9.7
 
 # kmviz still doesn't work.  Giving up.
 ```
+
+# gh (command-line github)
+
+```
+brew install gh
+```
+
+Also authenticated this mac for github.com use:
+
+1.	from the command line, “gh auth login”
+2.	choose GitHub.com
+3.	choose HTTPS
+4.	say Y to ‘authenticate git with my credentials’
+5.  choose web browser option
+6.	paste my authentication token
+
