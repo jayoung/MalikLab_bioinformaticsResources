@@ -38,6 +38,8 @@ Join the Hutch FH-Data/FH-BCR Slack workspace (old/new names for the same thing)
 
 We have a Dropbox folder called `PAML_class` with documents to help teach/learn PAML. If you don't already have access, let me know.   I might transfer those materials here at some point - will see how it goes sharing the other notes first. 
 
+I've also written a set of scripts that makes running PAML easier - that's in the [pamlWrapper](https://github.com/jayoung/pamlWrapper) github repository
+
 # My own notes on things I'm learning
 
 These are notes for myself - I haven't written these in a way that will be clear to others, but you're welcome to look through them if you like.

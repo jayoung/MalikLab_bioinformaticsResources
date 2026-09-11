@@ -24,6 +24,8 @@ The Hutch [‘Coop’](https://centernet.fredhutch.org/cn/u/bdsc.html) Bioinform
 
 Some useful classes/courses available through [fhcrc.io](http://www.fredhutch.io).
 
+In-browser tutorials from [Sandbox.bio](https://sandbox.bio/) (recommended by DASL).
+
 The Carpentries – coding and data science courses 
 - https://carpentries.org/
 - https://software-carpentry.org
