@@ -325,7 +325,8 @@ Brotman Baty's [Descartes](https://descartes.brotmanbaty.org) - gateway to singl
 
 Human: 1000 genomes [selection browser](http://hsb.upf.edu/)
 
-Drosophila: [popfly](http://popfly.uab.cat/) (has data to allow M-K tests)
+Drosophila: [popfly](http://popfly.uab.cat/) (has data to allow M-K tests). In Aug 2026 the browser works but Oscar found the link to download sequences is broken.  He is planning to write to Dr Barbadilla (might have the wrong name?).  The same group in Barcelona runs the MK and impMK websites and both of those are broken too.
+
 Older [D. simulans study](https://pmc.ncbi.nlm.nih.gov/articles/PMC2062478/)
 
 # Variation

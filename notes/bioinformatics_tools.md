@@ -567,6 +567,8 @@ Stephanie Spielman wrote pyvolve - simulation tools
 # Analysis of selective pressures
 
 PAML
+- for primates, we like to use species within simian primates
+- for Drosophila, Ching-Ho says we should use species in the '[melanogaster group](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?command=show&mode=tree&id=32346&lvl=3)' (some genomes are not well annotated)
 
 DataMonkey / Hyphy
 
