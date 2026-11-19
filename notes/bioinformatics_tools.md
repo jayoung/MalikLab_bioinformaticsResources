@@ -357,7 +357,22 @@ Phylogenetic analyis by maximum likelihood. See [manual](https://github.com/step
 
 Input file is a multiple sequence alignment in phylip format.
 
-The simplest way to run phyml is single-threaded version (`phyml`). Entering `phyml` on the command line brings up a menu-driven interface to run phyml. It totally works, but I don't like doing it this way - I prefer to figure out the full command-line version to run it, so that I have a record of how I made each trees, letting me reproduce it in future if necessary, or run the same method on another alignment.
+The simplest way to run phyml is single-threaded version (`phyml`). 
+
+On the Hutch cluster there's a module for phyml, which we will want to load:
+
+```
+module avail phyml
+------------------------------- /app/modules/all -------------------------------
+   PhyML/3.3.20220408-foss-2023a
+
+module load PhyML/3.3.20220408-foss-2023a
+```
+
+Loading the PhyML module ALSO results in the `OpenMPI` module being loaded behind the scenes, which PHYML uses in if we want to work in a multithreaded way.
+
+
+Entering `phyml` on the command line brings up a menu-driven interface to run phyml. It totally works, but I don't like doing it this way - I prefer to figure out the full command-line version to run it, so that I have a record of how I made each trees, letting me reproduce it in future if necessary, or run the same method on another alignment.
 
 Show help for command-line phyml:  `phyml --help`  
 Example: amino acid tree, 100 bootstraps, JTT evolutionary model:
@@ -372,20 +387,39 @@ phyml-mpi --help
 
 Example - to run 1000 bootstraps, using the JTT+I+G+F model, in an interactive session (you would do this in a grabnode session where we asked for 4 CPUs):
 ```
-module load OpenMPI 
 mpirun -np 4 phyml-mpi -i bigAln10.phyml -d aa --sequential -m JTT --pinv e --alpha e -f e -b 1000
-module purge
 ```
-`-np` = num CPUs (1-12, must have requested that number of CPUs when you logged in to gizmo node)  
+`-np` = num CPUs (must have requested that number of CPUs when you logged in to gizmo node)  
 `-b` = num bootstraps (must be a whole multiple of num CPUs, so I might do 4 CPUs and 100 or 1000 bootstraps)  
 `-m` = evolutionary model  
 `-f e` = estimate frequencies by counting alignment  
 `--pinv e` = estimate proportion of invariable sites  
 `--alpha e` = estimate the gamma distribution shape parameter
 
-We would probably want to run that as an sbatch job instead, requesting a node with 10 CPUs:
+We would probably want to run that as an sbatch job instead, requesting a node with 10 CPUs.   
+
+First, make a shell script - it might be called `runPHYML.sh` and it might look like this:
+
 ```
-sbatch --job-name=phyml --cpus-per-task=10 --wrap="/bin/bash -c \"source /app/lmod/lmod/init/profile; module load OpenMPI; mpirun -n 10 --oversubscribe phyml-mpi -i bigAln10.phyml -d aa --sequential -m JTT --pinv e --alpha e -f e -b 1000 > bigAln10.phyml_screenOutput.txt\""
+#!/bin/bash
+
+## this line activates the 'module' system.  May or may not actually be needed
+source /app/lmod/lmod/init/profile
+
+## load PHYML module and dependencies:
+module purge
+module load PhyML/3.3.20220408-foss-2023a
+
+## Run PHYML - 10 threads, 100 boostrapts
+mpirun -np 10 phyml-mpi -i bigAln10.phyml -d aa --sequential -m JTT --pinv e --alpha e -f e -b 100
+
+## tidy up
+module purge
+```
+
+Then run it, making sure to request the same number of CPUs as we specified in the shell script:
+```
+sbatch --job-name=phyml --cpus-per-task=10 runPHYML.sh
 ```
 
 ## Choose best evolutionary model for nucleotide alignments
@@ -568,11 +602,21 @@ Stephanie Spielman wrote pyvolve - simulation tools
 
 PAML
 - for primates, we like to use species within simian primates
-- for Drosophila, Ching-Ho says we should use species in the '[melanogaster group](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?command=show&mode=tree&id=32346&lvl=3)' (some genomes are not well annotated)
+- for Drosophila, Ching-Ho says we should use species in the '[melanogaster group](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?command=show&mode=tree&id=32346&lvl=3)' (some genomes are not well annotated). But also I'm wondering whether he meant 'melanogaster subgroup' - his eLife paper says different things in different places.
 
 DataMonkey / Hyphy
 
 [SWAKK](http://bioinformatics.mdanderson.org/main/SWAKK:Overview) website for sliding window dN/dS
+
+# Notes on Dipteran species tree and appropriate analysis sets
+
+Some useful papers:
+- This 2025 paper - [Subcellular Enrichment Patterns of New Genes in Drosophila Evolution](https://academic.oup.com/mbe/article/42/2/msaf038/8005449) - seems like it might have generated a good dataset of Drosophila orthology focussed on when new genes arose
+- Suvorov et al, 2022, Curr Biol: [Widespread introgression across a phylogeny of 155 Drosophila genomes](https://www.cell.com/current-biology/fulltext/S0960-9822(21)01496-2),  has a big tree
+- Finet et al, 2021, Genom Biol [DrosoPhyla: Resources for Drosophilid Phylogeny and Systematics](https://academic.oup.com/gbe/article/13/8/evab179/6337980) 
+- Kim et al, 2021, eLife [Highly contiguous assemblies of 101 drosophilid genomes](https://elifesciences.org/articles/66405/figures#fig5) might also be useful, haven't downloaded 
+
+Some of those are in `/FH_fast_storage/references/papers_and_SuppData/evolution/zz_species_trees`
 
 # Ancestral reconstruction
 

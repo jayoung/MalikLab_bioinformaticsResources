@@ -35,10 +35,33 @@ Synteny
 
 Assessing conservation / evolutionary rates / selective pressures
 
-## Evolutionary resources to check out
+# Evolutionary resources to check out
 
 You can get a lot of information from pre-computed public resources. Usually they're correct, but not always - to be confident about something you'll probably want to do your own analysis. They're especially useful to get a first idea about what's going on with a gene or gene family.
 
+## Big picture list of resources
+
+Ensembl trees (and Genomicus)
+
+UCSC conservation
+
+OrthoDB
+
+NCBI orthology
+
+Publications
+
+Orthofinder
+
+
+
+
+Organism-specific resources
+- Flybase
+- Yeast order browser (for yeast WGD)
+
+
+## Detailed notes on some resources
 
 
 ### [UCSC genome browser](https://genome.ucsc.edu/)
